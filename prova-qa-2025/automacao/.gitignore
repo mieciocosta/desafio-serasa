@@ -1,0 +1,60 @@
+# Arquivos e diretórios do Node.js
+node_modules/
+npm-debug.log
+yarn-error.log
+yarn-debug.log
+package-lock.json
+yarn.lock
+
+# Arquivos de ambiente e configuração
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+cypress.env.json
+
+# Diretórios e arquivos gerados pelo Cypress
+cypress/videos/
+cypress/screenshots/
+cypress/downloads/
+cypress/fixtures/example.json
+
+# Diretórios de relatórios
+cypress/reports/
+cypress/results/
+allure-results/
+allure-report/
+mochawesome-report/
+junit-reports/
+reports/
+
+# Arquivos de log
+*.log
+logs/
+
+# Arquivos temporários
+.tmp/
+.temp/
+temp/
+tmp/
+
+# Arquivos do sistema operacional
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Arquivos de IDE e editores
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+.project
+.classpath
+*.swp
+*.swo
+
+# Arquivos de build e distribuição
+dist/
+build/
+out/
