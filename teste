@@ -1,7 +1,3 @@
-Miecio Santos Costa, esse json disponibilizado é referente ao swagger dos relatos de infração não é o json que a Gabriela Braz dos Santos Souza e o Anderson Silva da Conceicao estão esperando
-
-
-
 Skip to main content
 Azure DevOps
 CAIXAAZURE
@@ -10,8 +6,8 @@ BoxEsteiraDigitalSeguranca
 /
 Boards
 /
-Sprints
-relatos de infração
+Work items
+Search
 
 
 
@@ -54,79 +50,11 @@ Artifacts
 Project settings
 Azure DevOps will stop accepting TLS 1.0/1.1 connections from Jan 31st, 2022. Please check our blog post for more details.
 
-
-Recuperacao e MED
-
-
-
-New Work Item
-
-Column Options
-Taskboard
-Backlog
-Capacity
-Analytics
-
-
-
-
-
-Sprint 02
-
-Person: All
-
-16 de dezembro - 30 de dezembro
-2 work days remaining
-Chart
-
-Chart with 10 data points.
-The chart has 1 X axis displaying values. Data ranges from -0.09 to 9.
-The chart has 1 Y axis displaying values. Data ranges from 0 to 4.
-End of interactive chart.
-Ordering cards is disabled, because the task board is grouped by people. 
-
-76676
-76910
-76928
-76915
-76921
-76980
-76981
-76982
-76983
-76984
-77541
-77543
-77545
-77696
-76681
-77052
-78159
-76678
-76907
-76908
-76976
-77002
-77003
-76931
-77995
-77997
-77998
-78000
-78142
-77108
-77807
-76918
-76919
-76924
 REQUIREMENT 74373
-
-
 74373
 HU - Relato de Infração - Integração com o SISPI - Listar Relatos
 
-Save and Close
-
+Save
 
 
 Follow
@@ -299,21 +227,24 @@ Subject matter expert 2
 No one selected
 Subject matter expert 3
 No one selected
-Showing 3 items.
-
 Content loading
 
 Content loaded
 
-Content loading
 
-Content loaded
 
-Recent workitems loaded.
+sabe o endpoint? eu importei no postman aqui, fica mais facil de separar
+ 
+Miecio Santos Costa
+sabe o endpoint? eu importei no postman aqui, fica mais facil de separar
+"/v2/relatos-infracao/listar"
+ 
+Miecio Santos Costa
+sabe o endpoint? eu importei no postman aqui, fica mais facil de separar
+os filtros estão na Hu 74373
 
-Results loaded.
+	
+            Azure DevOps Services | Sign In
+        
 
-Content loading
-
-Content loaded
-
+ 
