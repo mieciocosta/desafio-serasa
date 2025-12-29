@@ -1,6 +1,4 @@
-falei com a marcia aqui sobre a massa de testes. ela conseguindo.  em que ponto ja posso testar? com o seu ok Paulo?
- 
-Miecio Santos Costa
-falei com a marcia aqui sobre a massa de testes. ela conseguindo.  em que ponto ja posso testar? com o seu ok Paulo?
-Miecio Santos Costa meu caro colega, o json que foi disponibilizado para mim é referente ao consumo desse endpoint para que eu posso enviar para a fila do Siclon, conforme descritos na HUs, portanto o teste que vc imagina fazer, já é feito pela equipe do Sispi, de qq maneira muito obrigado pela sua intenção, nesse momento não tem porque testar o endpoint, visto que o problema de acesso e do erro 500 já foi resolvido.
- 
+Perfeito Paulo, entendido.
+Então vou focar nos testes da integração MED após o consumo do endpoint: gravação no Cosmos, filtro (RECEBIDA/OPEN), validação do ID fim a fim e envio para o Service Bus.
+Qualquer instabilidade no endpoint eu alinho diretamente com o SISPI.
+Obrigado pelo direcionamento!
