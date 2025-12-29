@@ -1,0 +1,1512 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "SISPI-dict-api-med",
+    "description": "PIX MED",
+    "contact": {
+      "url": "https://pix.caixa.gov.br",
+      "email": "pix@caixa.com.br"
+    },
+    "version": "1.0.0"
+  },
+  "tags": [
+    {
+      "name": "Recuperação de Valores",
+      "description": "Reúne endpoints destinados a lidar com Recuperação de Valores"
+    }
+  ],
+  "paths": {
+    "/api/v1/recuperacao-valores": {
+      "get": {
+        "tags": [
+          "Recuperação de Valores"
+        ],
+        "summary": "Consultar Recuperação de Valores.",
+        "description": "Obtém detalhes de uma recuperação de valores.",
+        "parameters": [
+          {
+            "name": "cpfCnpj",
+            "in": "query",
+            "description": "CPF/CNPJ do cliente pagador da transação original.",
+            "schema": {
+              "title": "CPF/CNPJ do cliente pagador",
+              "description": "CPF/CNPJ do cliente pagador da transação original.",
+              "pattern": "^(\\d{11}|\\d{14})$",
+              "type": "string"
+            }
+          },
+          {
+            "name": "idFimaFim",
+            "in": "query",
+            "description": "IDFimaFim ou ReturnID.",
+            "schema": {
+              "title": "IDFimaFim",
+              "description": "IDFimaFim ou ReturnID.",
+              "pattern": "[a-zA-Z0-9]{26,35}",
+              "type": "string"
+            }
+          },
+          {
+            "name": "idRecuperacaoValor",
+            "in": "query",
+            "description": "ID do processo de recuperação de valores.",
+            "schema": {
+              "title": "ID do processo",
+              "description": "ID do processo de recuperação de valores.",
+              "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ConsultarRecuperacaoValorResponseDto"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "O servidor não pode processar a requisição.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DictExceptionDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token inválido ou expirado.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DictExceptionDto"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Não autorizado para acessar este recurso.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DictExceptionDto"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DictExceptionDto"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Serviço indisponível.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DictExceptionDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Recuperação de Valores"
+        ],
+        "summary": "Criar Recuperação de Valores",
+        "description": "Cria um registro de Recuperação de Valores com base nos dados fornecidos.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CriarRecuperacaoValoresDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RecuperacaoValoresRespostaDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "O servidor não pode processar a requisição.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DictExceptionDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token inválido ou expirado.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DictExceptionDto"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Não autorizado para acessar este recurso.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DictExceptionDto"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DictExceptionDto"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Serviço indisponível.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DictExceptionDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ]
+      }
+    },
+    "/api/v1/recuperacao-valores/{idRecuperacaoValor}/cancelar": {
+      "post": {
+        "tags": [
+          "Recuperação de Valores"
+        ],
+        "summary": "Cancelar Recuperação de Valores.",
+        "description": "Cancela um recuperação de valores.",
+        "parameters": [
+          {
+            "name": "idRecuperacaoValor",
+            "in": "path",
+            "description": "ID do processo de recuperação de valores.",
+            "required": true,
+            "schema": {
+              "title": "ID do processo",
+              "description": "ID do processo de recuperação de valores.",
+              "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CancelarRecuperacaoValorResponseDto"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "O servidor não pode processar a requisição.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DictExceptionDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token inválido ou expirado.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DictExceptionDto"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Não autorizado para acessar este recurso.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DictExceptionDto"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DictExceptionDto"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Serviço indisponível.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DictExceptionDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ]
+      }
+    },
+    "/api/v1/recuperacao-valores/{idRecuperacaoValor}/devolucoes": {
+      "get": {
+        "tags": [
+          "Recuperação de Valores"
+        ],
+        "summary": "Lista Solicitações de devolução vinculadas a um processo de Recuperação de Valores",
+        "description": "Recupera da base de dados a lista de Solicitações de Devolução vinculadas a um processo de Recuperação de Valores",
+        "parameters": [
+          {
+            "name": "idRecuperacaoValor",
+            "in": "path",
+            "description": "ID da Recuperação de Valor",
+            "required": true,
+            "schema": {
+              "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$",
+              "type": "string"
+            },
+            "example": "91d65e98-97c0-4b0f-b577-73625da1f9fc"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ListarSolicitacaoDevolucaoRecuperacaoValorResponseDto"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token inválido ou expirado.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DictExceptionDto"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Nenhum registro encontrado.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DictExceptionDto"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DictExceptionDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Recuperação de Valores"
+        ],
+        "summary": "Solicitar devolução vinculadas a um processo de Recuperação de Valores",
+        "description": "Solicita devolução em uma recuperação de valores.",
+        "parameters": [
+          {
+            "name": "idRecuperacaoValor",
+            "in": "path",
+            "description": "ID da Recuperação de Valor",
+            "required": true,
+            "schema": {
+              "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$",
+              "type": "string"
+            },
+            "example": "91d65e98-97c0-4b0f-b577-73625da1f9fc"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SolicitarDevolucaoRecuperacaoValorResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "O servidor não pode processar a requisição.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DictException"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token inválido ou expirado.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DictException"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Não autorizado para acessar este recurso.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DictException"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DictException"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Serviço indisponível.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DictException"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ]
+      }
+    },
+    "/api/v1/recuperacao-valores/{idRecuperacaoValor}/relatos-infracao": {
+      "get": {
+        "tags": [
+          "Recuperação de Valores"
+        ],
+        "summary": "Lista Notificações de Infração vinculadas a um processo de Recuperação de Valores",
+        "description": "Recupera da base de dados a lista de Notificações de Infração vinculadas a um processo de Recuperação de Valores",
+        "parameters": [
+          {
+            "name": "idRecuperacaoValor",
+            "in": "path",
+            "description": "ID da Recuperação de Valor",
+            "required": true,
+            "schema": {
+              "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$",
+              "type": "string"
+            },
+            "example": "91d65e98-97c0-4b0f-b577-73625da1f9fc"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ListarRelatoInfracaoRecuperacaoValorResponseDto"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token inválido ou expirado.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DictExceptionDto"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Nenhum registro encontrado.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DictExceptionDto"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DictExceptionDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CancelarRecuperacaoValorExtensaoResponseDto": {
+        "description": "DTO de extensao de cancelamento para a recuperação de valor",
+        "required": [
+          "tipoFluxo",
+          "idFimAFim",
+          "tipoFraude",
+          "contato",
+          "idRecuperacaoValor",
+          "situacao",
+          "isbp",
+          "dataCriacao",
+          "dataAtualizacao"
+        ],
+        "type": "object",
+        "properties": {
+          "tipoFluxo": {
+            "$ref": "#/components/schemas/RecuperacaoValoresTipoFluxoEnum"
+          },
+          "idFimAFim": {
+            "pattern": "\\w{8,32}",
+            "type": "string"
+          },
+          "tipoFraude": {
+            "$ref": "#/components/schemas/TipoSituacaoRelatoInfracaoEnum"
+          },
+          "detalhe": {
+            "type": "string"
+          },
+          "contato": {
+            "$ref": "#/components/schemas/InformacoesContatoDto"
+          },
+          "idRecuperacaoValor": {
+            "$ref": "#/components/schemas/UUID"
+          },
+          "situacao": {
+            "$ref": "#/components/schemas/RecuperacaoValoresStatusEnum"
+          },
+          "isbp": {
+            "pattern": "^[0-9]{8}$",
+            "type": "string"
+          },
+          "dataCriacao": {
+            "type": "string"
+          },
+          "dataAtualizacao": {
+            "type": "string"
+          },
+          "tipoFluxoResposta": {
+            "type": "string"
+          }
+        }
+      },
+      "CancelarRecuperacaoValorResponseDto": {
+        "description": "DTO de resposta ao consultar a recuperação de valor",
+        "required": [
+          "idCorrelacao"
+        ],
+        "type": "object",
+        "properties": {
+          "assinatura": {
+            "type": "string"
+          },
+          "tempoResposta": {
+            "type": "string"
+          },
+          "idCorrelacao": {
+            "pattern": "^[0-9a-fA-F]{32}$",
+            "type": "string"
+          },
+          "recuperacaoValor": {
+            "$ref": "#/components/schemas/CancelarRecuperacaoValorExtensaoResponseDto"
+          }
+        }
+      },
+      "ConsultarRecuperacaoValorRequestDto": {
+        "description": "DTO de requisição de consultar a recuperação de valor",
+        "required": [
+          "idFimaFim",
+          "idRecuperacaoValor",
+          "cpfCnpj"
+        ],
+        "type": "object",
+        "properties": {
+          "idFimaFim": {
+            "title": "IDFimaFim",
+            "description": "IDFimaFim ou ReturnID.",
+            "pattern": "[a-zA-Z0-9]{26,35}",
+            "type": "string"
+          },
+          "idRecuperacaoValor": {
+            "title": "ID do processo",
+            "description": "ID do processo de recuperação de valores.",
+            "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$",
+            "type": "string"
+          },
+          "cpfCnpj": {
+            "title": "CPF/CNPJ do cliente pagador",
+            "description": "CPF/CNPJ do cliente pagador da transação original.",
+            "pattern": "^(\\d{11}|\\d{14})$",
+            "type": "string"
+          }
+        }
+      },
+      "ConsultarRecuperacaoValorResponseDto": {
+        "description": "DTO de resposta ao consultar a recuperação de valor",
+        "required": [
+          "idCorrelacao"
+        ],
+        "type": "object",
+        "properties": {
+          "assinatura": {
+            "type": "string"
+          },
+          "tempoResposta": {
+            "type": "string"
+          },
+          "idCorrelacao": {
+            "pattern": "^[0-9a-fA-F]{32}$",
+            "type": "string"
+          },
+          "recuperacaoValor": {
+            "$ref": "#/components/schemas/RecuperacaoValorExtensaoResponseDto"
+          }
+        }
+      },
+      "ContaDevolucaoRecuperacaoValorResponseDto": {
+        "type": "object",
+        "properties": {
+          "cpfCnpj": {
+            "description": "CPF ou CNPJ do usuário ao qual será associada a marcação de fraude.",
+            "type": "string",
+            "example": "99999999999"
+          },
+          "participante": {
+            "description": "Identificador SPB do provedor da conta.",
+            "type": "string",
+            "example": "99999011"
+          },
+          "agencia": {
+            "description": "Agência, sem dígito verificador",
+            "type": "string",
+            "example": "99999011"
+          },
+          "numeroConta": {
+            "description": "Número de conta, incluindo verificador. Se verificador for letra, substituir por 0.",
+            "type": "string",
+            "example": "99999011"
+          },
+          "tipoConta": {
+            "description": "Tipo de conta, conforme dicionário de domínio para a mensagem pacs.008 do SPI.",
+            "type": "string",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TipoContaSolicitacaoDevolucaoRecuperacaoValorEnum"
+              }
+            ],
+            "example": "CACC"
+          }
+        }
+      },
+      "CriarRecuperacaoValoresDto": {
+        "type": "object",
+        "properties": {
+          "usuario": {
+            "type": "string"
+          },
+          "idTransacaoRaiz": {
+            "type": "string"
+          },
+          "tipoFluxo": {
+            "$ref": "#/components/schemas/RecuperacaoValoresTipoFluxoEnum"
+          },
+          "tipoSituacao": {
+            "$ref": "#/components/schemas/RecuperacaoValoresTipoSituacaoEnum"
+          },
+          "detalhes": {
+            "type": "string"
+          },
+          "emailContatoPsp": {
+            "type": "string"
+          },
+          "telefoneContatoPsp": {
+            "type": "string"
+          },
+          "valorMinimoTransacao": {
+            "type": "string"
+          },
+          "quantidadeMaximaTransacoes": {
+            "type": "string"
+          },
+          "janelaTempoEntreTransacoes": {
+            "type": "string"
+          },
+          "profundidadeGrafo": {
+            "type": "string"
+          }
+        }
+      },
+      "DictException": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "causeCode": {
+            "type": "string"
+          },
+          "payload": {
+            "type": "string"
+          }
+        }
+      },
+      "DictExceptionDto": {
+        "description": "Problema",
+        "required": [
+          "tipo",
+          "titulo",
+          "situacao"
+        ],
+        "type": "object",
+        "properties": {
+          "tipo": {
+            "description": "URI de referência que identifica o tipo de problema.",
+            "type": "string"
+          },
+          "titulo": {
+            "description": "Descrição resumida do problema.",
+            "type": "string"
+          },
+          "situacao": {
+            "format": "int32",
+            "description": "Código HTTP do status retornado.",
+            "type": "integer"
+          },
+          "detalhe": {
+            "description": "Descrição completa do problema.",
+            "type": "string"
+          },
+          "idCorrelacao": {
+            "description": "Identificador de correlação do problema para fins de suporte.",
+            "type": "string"
+          },
+          "violacoes": {
+            "description": "violações.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ViolacaoDto"
+            }
+          }
+        }
+      },
+      "InformacoesContatoDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "description": "Email para contato",
+            "type": "string",
+            "example": "abc@pix.br"
+          },
+          "telefone": {
+            "description": "Telefone para contato",
+            "type": "string",
+            "example": "+5561988887777"
+          }
+        }
+      },
+      "ListarRelatoInfracaoRecuperacaoValorResponseDto": {
+        "type": "object",
+        "properties": {
+          "idTransacao": {
+            "description": "Identificador da transação liquidada no SPI",
+            "type": "string",
+            "example": "E9999901012341234123412345678900"
+          },
+          "razao": {
+            "description": "Motivo da notificação de infração",
+            "type": "string",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/RazaoRelatoInfracaoEnum"
+              }
+            ]
+          },
+          "tipoSituacao": {
+            "description": "Tipo de situação que deu origem à notificação de infração",
+            "type": "string",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TipoSituacaoRelatoInfracaoEnum"
+              }
+            ]
+          },
+          "detalhes": {
+            "description": "Detalhes que possam ajudar o PSP contraparte na análise.",
+            "type": "string",
+            "example": "Transação feita através de QR Code falso em boleto"
+          },
+          "informacoesContato": {
+            "description": "Informações de contato do participante criador da notificação de infração",
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/InformacoesContatoDto"
+              }
+            ]
+          },
+          "idNotificacaoInfracao": {
+            "description": "Identificador da notificação de infração no Banco Central",
+            "type": "string",
+            "example": "91d65e98-97c0-4b0f-b577-73625da1f9fc"
+          },
+          "idRecuperacaoValor": {
+            "description": "Identificador da recuperação de valores no Banco Central",
+            "type": "string",
+            "example": "91d65e98-97c0-4b0f-b577-73625da1f9fc"
+          },
+          "status": {
+            "description": "Status da Notificação de Infração",
+            "type": "string",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/StatusRelatoInfracaoEnum"
+              }
+            ]
+          },
+          "participanteCriador": {
+            "description": "Identificador SPB do participante criador da notificação de infração",
+            "type": "string",
+            "example": "99999010"
+          },
+          "participanteContraparte": {
+            "description": "Identificador SPB do participante contraparte na notificação de infração",
+            "type": "string",
+            "example": "99999011"
+          },
+          "idMarcacaoFraude": {
+            "description": "Identificador da marcação de fraude no Banco Central",
+            "type": "string",
+            "example": "91d65e98-97c0-4b0f-b577-73625da1f9fc"
+          },
+          "resultadoAnalise": {
+            "description": "Resultado da análise da infração",
+            "type": "string",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ResultadoAnaliseRelatoInfracaoEnum"
+              }
+            ]
+          },
+          "detalhesAnalise": {
+            "description": "Detalhes da análise da notificação de infração",
+            "type": "string",
+            "example": " Valor bloqueado. Para mais informações, contactar central antifraude em 11 3000-00000, informando ID 9999."
+          },
+          "dataHoraCriacao": {
+            "description": "Data-hora da criação da notificação de infração",
+            "type": "string",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/LocalDateTime"
+              }
+            ],
+            "example": "2020-01-17T10:00:00.000"
+          },
+          "dataHoraModificacao": {
+            "description": "Data-hora da última atualização de status",
+            "type": "string",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/LocalDateTime"
+              }
+            ],
+            "example": "2020-01-17T10:00:00.000"
+          },
+          "valorPrevistoBloqueio": {
+            "description": "Valor a ser bloqueado na conta, sempre menor ou igual à soma dos valores das transações de entrada no período",
+            "type": "number",
+            "example": 200
+          }
+        }
+      },
+      "ListarSolicitacaoDevolucaoRecuperacaoValorResponseDto": {
+        "type": "object",
+        "properties": {
+          "idTransacao": {
+            "description": "Identificador da transação sendo contestada",
+            "type": "string",
+            "example": "E9999901012341234123412345678901"
+          },
+          "razaoSolicitacaoDevolucao": {
+            "description": "Razão da solicitação de devolução",
+            "type": "string",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/RazaoSolicitacaoDevolucaoRecuperacaoValorEnum"
+              }
+            ],
+            "example": "FRAUDE"
+          },
+          "valorSolicitacaoDevolucao": {
+            "description": "Valor solicitado para devolução",
+            "type": "number",
+            "example": 200
+          },
+          "detalhesDevolucao": {
+            "description": "Breve descrição do motivo da solicitação de devolução. Obrigatório se RefundReason for OPERATIONAL_FLAW.",
+            "type": "string",
+            "example": "..."
+          },
+          "idBacen": {
+            "description": "Identificador da solicitação de devolução no Banco Central",
+            "type": "string",
+            "example": "91d65e98-97c0-4b0f-b577-73625da1f9fc"
+          },
+          "status": {
+            "description": "Status da Solicitacão de Devolucão",
+            "type": "string",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/StatusSolicitacaoDevolucaoRecuperacaoValorEnum"
+              }
+            ],
+            "example": "FECHADA"
+          },
+          "participanteSolicitante": {
+            "description": "Identificador SPB do participante solicitante da devolução",
+            "type": "string",
+            "example": "99999010"
+          },
+          "participanteContestado": {
+            "description": "Identificador SPB do participante sendo contestado.",
+            "type": "string",
+            "example": "99999011"
+          },
+          "dataCriacaoDevolucao": {
+            "description": "Data-hora da criação da requisição de devolução",
+            "type": "string",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/LocalDateTime"
+              }
+            ],
+            "example": "2020-01-17T10:00:00.000"
+          },
+          "dataUltimaModificacaoStatus": {
+            "description": "Data-hora da última atualização de status",
+            "type": "string",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/LocalDateTime"
+              }
+            ],
+            "example": "2020-01-17T10:00:00.000"
+          },
+          "idNotificacaoInfracao": {
+            "description": "Identificador da notificação de infração no Banco Central",
+            "type": "string",
+            "example": "91d65e98-97c0-4b0f-b577-73625da1f9fc"
+          },
+          "idRecuperacaoValor": {
+            "description": "Identificador da recuperação de valores no Banco Central",
+            "type": "string",
+            "example": "91d65e98-97c0-4b0f-b577-73625da1f9fc"
+          },
+          "resultadoAnalise": {
+            "description": "Resultado da análise da infração",
+            "type": "string",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ResultadoAnaliseSolicitacaoDevolucaoRecuperacaoValorEnum"
+              }
+            ],
+            "example": "ACEITO_TOTALMENTE"
+          },
+          "detalheAnalise": {
+            "description": "Detalhes da análise da notificação de infração",
+            "type": "string",
+            "example": "Valor bloqueado. Para mais informações, contactar central antifraude em 11 3000-00000, informando ID 9999."
+          },
+          "razaoDevolucaoRejeitada": {
+            "description": "Razão da rejeição da solicitação de devolução",
+            "type": "string",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/RazaoRejeicaoDevolucaoRecuperacaoValorEnum"
+              }
+            ],
+            "example": "SEM_SALDO"
+          },
+          "idTransacaoDevolucao": {
+            "description": "Transação de devolução (completa ou parcial)",
+            "type": "string",
+            "example": "E9999901012341234123412345678901"
+          },
+          "contaDevolucao": {
+            "description": "Dados de conta para devolução Obs: Utilizado apenas no contexto de Recuperação de Valores",
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ContaDevolucaoRecuperacaoValorResponseDto"
+              }
+            ]
+          },
+          "monitorarConta": {
+            "description": "Indica se a conta deve ser monitorada para bloqueios, seguindo o procedimento descrito na seção 17 do Manual Operacional do Dict",
+            "type": "string",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/MonitorarContaRecuperacaoValorEnum"
+              }
+            ],
+            "example": "TRUE"
+          },
+          "valorEfetivoDevolvido": {
+            "description": "Valor efetivamente devolvido.",
+            "type": "number",
+            "example": 200
+          }
+        }
+      },
+      "LocalDateTime": {
+        "format": "date-time",
+        "type": "string",
+        "example": "2022-03-10T12:15:50"
+      },
+      "MonitorarContaRecuperacaoValorEnum": {
+        "enum": [false, true],
+        "type": "string"
+      },
+      "OffsetTime": {
+        "format": "time",
+        "type": "string",
+        "externalDocs": {
+          "description": "As defined by 'full-time' in RFC3339",
+          "url": "https://www.rfc-editor.org/rfc/rfc3339.html#section-5.6"
+        },
+        "example": "13:45:30.123456789+02:00"
+      },
+      "RazaoRejeicaoDevolucaoRecuperacaoValorEnum": {
+        "enum": [
+          "SEM_SALDO",
+          "ENCERRAMENTO_DE_CONTA",
+          "REQUISICAO_INVALIDA",
+          "OUTRO"
+        ],
+        "type": "string"
+      },
+      "RazaoRelatoInfracaoEnum": {
+        "enum": [
+          "SOLICITACAO_REEMBOLSO",
+          "REEMBOLSO_CANCELADO"
+        ],
+        "type": "string"
+      },
+      "RazaoSolicitacaoDevolucaoRecuperacaoValorEnum": {
+        "enum": [
+          "FRAUDE",
+          "FALHA_OPERACIONAL",
+          "REEMBOLSO_CANCELADO",
+          "PIX_AUTOMATICO"
+        ],
+        "type": "string"
+      },
+      "RecuperacaoValorExtensaoResponseDto": {
+        "description": "DTO de resposta ao da recuperação de valor",
+        "required": [
+          "tipoFluxo",
+          "tipoFraude",
+          "idRecuperacaoValor",
+          "situacao"
+        ],
+        "type": "object",
+        "properties": {
+          "tipoFluxo": {
+            "$ref": "#/components/schemas/RecuperacaoValoresTipoFluxoEnum"
+          },
+          "idFimAFim": {
+            "pattern": "\\w{8,32}",
+            "type": "string"
+          },
+          "tipoFraude": {
+            "$ref": "#/components/schemas/TipoSituacaoRelatoInfracaoEnum"
+          },
+          "idRecuperacaoValor": {
+            "type": "string"
+          },
+          "situacao": {
+            "$ref": "#/components/schemas/RecuperacaoValoresStatusEnum"
+          },
+          "isbp": {
+            "pattern": "^[0-9]{8}$",
+            "type": "string"
+          },
+          "dataCriacao": {
+            "type": "string"
+          },
+          "dataAtualizacao": {
+            "type": "string"
+          },
+          "tipoFluxoResposta": {
+            "type": "string"
+          }
+        }
+      },
+      "RecuperacaoValores": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "status": {
+            "$ref": "#/components/schemas/RecuperacaoValoresStatusEnum"
+          },
+          "tipoFluxo": {
+            "$ref": "#/components/schemas/RecuperacaoValoresTipoFluxoEnum"
+          },
+          "idTransacaoRaiz": {
+            "type": "string"
+          },
+          "tipoSituacao": {
+            "$ref": "#/components/schemas/RecuperacaoValoresTipoSituacaoEnum"
+          },
+          "detalhesRelato": {
+            "type": "string"
+          },
+          "participanteReportante": {
+            "type": "string"
+          },
+          "dataHoraCriacao": {
+            "type": "string"
+          },
+          "ultimaModificacao": {
+            "type": "string"
+          },
+          "informacoesContato": {
+            "$ref": "#/components/schemas/RecuperacaoValoresInformacoesContato"
+          },
+          "tipoFluxoResposta": {
+            "type": "string"
+          },
+          "tipoSituacaoResposta": {
+            "type": "string"
+          },
+          "statusResposta": {
+            "type": "string"
+          }
+        }
+      },
+      "RecuperacaoValoresConta": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "idProprietario": {
+            "type": "string"
+          },
+          "participante": {
+            "type": "string"
+          }
+        }
+      },
+      "RecuperacaoValoresGrafoRastreamento": {
+        "type": "object",
+        "properties": {
+          "idRecuperacaoValores": {
+            "type": "string"
+          },
+          "idTransacaoRaiz": {
+            "type": "string"
+          },
+          "dataHoraCriacao": {
+            "type": "string"
+          },
+          "parametros": {
+            "$ref": "#/components/schemas/RecuperacaoValoresParametrosGrafo"
+          },
+          "pessoas": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RecuperacaoValoresPessoa"
+            }
+          },
+          "contas": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RecuperacaoValoresConta"
+            }
+          },
+          "transacoes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RecuperacaoValoresTransacao"
+            }
+          }
+        }
+      },
+      "RecuperacaoValoresInformacoesContato": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "telefone": {
+            "type": "string"
+          }
+        }
+      },
+      "RecuperacaoValoresParametrosGrafo": {
+        "type": "object",
+        "properties": {
+          "valorMinimoTransacao": {
+            "type": "string"
+          },
+          "quantidadeMaximaTransacoes": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "janelaTempoEntreTransacoes": {
+            "type": "string"
+          },
+          "profundidadeGrafo": {
+            "format": "int32",
+            "type": "integer"
+          }
+        }
+      },
+      "RecuperacaoValoresPessoa": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "tipo": {
+            "type": "string"
+          },
+          "dataCriacaoEntidade": {
+            "$ref": "#/components/schemas/OffsetTime"
+          }
+        }
+      },
+      "RecuperacaoValoresRespostaDto": {
+        "type": "object",
+        "properties": {
+          "idCorrelacao": {
+            "type": "string"
+          },
+          "horaResposta": {
+            "type": "string"
+          },
+          "recuperacaoValores": {
+            "$ref": "#/components/schemas/RecuperacaoValores"
+          },
+          "grafoRastreamento": {
+            "$ref": "#/components/schemas/RecuperacaoValoresGrafoRastreamento"
+          }
+        }
+      },
+      "RecuperacaoValoresStatusEnum": {
+        "enum": [
+          "CRIADA",
+          "RASTREADA",
+          "AGUARDANDO_ANALISE",
+          "ANALISADA",
+          "EM_DEVOLUCAO",
+          "CONCLUIDA",
+          "CANCELADA",
+          "ENVIADA",
+          "TENTATIVA_DEVOLUCAO"
+        ],
+        "type": "string"
+      },
+      "RecuperacaoValoresTipoFluxoEnum": {
+        "enum": [
+          "AUTOMATIZADO",
+          "INTERATIVO"
+        ],
+        "type": "string"
+      },
+      "RecuperacaoValoresTipoSituacaoEnum": {
+        "enum": [
+          "GOLPE",
+          "INVASAO_CONTA",
+          "COACAO",
+          "ACESSO_FRAUDULENTO",
+          "OUTRO",
+          "DESCONHECIDO"
+        ],
+        "type": "string"
+      },
+      "RecuperacaoValoresTransacao": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "contaDevedoraId": {
+            "type": "string"
+          },
+          "contaCredoraId": {
+            "type": "string"
+          },
+          "valor": {
+            "type": "string"
+          },
+          "valorReembolsavel": {
+            "type": "string"
+          },
+          "dataHoraLiquidacao": {
+            "type": "string"
+          }
+        }
+      },
+      "ResultadoAnaliseRelatoInfracaoEnum": {
+        "enum": [
+          "ACEITO",
+          "REJEITADO"
+        ],
+        "type": "string"
+      },
+      "ResultadoAnaliseSolicitacaoDevolucaoRecuperacaoValorEnum": {
+        "enum": [
+          "ACEITO_TOTALMENTE",
+          "ACEITO_PARCIALMENTE",
+          "REJEITADO"
+        ],
+        "type": "string"
+      },
+      "SolicitarDevolucaoRecuperacaoValorExtensaoResponseDto": {
+        "description": "DTO de resposta ao da recuperação de valor",
+        "required": [
+          "tipoFluxo",
+          "tipoSituacao",
+          "informacoesContato",
+          "idRecuperacaoValor",
+          "status"
+        ],
+        "type": "object",
+        "properties": {
+          "tipoFluxo": {
+            "$ref": "#/components/schemas/RecuperacaoValoresTipoFluxoEnum"
+          },
+          "idTransacaoRaiz": {
+            "pattern": "\\w{8,32}",
+            "type": "string"
+          },
+          "tipoSituacao": {
+            "$ref": "#/components/schemas/TipoSituacaoRelatoInfracaoEnum"
+          },
+          "detalhes": {
+            "type": "string"
+          },
+          "informacoesContato": {
+            "$ref": "#/components/schemas/InformacoesContatoDto"
+          },
+          "idRecuperacaoValor": {
+            "type": "string"
+          },
+          "status": {
+            "$ref": "#/components/schemas/RecuperacaoValoresStatusEnum"
+          },
+          "participanteReportante": {
+            "pattern": "^[0-9]{8}$",
+            "type": "string"
+          },
+          "dataCriacao": {
+            "type": "string"
+          },
+          "dataAtualizacao": {
+            "type": "string"
+          }
+        }
+      },
+      "SolicitarDevolucaoRecuperacaoValorResponseDto": {
+        "description": "DTO de resposta ao consultar a recuperação de valor",
+        "required": [
+          "idCorrelacao"
+        ],
+        "type": "object",
+        "properties": {
+          "assinatura": {
+            "type": "string"
+          },
+          "tempoResposta": {
+            "type": "string"
+          },
+          "idCorrelacao": {
+            "pattern": "^[0-9a-fA-F]{32}$",
+            "type": "string"
+          },
+          "recuperacaoValor": {
+            "$ref": "#/components/schemas/SolicitarDevolucaoRecuperacaoValorExtensaoResponseDto"
+          }
+        }
+      },
+      "StatusRelatoInfracaoEnum": {
+        "enum": [
+          "ABERTA",
+          "AGUARDANDO_ANALISE",
+          "FECHADA",
+          "CANCELADA"
+        ],
+        "type": "string"
+      },
+      "StatusSolicitacaoDevolucaoRecuperacaoValorEnum": {
+        "enum": [
+          "ABERTA",
+          "FECHADA",
+          "CANCELADA"
+        ],
+        "type": "string"
+      },
+      "TipoContaSolicitacaoDevolucaoRecuperacaoValorEnum": {
+        "enum": [
+          "CACC",
+          "TRAN",
+          "SLRY",
+          "SVGS"
+        ],
+        "type": "string"
+      },
+      "TipoSituacaoRelatoInfracaoEnum": {
+        "enum": [
+          "GOLPE",
+          "INVASAO_CONTA",
+          "COACAO",
+          "ACESSO_FRAUDULENTO",
+          "OUTRO",
+          "DESCONHECIDO"
+        ],
+        "type": "string"
+      },
+      "UUID": {
+        "format": "uuid",
+        "pattern": "[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}",
+        "type": "string"
+      },
+      "ViolacaoDto": {
+        "title": "Violações",
+        "type": "object",
+        "properties": {
+          "razao": {
+            "description": "Descrição do erro.",
+            "type": "string",
+            "example": "campo com erro de preenchimento"
+          },
+          "propriedade": {
+            "description": "Nome da propriedade.",
+            "type": "string",
+            "example": "campo"
+          },
+          "valor": {
+            "description": "Valor da propriedade.",
+            "type": "string",
+            "example": "!@#$"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "SecurityScheme": {
+        "type": "http",
+        "description": "Authentication",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}
