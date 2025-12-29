@@ -1,16 +1,16 @@
 {
   "info": {
-    "_postman_id": "807a7d50-7f7c-4855-ad14-e4f5d1e01e5c",
-    "name": "SISPI - Recuperacao de Valores - Contrato (exemplo QA)",
-    "description": "Collection gerada a partir do contrato OpenAPI para testes de contrato da API de Recuperação de Valores PIX.",
+    "_postman_id": "e1c8d4c3-1111-4444-8888-0fac7beb60af",
+    "name": "SISPI - Recuperacao de Valores - Contrato (GET+POST)",
+    "description": "Collection com apenas 2 endpoints (/api/v1/recuperacao-valores GET e POST) focada em testes de contrato.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "item": [
     {
-      "name": "Recuperacao de Valores",
+      "name": "Recuperacao de Valores (Contrato)",
       "item": [
         {
-          "name": "GET /api/v1/recuperacao-valores - Sucesso",
+          "name": "GET /api/v1/recuperacao-valores - contrato",
           "request": {
             "method": "GET",
             "header": [
@@ -44,7 +44,12 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "pm.test('Status code é 200', function () {",
+                  "// ---------- TESTES DE CONTRATO: GET /api/v1/recuperacao-valores ----------",
+                  "const statusEnum = ['CRIADA','RASTREADA','AGUARDANDO_ANALISE','ANALISADA','EM_DEVOLUCAO','CONCLUIDA','CANCELADA','ENVIADA','TENTATIVA_DEVOLUCAO'];",
+                  "const tipoFluxoEnum = ['AUTOMATIZADO', 'INTERATIVO'];",
+                  "const tipoFraudeEnum = ['GOLPE','INVASAO_CONTA','COACAO','ACESSO_FRAUDULENTO','OUTRO','DESCONHECIDO'];",
+                  "",
+                  "pm.test('Status code é 200 (contrato)', function () {",
                   "    pm.response.to.have.status(200);",
                   "});",
                   "",
@@ -53,104 +58,60 @@
                   "    pm.response.to.be.json;",
                   "});",
                   "",
-                  "pm.test('Body é um array de recuperações (quando há resultados)', function () {",
-                  "    const json = pm.response.json();",
-                  "    pm.expect(Array.isArray(json)).to.be.true;",
-                  "});"
-                ]
-              }
-            }
-          ]
-        },
-        {
-          "name": "GET /api/v1/recuperacao-valores - CPF inválido (400)",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{authToken}}",
-                "type": "text"
-              }
-            ],
-            "url": {
-              "raw": "{{baseUrl}}/api/v1/recuperacao-valores?cpfCnpj=123",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "recuperacao-valores"
-              ],
-              "query": [
-                {
-                  "key": "cpfCnpj",
-                  "value": "123"
-                }
-              ]
-            }
-          },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test('Status code é 400', function () {",
-                  "    pm.response.to.have.status(400);",
+                  "const body = pm.response.json();",
+                  "",
+                  "pm.test('Body segue contrato: array de ConsultarRecuperacaoValorResponseDto', function () {",
+                  "    pm.expect(Array.isArray(body)).to.be.true;",
                   "});",
                   "",
-                  "pm.test('Erro segue contrato DictExceptionDto', function () {",
-                  "    const json = pm.response.json();",
-                  "    pm.expect(json).to.have.property('tipo');",
-                  "    pm.expect(json).to.have.property('titulo');",
-                  "    pm.expect(json).to.have.property('situacao');",
-                  "});"
+                  "if (Array.isArray(body) && body.length > 0) {",
+                  "    const item = body[0];",
+                  "    pm.test('Item possui campos mínimos de ConsultarRecuperacaoValorResponseDto', function () {",
+                  "        pm.expect(item).to.be.an('object');",
+                  "        pm.expect(item).to.have.property('idCorrelacao');",
+                  "        pm.expect(item).to.have.property('recuperacaoValor');",
+                  "    });",
+                  "",
+                  "    pm.test('idCorrelacao segue padrão de 32 hex (^[0-9a-fA-F]{32}$)', function () {",
+                  "        pm.expect(item.idCorrelacao).to.match(/^[0-9a-fA-F]{32}$/);",
+                  "    });",
+                  "",
+                  "    const rec = item.recuperacaoValor;",
+                  "    pm.test('recuperacaoValor possui campos obrigatórios', function () {",
+                  "        pm.expect(rec).to.be.an('object');",
+                  "        pm.expect(rec).to.have.property('tipoFluxo');",
+                  "        pm.expect(rec).to.have.property('tipoFraude');",
+                  "        pm.expect(rec).to.have.property('idRecuperacaoValor');",
+                  "        pm.expect(rec).to.have.property('situacao');",
+                  "    });",
+                  "",
+                  "    pm.test('tipoFluxo respeita enum de contrato', function () {",
+                  "        pm.expect(tipoFluxoEnum).to.include(rec.tipoFluxo);",
+                  "    });",
+                  "",
+                  "    pm.test('tipoFraude respeita enum de contrato', function () {",
+                  "        pm.expect(tipoFraudeEnum).to.include(rec.tipoFraude);",
+                  "    });",
+                  "",
+                  "    pm.test('situacao respeita enum de contrato', function () {",
+                  "        pm.expect(statusEnum).to.include(rec.situacao);",
+                  "    });",
+                  "",
+                  "    pm.test('isbp, se presente, segue regex ^[0-9]{8}$', function () {",
+                  "        if (rec.isbp !== undefined && rec.isbp !== null) {",
+                  "            pm.expect(rec.isbp).to.match(/^[0-9]{8}$/);",
+                  "        }",
+                  "    });",
+                  "} else {",
+                  "    console.log('Resposta vazia - ainda assim contrato ok (array), mas sem validar itens.');",
+                  "}"
                 ]
               }
             }
           ]
         },
         {
-          "name": "GET /api/v1/recuperacao-valores - Sem token (401)",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{baseUrl}}/api/v1/recuperacao-valores?cpfCnpj=02914270305",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "recuperacao-valores"
-              ],
-              "query": [
-                {
-                  "key": "cpfCnpj",
-                  "value": "02914270305"
-                }
-              ]
-            }
-          },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test('Status code é 401', function () {",
-                  "    pm.response.to.have.status(401);",
-                  "});"
-                ]
-              }
-            }
-          ]
-        },
-        {
-          "name": "POST /api/v1/recuperacao-valores - Criar (200)",
+          "name": "POST /api/v1/recuperacao-valores - contrato",
           "request": {
             "method": "POST",
             "header": [
@@ -167,7 +128,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"usuario\": \"teste.qa\",\n  \"idTransacaoRaiz\": \"ABCD1234EFGH5678IJKL9012MN\",\n  \"tipoFluxo\": \"PAGADOR\",\n  \"tipoSituacao\": \"EM_ANALISE\",\n  \"detalhes\": \"Criado via Postman teste contrato.\",\n  \"emailContatoPsp\": \"qa@example.com\",\n  \"telefoneContatoPsp\": \"5598999999999\",\n  \"janelaTempoEntreTransacoes\": \"PT24H\",\n  \"profundidadeGrafo\": \"3\",\n  \"quantidadeMaximaTransacoes\": \"100\",\n  \"valorMinimoTransacao\": \"1.00\"\n}"
+              "raw": "{\n  \"usuario\": \"teste.qa\",\n  \"idTransacaoRaiz\": \"ABCD1234EFGH5678IJKL9012MN\",\n  \"tipoFluxo\": \"AUTOMATIZADO\",\n  \"tipoSituacao\": \"GOLPE\",\n  \"detalhes\": \"Criado via Postman teste contrato.\",\n  \"emailContatoPsp\": \"qa@example.com\",\n  \"telefoneContatoPsp\": \"5598999999999\",\n  \"valorMinimoTransacao\": \"1.00\",\n  \"quantidadeMaximaTransacoes\": \"100\",\n  \"janelaTempoEntreTransacoes\": \"PT24H\",\n  \"profundidadeGrafo\": \"3\"\n}"
             },
             "url": {
               "raw": "{{baseUrl}}/api/v1/recuperacao-valores",
@@ -187,223 +148,62 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "pm.test('Status code é 200', function () {",
+                  "// ---------- TESTES DE CONTRATO: POST /api/v1/recuperacao-valores ----------",
+                  "const statusEnum = ['CRIADA','RASTREADA','AGUARDANDO_ANALISE','ANALISADA','EM_DEVOLUCAO','CONCLUIDA','CANCELADA','ENVIADA','TENTATIVA_DEVOLUCAO'];",
+                  "const tipoFluxoEnum = ['AUTOMATIZADO', 'INTERATIVO'];",
+                  "const tipoSituacaoEnum = ['GOLPE','INVASAO_CONTA','COACAO','ACESSO_FRAUDULENTO','OUTRO','DESCONHECIDO'];",
+                  "",
+                  "pm.test('Status code é 200 (contrato)', function () {",
                   "    pm.response.to.have.status(200);",
                   "});",
                   "",
-                  "pm.test('Resposta segue contrato básico de RecuperacaoValoresRespostaDto', function () {",
-                  "    const json = pm.response.json();",
-                  "    pm.expect(json).to.be.an('object');",
-                  "    pm.expect(json).to.have.property('idRecuperacaoValor');",
+                  "pm.test('Resposta é JSON', function () {",
+                  "    pm.response.to.be.withBody;",
+                  "    pm.response.to.be.json;",
                   "});",
                   "",
-                  "// Salva idRecuperacaoValor em variável de collection para ser reutilizado nos outros testes",
-                  "const json = pm.response.json();",
-                  "if (json && json.idRecuperacaoValor) {",
-                  "    pm.collectionVariables.set('idRecuperacaoValor', json.idRecuperacaoValor);",
+                  "const body = pm.response.json();",
+                  "",
+                  "pm.test('Body segue contrato mínimo de RecuperacaoValoresRespostaDto', function () {",
+                  "    pm.expect(body).to.be.an('object');",
+                  "    pm.expect(body).to.have.property('idCorrelacao');",
+                  "    pm.expect(body).to.have.property('horaResposta');",
+                  "    pm.expect(body).to.have.property('recuperacaoValores');",
+                  "});",
+                  "",
+                  "pm.test('recuperacaoValores possui estrutura conforme contrato', function () {",
+                  "    const recVals = body.recuperacaoValores;",
+                  "    pm.expect(recVals).to.be.an('object');",
+                  "    pm.expect(recVals).to.have.property('id');",
+                  "    pm.expect(recVals).to.have.property('status');",
+                  "    pm.expect(recVals).to.have.property('tipoFluxo');",
+                  "    pm.expect(recVals).to.have.property('idTransacaoRaiz');",
+                  "    pm.expect(recVals).to.have.property('tipoSituacao');",
+                  "    pm.expect(recVals).to.have.property('detalhesRelato');",
+                  "    pm.expect(recVals).to.have.property('participanteReportante');",
+                  "    pm.expect(recVals).to.have.property('dataHoraCriacao');",
+                  "    pm.expect(recVals).to.have.property('ultimaModificacao');",
+                  "});",
+                  "",
+                  "pm.test('status/tipoFluxo/tipoSituacao respeitam enums de contrato', function () {",
+                  "    const recVals = body.recuperacaoValores;",
+                  "    pm.expect(statusEnum).to.include(recVals.status);",
+                  "    pm.expect(tipoFluxoEnum).to.include(recVals.tipoFluxo);",
+                  "    pm.expect(tipoSituacaoEnum).to.include(recVals.tipoSituacao);",
+                  "});",
+                  "",
+                  "pm.test('informacoesContato, se presente, é objeto', function () {",
+                  "    const recVals = body.recuperacaoValores;",
+                  "    if (recVals.informacoesContato !== undefined && recVals.informacoesContato !== null) {",
+                  "        pm.expect(recVals.informacoesContato).to.be.an('object');",
+                  "    }",
+                  "});",
+                  "",
+                  "// Guarda id/idCorrelacao pra outros testes (se você quiser criar depois)",
+                  "pm.collectionVariables.set('idCorrelacao', body.idCorrelacao);",
+                  "if (body.recuperacaoValores && body.recuperacaoValores.id) {",
+                  "    pm.collectionVariables.set('idRecuperacaoValor', body.recuperacaoValores.id);",
                   "}"
-                ]
-              }
-            }
-          ]
-        },
-        {
-          "name": "POST /api/v1/recuperacao-valores/{idRecuperacaoValor}/cancelar - Sucesso",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{authToken}}",
-                "type": "text"
-              }
-            ],
-            "url": {
-              "raw": "{{baseUrl}}/api/v1/recuperacao-valores/{{idRecuperacaoValor}}/cancelar",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "recuperacao-valores",
-                "{{idRecuperacaoValor}}",
-                "cancelar"
-              ]
-            }
-          },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test('Status code é 200', function () {",
-                  "    pm.response.to.have.status(200);",
-                  "});"
-                ]
-              }
-            }
-          ]
-        },
-        {
-          "name": "GET /api/v1/recuperacao-valores/{idRecuperacaoValor}/devolucoes - Sucesso",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{authToken}}",
-                "type": "text"
-              }
-            ],
-            "url": {
-              "raw": "{{baseUrl}}/api/v1/recuperacao-valores/{{idRecuperacaoValor}}/devolucoes",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "recuperacao-valores",
-                "{{idRecuperacaoValor}}",
-                "devolucoes"
-              ]
-            }
-          },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test('Status code é 200', function () {",
-                  "    pm.response.to.have.status(200);",
-                  "});"
-                ]
-              }
-            }
-          ]
-        },
-        {
-          "name": "POST /api/v1/recuperacao-valores/{idRecuperacaoValor}/devolucoes - Solicitar (200)",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{authToken}}",
-                "type": "text"
-              }
-            ],
-            "url": {
-              "raw": "{{baseUrl}}/api/v1/recuperacao-valores/{{idRecuperacaoValor}}/devolucoes",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "recuperacao-valores",
-                "{{idRecuperacaoValor}}",
-                "devolucoes"
-              ]
-            }
-          },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test('Status code é 200', function () {",
-                  "    pm.response.to.have.status(200);",
-                  "});"
-                ]
-              }
-            }
-          ]
-        },
-        {
-          "name": "GET /api/v1/recuperacao-valores/{idRecuperacaoValor}/relatos-infracao - Sucesso",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{authToken}}",
-                "type": "text"
-              }
-            ],
-            "url": {
-              "raw": "{{baseUrl}}/api/v1/recuperacao-valores/{{idRecuperacaoValor}}/relatos-infracao",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "recuperacao-valores",
-                "{{idRecuperacaoValor}}",
-                "relatos-infracao"
-              ]
-            }
-          },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test('Status code é 200', function () {",
-                  "    pm.response.to.have.status(200);",
-                  "});"
-                ]
-              }
-            }
-          ]
-        },
-        {
-          "name": "GET /api/v1/recuperacao-valores/{idRecuperacaoValor}/relatos-infracao - id inválido (400)",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{authToken}}",
-                "type": "text"
-              }
-            ],
-            "url": {
-              "raw": "{{baseUrl}}/api/v1/recuperacao-valores/abc/relatos-infracao",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "recuperacao-valores",
-                "abc",
-                "relatos-infracao"
-              ]
-            }
-          },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test('Status code é 400', function () {",
-                  "    pm.response.to.have.status(400);",
-                  "});",
-                  "",
-                  "pm.test('Erro segue contrato DictExceptionDto', function () {",
-                  "    const json = pm.response.json();",
-                  "    pm.expect(json).to.have.property('tipo');",
-                  "    pm.expect(json).to.have.property('titulo');",
-                  "    pm.expect(json).to.have.property('situacao');",
-                  "});"
                 ]
               }
             }
@@ -421,11 +221,6 @@
     {
       "key": "authToken",
       "value": "<INSIRA_SEU_JWT_AQUI>",
-      "type": "string"
-    },
-    {
-      "key": "idRecuperacaoValor",
-      "value": "91d65e98-97c0-4b0f-b577-73625da1f9fc",
       "type": "string"
     }
   ]
