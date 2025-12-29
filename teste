@@ -1,227 +1,319 @@
-{
-  "info": {
-    "_postman_id": "e1c8d4c3-1111-4444-8888-0fac7beb60af",
-    "name": "SISPI - Recuperacao de Valores - Contrato (GET+POST)",
-    "description": "Collection com apenas 2 endpoints (/api/v1/recuperacao-valores GET e POST) focada em testes de contrato.",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
-  },
-  "item": [
-    {
-      "name": "Recuperacao de Valores (Contrato)",
-      "item": [
-        {
-          "name": "GET /api/v1/recuperacao-valores - contrato",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{authToken}}",
-                "type": "text"
-              }
-            ],
-            "url": {
-              "raw": "{{baseUrl}}/api/v1/recuperacao-valores?cpfCnpj=02914270305",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "recuperacao-valores"
-              ],
-              "query": [
-                {
-                  "key": "cpfCnpj",
-                  "value": "02914270305"
-                }
-              ]
-            }
-          },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "// ---------- TESTES DE CONTRATO: GET /api/v1/recuperacao-valores ----------",
-                  "const statusEnum = ['CRIADA','RASTREADA','AGUARDANDO_ANALISE','ANALISADA','EM_DEVOLUCAO','CONCLUIDA','CANCELADA','ENVIADA','TENTATIVA_DEVOLUCAO'];",
-                  "const tipoFluxoEnum = ['AUTOMATIZADO', 'INTERATIVO'];",
-                  "const tipoFraudeEnum = ['GOLPE','INVASAO_CONTA','COACAO','ACESSO_FRAUDULENTO','OUTRO','DESCONHECIDO'];",
-                  "",
-                  "pm.test('Status code é 200 (contrato)', function () {",
-                  "    pm.response.to.have.status(200);",
-                  "});",
-                  "",
-                  "pm.test('Resposta é JSON', function () {",
-                  "    pm.response.to.be.withBody;",
-                  "    pm.response.to.be.json;",
-                  "});",
-                  "",
-                  "const body = pm.response.json();",
-                  "",
-                  "pm.test('Body segue contrato: array de ConsultarRecuperacaoValorResponseDto', function () {",
-                  "    pm.expect(Array.isArray(body)).to.be.true;",
-                  "});",
-                  "",
-                  "if (Array.isArray(body) && body.length > 0) {",
-                  "    const item = body[0];",
-                  "    pm.test('Item possui campos mínimos de ConsultarRecuperacaoValorResponseDto', function () {",
-                  "        pm.expect(item).to.be.an('object');",
-                  "        pm.expect(item).to.have.property('idCorrelacao');",
-                  "        pm.expect(item).to.have.property('recuperacaoValor');",
-                  "    });",
-                  "",
-                  "    pm.test('idCorrelacao segue padrão de 32 hex (^[0-9a-fA-F]{32}$)', function () {",
-                  "        pm.expect(item.idCorrelacao).to.match(/^[0-9a-fA-F]{32}$/);",
-                  "    });",
-                  "",
-                  "    const rec = item.recuperacaoValor;",
-                  "    pm.test('recuperacaoValor possui campos obrigatórios', function () {",
-                  "        pm.expect(rec).to.be.an('object');",
-                  "        pm.expect(rec).to.have.property('tipoFluxo');",
-                  "        pm.expect(rec).to.have.property('tipoFraude');",
-                  "        pm.expect(rec).to.have.property('idRecuperacaoValor');",
-                  "        pm.expect(rec).to.have.property('situacao');",
-                  "    });",
-                  "",
-                  "    pm.test('tipoFluxo respeita enum de contrato', function () {",
-                  "        pm.expect(tipoFluxoEnum).to.include(rec.tipoFluxo);",
-                  "    });",
-                  "",
-                  "    pm.test('tipoFraude respeita enum de contrato', function () {",
-                  "        pm.expect(tipoFraudeEnum).to.include(rec.tipoFraude);",
-                  "    });",
-                  "",
-                  "    pm.test('situacao respeita enum de contrato', function () {",
-                  "        pm.expect(statusEnum).to.include(rec.situacao);",
-                  "    });",
-                  "",
-                  "    pm.test('isbp, se presente, segue regex ^[0-9]{8}$', function () {",
-                  "        if (rec.isbp !== undefined && rec.isbp !== null) {",
-                  "            pm.expect(rec.isbp).to.match(/^[0-9]{8}$/);",
-                  "        }",
-                  "    });",
-                  "} else {",
-                  "    console.log('Resposta vazia - ainda assim contrato ok (array), mas sem validar itens.');",
-                  "}"
-                ]
-              }
-            }
-          ]
-        },
-        {
-          "name": "POST /api/v1/recuperacao-valores - contrato",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{authToken}}",
-                "type": "text"
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json",
-                "type": "text"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"usuario\": \"teste.qa\",\n  \"idTransacaoRaiz\": \"ABCD1234EFGH5678IJKL9012MN\",\n  \"tipoFluxo\": \"AUTOMATIZADO\",\n  \"tipoSituacao\": \"GOLPE\",\n  \"detalhes\": \"Criado via Postman teste contrato.\",\n  \"emailContatoPsp\": \"qa@example.com\",\n  \"telefoneContatoPsp\": \"5598999999999\",\n  \"valorMinimoTransacao\": \"1.00\",\n  \"quantidadeMaximaTransacoes\": \"100\",\n  \"janelaTempoEntreTransacoes\": \"PT24H\",\n  \"profundidadeGrafo\": \"3\"\n}"
-            },
-            "url": {
-              "raw": "{{baseUrl}}/api/v1/recuperacao-valores",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "recuperacao-valores"
-              ]
-            }
-          },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "// ---------- TESTES DE CONTRATO: POST /api/v1/recuperacao-valores ----------",
-                  "const statusEnum = ['CRIADA','RASTREADA','AGUARDANDO_ANALISE','ANALISADA','EM_DEVOLUCAO','CONCLUIDA','CANCELADA','ENVIADA','TENTATIVA_DEVOLUCAO'];",
-                  "const tipoFluxoEnum = ['AUTOMATIZADO', 'INTERATIVO'];",
-                  "const tipoSituacaoEnum = ['GOLPE','INVASAO_CONTA','COACAO','ACESSO_FRAUDULENTO','OUTRO','DESCONHECIDO'];",
-                  "",
-                  "pm.test('Status code é 200 (contrato)', function () {",
-                  "    pm.response.to.have.status(200);",
-                  "});",
-                  "",
-                  "pm.test('Resposta é JSON', function () {",
-                  "    pm.response.to.be.withBody;",
-                  "    pm.response.to.be.json;",
-                  "});",
-                  "",
-                  "const body = pm.response.json();",
-                  "",
-                  "pm.test('Body segue contrato mínimo de RecuperacaoValoresRespostaDto', function () {",
-                  "    pm.expect(body).to.be.an('object');",
-                  "    pm.expect(body).to.have.property('idCorrelacao');",
-                  "    pm.expect(body).to.have.property('horaResposta');",
-                  "    pm.expect(body).to.have.property('recuperacaoValores');",
-                  "});",
-                  "",
-                  "pm.test('recuperacaoValores possui estrutura conforme contrato', function () {",
-                  "    const recVals = body.recuperacaoValores;",
-                  "    pm.expect(recVals).to.be.an('object');",
-                  "    pm.expect(recVals).to.have.property('id');",
-                  "    pm.expect(recVals).to.have.property('status');",
-                  "    pm.expect(recVals).to.have.property('tipoFluxo');",
-                  "    pm.expect(recVals).to.have.property('idTransacaoRaiz');",
-                  "    pm.expect(recVals).to.have.property('tipoSituacao');",
-                  "    pm.expect(recVals).to.have.property('detalhesRelato');",
-                  "    pm.expect(recVals).to.have.property('participanteReportante');",
-                  "    pm.expect(recVals).to.have.property('dataHoraCriacao');",
-                  "    pm.expect(recVals).to.have.property('ultimaModificacao');",
-                  "});",
-                  "",
-                  "pm.test('status/tipoFluxo/tipoSituacao respeitam enums de contrato', function () {",
-                  "    const recVals = body.recuperacaoValores;",
-                  "    pm.expect(statusEnum).to.include(recVals.status);",
-                  "    pm.expect(tipoFluxoEnum).to.include(recVals.tipoFluxo);",
-                  "    pm.expect(tipoSituacaoEnum).to.include(recVals.tipoSituacao);",
-                  "});",
-                  "",
-                  "pm.test('informacoesContato, se presente, é objeto', function () {",
-                  "    const recVals = body.recuperacaoValores;",
-                  "    if (recVals.informacoesContato !== undefined && recVals.informacoesContato !== null) {",
-                  "        pm.expect(recVals.informacoesContato).to.be.an('object');",
-                  "    }",
-                  "});",
-                  "",
-                  "// Guarda id/idCorrelacao pra outros testes (se você quiser criar depois)",
-                  "pm.collectionVariables.set('idCorrelacao', body.idCorrelacao);",
-                  "if (body.recuperacaoValores && body.recuperacaoValores.id) {",
-                  "    pm.collectionVariables.set('idRecuperacaoValor', body.recuperacaoValores.id);",
-                  "}"
-                ]
-              }
-            }
-          ]
-        }
-      ]
-    }
-  ],
-  "variable": [
-    {
-      "key": "baseUrl",
-      "value": "http://localhost:8080",
-      "type": "string"
-    },
-    {
-      "key": "authToken",
-      "value": "<INSIRA_SEU_JWT_AQUI>",
-      "type": "string"
-    }
-  ]
-}
+Miecio Santos Costa, esse json disponibilizado é referente ao swagger dos relatos de infração não é o json que a Gabriela Braz dos Santos Souza e o Anderson Silva da Conceicao estão esperando
+
+
+
+Skip to main content
+Azure DevOps
+CAIXAAZURE
+/
+BoxEsteiraDigitalSeguranca
+/
+Boards
+/
+Sprints
+relatos de infração
+
+
+
+
+
+Account manager for Miecio Santos Costa
+BoxEsteiraDigitalSeguranca
+
+Overview
+
+Boards
+Work items
+Boards
+Backlogs
+Sprints
+Queries
+Delivery Plans
+Analytics views
+Plans
+
+Personas
+
+Planner
+
+Retrospectives
+Calendar
+
+Estimate
+
+Dependency Tracker
+Tags
+
+Repos
+
+Pipelines
+
+Test Plans
+
+Artifacts
+Project settings
+Azure DevOps will stop accepting TLS 1.0/1.1 connections from Jan 31st, 2022. Please check our blog post for more details.
+
+
+Recuperacao e MED
+
+
+
+New Work Item
+
+Column Options
+Taskboard
+Backlog
+Capacity
+Analytics
+
+
+
+
+
+Sprint 02
+
+Person: All
+
+16 de dezembro - 30 de dezembro
+2 work days remaining
+Chart
+
+Chart with 10 data points.
+The chart has 1 X axis displaying values. Data ranges from -0.09 to 9.
+The chart has 1 Y axis displaying values. Data ranges from 0 to 4.
+End of interactive chart.
+Ordering cards is disabled, because the task board is grouped by people. 
+
+76676
+76910
+76928
+76915
+76921
+76980
+76981
+76982
+76983
+76984
+77541
+77543
+77545
+77696
+76681
+77052
+78159
+76678
+76907
+76908
+76976
+77002
+77003
+76931
+77995
+77997
+77998
+78000
+78142
+77108
+77807
+76918
+76919
+76924
+REQUIREMENT 74373
+
+
+74373
+HU - Relato de Infração - Integração com o SISPI - Listar Relatos
+
+Save and Close
+
+
+
+Follow
+
+
+
+Guilherme Klein
+ 
+1 Comment
+
+Add Tag
+State
+Active
+Reason
+Accepted
+Area
+BoxEsteiraDigitalSeguranca\Recuperacao e MED
+Iteration
+BoxEsteiraDigitalSeguranca\Recuperacao e MED\Sprint 02
+Updated by Paulo Lisboa de Almeida Junior: 
+17 de dez.
+Details
+Definition of Done
+Scans
+6
+3
+Description
+
+
+Como gestor do SIGCN Nuvem MED
+
+Quero listar os relatos de Infração abertos para tratamento de CAIXA
+
+Para salvar na base e enviar para tratamento do SICLON
+
+Requisitos Funcionais
+
+ Integrar com o SISPI pelo API Listar Relatos de Infração no Catálogo de APIs CAIXA ;
+ Consultar os relatos de infração a cada 1 hora;
+ Gravar na base os relatos de infração com tipoOrigemRelatoInfracao = “RECEBIDA” com o statusRelatoInfracao = “OPEN”;
+ Distinguir pelo ID fim a fim;
+ Postar na fila do service bus para tratamento do SICLON.
+
+Critérios de Aceite:
+
+ Integração ininterrupta e estável com o SISPI;
+ Gravação das informações com sucesso no banco de dados;
+ Gravação das informações de erro com sucesso;
+ Envio com sucesso ao SICLON;
+
+Impact Assessment
+
+
+
+Discussion
+
+
+
+switch to Markdown editor
+Paulo Lisboa de Almeida Junior
+commented 17 de dez.
+
+
+
+Task 76924
+
+Containers do banco de dados CosmosDB
+
+relatos-infracao-med-devolucao
+
+Chave de particao: atributo "particao" 
+
+Planning
+
+
+Size
+Priority
+2
+Triage
+Pending
+Blocked
+No
+Committed
+No
+Effort (Hours)
+
+
+Original Estimate
+Classification
+
+
+Type
+Functional
+Value area
+Business
+Item Portfolio
+Unidade Gestora
+Schedule
+
+
+Start Date
+Finish Date
+Personas affected
+
+
+
+Deployment
+
+
+
+To track releases associated with this work item, go to Releases and turn on deployment status reporting for Boards in your pipeline's Options menu. Learn more about deployment status reporting
+Development
+
+
+
+Add link
+
+Link a GitHub commit, pull request or branch to see the status of your development. You can also create a branch to get started. Learn more
+
+Link an Azure Repos commit, pull request or branch to see the status of your development. You can also create a branch to get started.
+Related Work
+
+
+
+Add link
+Parent
+74706
+MED - Fluxo de Relato de Infração
+Updated 22 de dez.
+Active
+
+Child
+77108
+[QA] - Criação de cenários de testes
+Updated 22 de dez.
+Resolved
+
+76919
+Consumo de API do SISPI para recuperação da mensagem
+Updated 5h ago
+Active
+
+76924
+Criação do container para armazenar o historico de relatos enviados ao SICLON
+Updated 17 de dez.
+Resolved
+
+76918
+Criação do worker de verificação da listagem de infração
+Updated terça-feira
+Active
+
+76983
+Elaborar Requisito -- Integração com o SISPI - Listar Relatos
+Updated terça-feira
+Active
+
+Build and test
+
+
+Integrated In
+User Acceptance Test
+Not Ready
+Subject Matter Experts
+
+
+Subject matter expert 1
+No one selected
+Subject matter expert 2
+No one selected
+Subject matter expert 3
+No one selected
+Showing 3 items.
+
+Content loading
+
+Content loaded
+
+Content loading
+
+Content loaded
+
+Recent workitems loaded.
+
+Results loaded.
+
+Content loading
+
+Content loaded
+
