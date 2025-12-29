@@ -1,0 +1,189 @@
+{
+  "info": {
+    "_postman_id": "74373-0000-0000-0000-000000000001",
+    "name": "74373 - HU Relato de Infração - Integração SISPI - Listar Relatos",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Collection para HU 74373 - Relato de Infração - Integração com o SISPI - Listar Relatos.\nCritérios de aceite:\n- Integrar com SISPI via API Listar Relatos de Infração\n- Consultar a cada 1 hora\n- Gravar apenas relatos com tipoOrigemRelatoInfracao = \"RECEBIDA\" e statusRelatoInfracao = \"OPEN\"\n- Distinguir pelo ID fim a fim\n- Enviar para fila do service bus (tratado na aplicação)"
+  },
+  "item": [
+    {
+      "name": "74373 - Listar Relatos de Infração (RECEBIDA/OPEN)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{accessToken}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/v2/relatos-infracao/listar?periodoCriacaoInicio={{periodoCriacaoInicio}}&periodoCriacaoFim={{periodoCriacaoFim}}&tipoOrigemRelatoInfracao={{tipoOrigemRelatoInfracao}}&statusRelatoInfracao={{statusRelatoInfracao}}&motivo={{motivo}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "v2",
+            "relatos-infracao",
+            "listar"
+          ],
+          "query": [
+            {
+              "key": "periodoCriacaoInicio",
+              "value": "{{periodoCriacaoInicio}}",
+              "description": "Data/hora de início do período de criação (UTC). Ex: 2025-01-01T00:00:00Z"
+            },
+            {
+              "key": "periodoCriacaoFim",
+              "value": "{{periodoCriacaoFim}}",
+              "description": "Data/hora de fim do período de criação (UTC). Ex: 2025-01-31T23:59:59Z"
+            },
+            {
+              "key": "tipoOrigemRelatoInfracao",
+              "value": "{{tipoOrigemRelatoInfracao}}",
+              "description": "ENVIADA | RECEBIDA | CAIXACAIXA"
+            },
+            {
+              "key": "statusRelatoInfracao",
+              "value": "{{statusRelatoInfracao}}",
+              "description": "OPEN | ACKNOWLEDGED | CLOSED | CANCELLED | SENT"
+            },
+            {
+              "key": "motivo",
+              "value": "{{motivo}}",
+              "description": "FRAUD | AML_CTF | REFUND_REQUEST | REFUND_CANCELLED (se aplicável)"
+            }
+          ]
+        },
+        "description": "HU 74373 - Relato de Infração - Integração com o SISPI - Listar Relatos.\nConsulta relatos de infração para tratamento da CAIXA, filtrando por tipoOrigemRelatoInfracao e statusRelatoInfracao, conforme critérios de aceite."
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "id": "74373-tests-script-001",
+            "type": "text/javascript",
+            "exec": [
+              "// 74373 - HU Relato de Infração - Integração SISPI - Listar Relatos",
+              "// Testes de contrato e critérios de aceite",
+              "",
+              "let jsonData;",
+              "",
+              "pm.test(\"74373 - Resposta é JSON válido\", function () {",
+              "    jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.exist;",
+              "});",
+              "",
+              "// --- STATUS / ESTRUTURA BÁSICA ---",
+              "",
+              "pm.test(\"74373 - Status code 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"74373 - Resposta é uma lista de relatos\", function () {",
+              "    pm.expect(Array.isArray(jsonData)).to.be.true;",
+              "});",
+              "",
+              "pm.test(\"74373 - Lista de relatos não está vazia\", function () {",
+              "    pm.expect(jsonData.length).to.be.above(0);",
+              "});",
+              "",
+              "// --- TESTE DE CONTRATO (JSON SCHEMA SIMPLES) ---",
+              "",
+              "const contratoRelatoInfracao = {",
+              "    type: \"array\",",
+              "    items: {",
+              "        type: \"object\",",
+              "        required: [",
+              "            \"idRelatoInfracao\",",
+              "            \"idFimAFim\",              // ajuste se o campo tiver outro nome no payload real",
+              "            \"tipoOrigemRelatoInfracao\",",
+              "            \"statusRelatoInfracao\",",
+              "            \"dataCriacao\"",
+              "        ],",
+              "        properties: {",
+              "            idRelatoInfracao: { type: \"string\" },",
+              "            idFimAFim:       { type: \"string\" }, // ou idFimFim / idEndToEnd, etc.",
+              "            tipoOrigemRelatoInfracao: {",
+              "                type: \"string\",",
+              "                enum: [\"ENVIADA\", \"RECEBIDA\", \"CAIXACAIXA\"]",
+              "            },",
+              "            statusRelatoInfracao: {",
+              "                type: \"string\",",
+              "                enum: [\"OPEN\", \"ACKNOWLEDGED\", \"CLOSED\", \"CANCELLED\", \"SENT\"]",
+              "            },",
+              "            dataCriacao:      { type: \"string\" },",
+              "            dataAtualizacao:  { type: \"string\" },",
+              "            motivo:           { type: \"string\" }",
+              "            // adicionar outros campos conforme payload real",
+              "        }",
+              "    }",
+              "};",
+              "",
+              "pm.test(\"74373 - Contrato da resposta está válido\", function () {",
+              "    pm.response.to.have.jsonSchema(contratoRelatoInfracao);",
+              "});",
+              "",
+              "// --- CRITÉRIOS DE ACEITE: FILTROS FUNCIONAIS ---",
+              "",
+              "pm.test('74373 - Todos os relatos com tipoOrigemRelatoInfracao = \"RECEBIDA\"', function () {",
+              "    jsonData.forEach((item, idx) => {",
+              "        pm.expect(item.tipoOrigemRelatoInfracao, `Item índice ${idx}`).to.eql(\"RECEBIDA\");",
+              "    });",
+              "});",
+              "",
+              "pm.test('74373 - Todos os relatos com statusRelatoInfracao = \"OPEN\"', function () {",
+              "    jsonData.forEach((item, idx) => {",
+              "        pm.expect(item.statusRelatoInfracao, `Item índice ${idx}`).to.eql(\"OPEN\");",
+              "    });",
+              "});",
+              "",
+              "// --- CRITÉRIO: Distinguir pelo ID fim a fim (não repetir) ---",
+              "",
+              "pm.test(\"74373 - ID fim a fim distinto para cada relato\", function () {",
+              "    const ids = new Set();",
+              "    jsonData.forEach((item, idx) => {",
+              "        const idFimAFim = item.idFimAFim || item.idFimFim || item.idEndToEnd;",
+              "        pm.expect(idFimAFim, `Item índice ${idx} sem ID fim a fim`).to.exist;",
+              "        pm.expect(ids.has(idFimAFim), `ID fim a fim duplicado: ${idFimAFim}`).to.be.false;",
+              "        ids.add(idFimAFim);",
+              "    });",
+              "});"
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.des.caixa:8443/transacoes-financeiras/pagamentos-instantaneos/dict"
+    },
+    {
+      "key": "accessToken",
+      "value": "",
+      "description": "Token Bearer para autenticação na API DICT (preencher antes de executar)."
+    },
+    {
+      "key": "periodoCriacaoInicio",
+      "value": "2025-01-01T00:00:00Z"
+    },
+    {
+      "key": "periodoCriacaoFim",
+      "value": "2025-01-31T23:59:59Z"
+    },
+    {
+      "key": "tipoOrigemRelatoInfracao",
+      "value": "RECEBIDA"
+    },
+    {
+      "key": "statusRelatoInfracao",
+      "value": "OPEN"
+    },
+    {
+      "key": "motivo",
+      "value": "FRAUD"
+    }
+  ]
+}
