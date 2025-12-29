@@ -1,2 +1,25 @@
-Preciso entender qual massa que você quer? 
-Por exemplo, para contestações, a gente pede abertura de contas, para realizar transações pix, por exemplo
+Márcia, obrigado.
+A massa que preciso não envolve abertura de conta ou transações PIX novas.
+
+O que preciso é o seguinte:
+Relatos de Infração que já existam no SISPI e que retornem no endpoint:
+
+GET /v2/relatos-infracao/listar
+
+com os filtros abaixo:
+
+tipoOrigemRelatoInfracao = RECEBIDA
+
+statusRelatoInfracao = OPEN
+
+Ou seja, apenas algum registro que já esteja disponível no SISPI e que apareça nesse endpoint com esses filtros, para eu validar o consumo e o fluxo no MED.
+
+Caso seja possível, se puder indicar:
+
+ID do relato
+
+Data de criação
+
+Motivo (por exemplo, FRAUD)
+
+Isso já é suficiente para os testes.
