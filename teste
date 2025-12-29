@@ -1,4 +1,2 @@
-Perfeito Paulo, entendido.
-Então vou focar nos testes da integração MED após o consumo do endpoint: gravação no Cosmos, filtro (RECEBIDA/OPEN), validação do ID fim a fim e envio para o Service Bus.
-Qualquer instabilidade no endpoint eu alinho diretamente com o SISPI.
-Obrigado pelo direcionamento!
+Preciso entender qual massa que você quer? 
+Por exemplo, para contestações, a gente pede abertura de contas, para realizar transações pix, por exemplo
