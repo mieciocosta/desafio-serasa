@@ -3,3 +3,4 @@ Paulo, entendido. Os cenários que levantei são para validar o worker end-to-en
 Me permita, falar algo sobre isso, eu não concordo, pois o resultado do endpoint a Listagem de Relatos é enviado à Fila. O que esta pendente é o validar se o resultado x o que o SICLON precisa, nesse caso, os dados deveriam ir pra fila e dar o caso temporariamente como encerrado/bloqueado até que o Moreno traga a resposta, mas até lá você consegue validar vários itens dos cenários.
 Inclusive deve sim fazer um teste isolado do endpoint de listagem, pra validar se o que o SISPI enviou é o que foi colocado na fila pelo worker.
  
+Miecio Santos Costa, conseguimos te ajudar ou ainda tens dúvidas?
