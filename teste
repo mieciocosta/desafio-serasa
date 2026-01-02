@@ -1,6 +1,7 @@
-Miecio Santos Costa
-Paulo, entendido. Os cenários que levantei são para validar o worker end-to-end da HU 74373 (após ele estar completo), cobrindo filtros RECEBIDA/OPEN, gravação no Cosmos, idempotência por ID fim a fim, envio ao Service Bus e registro de erro. Não é teste do endpoint do SISPI isoladamente. Assim que…
-Me permita, falar algo sobre isso, eu não concordo, pois o resultado do endpoint a Listagem de Relatos é enviado à Fila. O que esta pendente é o validar se o resultado x o que o SICLON precisa, nesse caso, os dados deveriam ir pra fila e dar o caso temporariamente como encerrado/bloqueado até que o Moreno traga a resposta, mas até lá você consegue validar vários itens dos cenários.
-Inclusive deve sim fazer um teste isolado do endpoint de listagem, pra validar se o que o SISPI enviou é o que foi colocado na fila pelo worker.
- 
-Miecio Santos Costa, conseguimos te ajudar ou ainda tens dúvidas?
+Gabriela, entendi sim.
+Concordo em validar o contrato do endpoint de listagem e a aderência entre o retorno e o que o worker envia para a fila, pensando no SICLON.
+Da minha parte consigo apoiar na análise dos campos e cenários de validação; a execução do worker localmente pode ficar com quem já está com o ambiente configurado (como o Paulo).
+
+Paulo, sim, ficou claro.
+No momento não tenho dúvidas. Vou seguir com a validação da HU 74373 focando na análise de contrato, cenários e aderência entre o retorno do endpoint, persistência e envio à fila.
+Caso surja algo, sinalizo.
