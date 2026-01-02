@@ -1,1 +1,60 @@
-dotnet run --project src/MedBackend.Api/MedBackend.Api.csproj
+PS C:\Users\f996657\OneDrive - Caixa Economica Federal\Área de Trabalho\workspace\sigcn-med-backend> dotnet run --project MedBackend.sln       
+'MedBackend.sln' não é um arquivo de projeto válido.
+PS C:\Users\f996657\OneDrive - Caixa Economica Federal\Área de Trabalho\workspace\sigcn-med-backend> 
+
+
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.2.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MedBackend", "MedBackend\MedBackend.csproj", "{CA638C04-52A9-D381-EEEE-1FAAE7308F61}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MedBackendTests", "MedBackendTests\MedBackendTests.csproj", "{2EEC71BA-847A-4B58-81BF-CEC27B7F3A8B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{089100B1-113F-4E66-888A-E83F3999EAFD}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		CHANGELOG.md = CHANGELOG.md
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MedBackend.Domain", "MedBackend.Domain\MedBackend.Domain.csproj", "{B049E37F-CE44-4BBA-8CAE-2AAF3FA5E193}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MedBackend.Application", "MedBackend.Application\MedBackend.Application.csproj", "{EFFEBBE9-8733-47AB-B379-C5E4CD4AD59F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MedBackend.Infrastructure", "MedBackend.Infrastructure\MedBackend.Infrastructure.csproj", "{B29F3A59-0004-492F-993A-ABDC4DE99207}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CA638C04-52A9-D381-EEEE-1FAAE7308F61}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA638C04-52A9-D381-EEEE-1FAAE7308F61}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA638C04-52A9-D381-EEEE-1FAAE7308F61}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA638C04-52A9-D381-EEEE-1FAAE7308F61}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2EEC71BA-847A-4B58-81BF-CEC27B7F3A8B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2EEC71BA-847A-4B58-81BF-CEC27B7F3A8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2EEC71BA-847A-4B58-81BF-CEC27B7F3A8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2EEC71BA-847A-4B58-81BF-CEC27B7F3A8B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B049E37F-CE44-4BBA-8CAE-2AAF3FA5E193}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B049E37F-CE44-4BBA-8CAE-2AAF3FA5E193}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B049E37F-CE44-4BBA-8CAE-2AAF3FA5E193}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B049E37F-CE44-4BBA-8CAE-2AAF3FA5E193}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EFFEBBE9-8733-47AB-B379-C5E4CD4AD59F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EFFEBBE9-8733-47AB-B379-C5E4CD4AD59F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EFFEBBE9-8733-47AB-B379-C5E4CD4AD59F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EFFEBBE9-8733-47AB-B379-C5E4CD4AD59F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B29F3A59-0004-492F-993A-ABDC4DE99207}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B29F3A59-0004-492F-993A-ABDC4DE99207}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B29F3A59-0004-492F-993A-ABDC4DE99207}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B29F3A59-0004-492F-993A-ABDC4DE99207}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CE65272C-F7B7-4079-97CF-11EA94E52CAB}
+	EndGlobalSection
+EndGlobal
