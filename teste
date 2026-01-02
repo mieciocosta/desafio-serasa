@@ -1,9 +1,3 @@
-PS C:\Users\f996657\OneDrive - Caixa Economica Federal\Área de Trabalho\workspace\sigcn-med-backend> dotnet run
-Não foi possível localizar um projeto para executar. Verifique se existe um projeto em C:\Users\f996657\OneDrive - Caixa Economica Federal\Área de Trabalho\workspace\sigcn-med-backend ou passe o caminho para o projeto usando --project.
-PS C:\Users\f996657\OneDrive - Caixa Economica Federal\Área de Trabalho\workspace\sigcn-med-backend> 
-
-
-abre o projeto no vscode
-seleciona a branch de develop
-ai provavelmente vc vai ter q procurar esse arquivo "MedBackend.sln", ele fica na raiz do projeto 
-clicar com o botao direito e executar ele
+dotnet restore
+dotnet build
+dotnet run --project MedBackend.sln
