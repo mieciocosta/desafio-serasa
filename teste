@@ -1,7 +1,9 @@
-Gabriela, entendi sim.
-Concordo em validar o contrato do endpoint de listagem e a aderência entre o retorno e o que o worker envia para a fila, pensando no SICLON.
-Da minha parte consigo apoiar na análise dos campos e cenários de validação; a execução do worker localmente pode ficar com quem já está com o ambiente configurado (como o Paulo).
+PS C:\Users\f996657\OneDrive - Caixa Economica Federal\Área de Trabalho\workspace\sigcn-med-backend> dotnet run
+Não foi possível localizar um projeto para executar. Verifique se existe um projeto em C:\Users\f996657\OneDrive - Caixa Economica Federal\Área de Trabalho\workspace\sigcn-med-backend ou passe o caminho para o projeto usando --project.
+PS C:\Users\f996657\OneDrive - Caixa Economica Federal\Área de Trabalho\workspace\sigcn-med-backend> 
 
-Paulo, sim, ficou claro.
-No momento não tenho dúvidas. Vou seguir com a validação da HU 74373 focando na análise de contrato, cenários e aderência entre o retorno do endpoint, persistência e envio à fila.
-Caso surja algo, sinalizo.
+
+abre o projeto no vscode
+seleciona a branch de develop
+ai provavelmente vc vai ter q procurar esse arquivo "MedBackend.sln", ele fica na raiz do projeto 
+clicar com o botao direito e executar ele
