@@ -1,78 +1,68 @@
-quer fazer uma call ?
- 
-pq eu executo local aqui pelo visual studio, q pedimos licença logo no começo do projeto
- 
-no vscode to fazendo junto com vc
+C:\Desenvolvimento\sigcn-med-backend\WeatherForecast.cs
 
 
-PS C:\Desenvolvimento> cd .\sigcn-med-backend\
-PS C:\Desenvolvimento\sigcn-med-backend> dotnet run
-Compilando...
-C:\Desenvolvimento\sigcn-med-backend\Controllers\WeatherForecastController.cs(3,23): error CS0116: Um namespace não pode conter diretamente membros, como campo
-s, métodos ou instruções [C:\Desenvolvimento\sigcn-med-backend\med-backend.csproj]
-C:\Desenvolvimento\sigcn-med-backend\Controllers\WeatherForecastController.cs(3,14): error CS1514: { esperado [C:\Desenvolvimento\sigcn-med-backend\med-backend
-.csproj]
-C:\Desenvolvimento\sigcn-med-backend\WeatherForecast.cs(1,15): error CS0116: Um namespace não pode conter diretamente membros, como campos, métodos ou instruçõ
-es [C:\Desenvolvimento\sigcn-med-backend\med-backend.csproj]
-C:\Desenvolvimento\sigcn-med-backend\Controllers\WeatherForecastController.cs(4,1): error CS1022: Definição de namespace ou tipo, ou final do arquivo esperado 
-[C:\Desenvolvimento\sigcn-med-backend\med-backend.csproj]
-C:\Desenvolvimento\sigcn-med-backend\WeatherForecast.cs(1,14): error CS1514: { esperado [C:\Desenvolvimento\sigcn-med-backend\med-backend.csproj]
-C:\Desenvolvimento\sigcn-med-backend\WeatherForecast.cs(2,1): error CS1022: Definição de namespace ou tipo, ou final do arquivo esperado [C:\Desenvolvimento\si 
-gcn-med-backend\med-backend.csproj]
+namespace MedBackend;
 
-Ocorreu uma falha no build. Corrija os erros de build e execute novamente.
-PS C:\Desenvolvimento\sigcn-med-backend> 
+namespace MedBackend;
 
-
-namespace med-backend
+public class WeatherForecast
 {
-    public class WeatherForecast
-    {
-        public DateOnly Date { get; set; }
+    public DateOnly Date { get; set; }
 
-        public int TemperatureC { get; set; }
+    public int TemperatureC { get; set; }
 
-        public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
 
-        public string? Summary { get; set; }
-    }
+    public string? Summary { get; set; }
 }
 
 
-
-
+C:\Desenvolvimento\sigcn-med-backend\Controllers\WeatherForecastController.cs
 
 using Microsoft.AspNetCore.Mvc;
 
-namespace med-backend.Controllers
+namespace MedBackend.Controllers;
+
+[ApiController]
+[Route("/")]
+public class WeatherForecastController : ControllerBase
 {
-    [ApiController]
-    [Route("/")]
-    public class WeatherForecastController : ControllerBase
+    private static readonly string[] Summaries =
     {
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
+        "Freezing",
+        "Bracing",
+        "Chilly",
+        "Cool",
+        "Mild",
+        "Warm",
+        "Balmy",
+        "Hot",
+        "Sweltering",
+        "Scorching"
+    };
 
-        private readonly ILogger<WeatherForecastController> _logger;
+    private readonly ILogger<WeatherForecastController> _logger;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
-        {
-            _logger = logger;
-        }
+    public WeatherForecastController(ILogger<WeatherForecastController> logger)
+    {
+        _logger = logger;
+    }
 
-        [HttpGet()]
-        public IEnumerable<WeatherForecast> Get()
+    [HttpGet]
+    public IEnumerable<WeatherForecast> Get()
+    {
+        return Enumerable.Range(1, 5).Select(index => new WeatherForecast
         {
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                TemperatureC = Random.Shared.Next(-20, 55),
-                Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-            })
-            .ToArray();
-        }
+            Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
+            TemperatureC = Random.Shared.Next(-20, 55),
+            Summary = Summaries[Random.Shared.Next(Summaries.Length)]
+        })
+        .ToArray();
     }
 }
 
+
+
+dotnet clean
+dotnet restore
+dotnet run
