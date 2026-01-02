@@ -1,39 +1,78 @@
-então vc vai precisar criar uma pasta la no C: chamada Desenvolvimento
+quer fazer uma call ?
  
-ai faz o clone dentro dessa pasta e tenta de novo
+pq eu executo local aqui pelo visual studio, q pedimos licença logo no começo do projeto
  
-para ver se vai
- PS C:\Desenvolvimento> git clone https://github.com/caixagithub/sigcn-med-backend.git
-Cloning into 'sigcn-med-backend'...
-error: cannot spawn git-credential-manager: Function not implemented
-error: cannot spawn git-credential-manager: Function not implemented
-remote: Enumerating objects: 283, done.
-remote: Counting objects: 100% (283/283), done.
-remote: Compressing objects: 100% (175/175), done.
-remote: Total 283 (delta 87), reused 273 (delta 79), pack-reused 0 (from 0)
-Receiving objects: 100% (283/283), 98.95 KiB | 499.00 KiB/s, done.
-Resolving deltas: 100% (87/87), done.
-PS C:\Desenvolvimento> cd .\sigcn-med-backend\
-PS C:\Desenvolvimento\sigcn-med-backend> dotnet run --project MedBackend.sln
-MSBUILD : error MSB1009: Arquivo de projeto não existe.
-Opção: MedBackend.sln
+no vscode to fazendo junto com vc
 
-Ocorreu uma falha no build. Corrija os erros de build e execute novamente.
+
+PS C:\Desenvolvimento> cd .\sigcn-med-backend\
 PS C:\Desenvolvimento\sigcn-med-backend> dotnet run
 Compilando...
-C:\Desenvolvimento\sigcn-med-backend\Controllers\WeatherForecastController.cs(3,23): error CS0116: Um namespace 
-não pode conter diretamente membros, como campos, métodos ou instruções [C:\Desenvolvimento\sigcn-med-backend\me
-d-backend.csproj]
-C:\Desenvolvimento\sigcn-med-backend\WeatherForecast.cs(1,15): error CS0116: Um namespace não pode conter direta
-mente membros, como campos, métodos ou instruções [C:\Desenvolvimento\sigcn-med-backend\med-backend.csproj]
-C:\Desenvolvimento\sigcn-med-backend\WeatherForecast.cs(1,14): error CS1514: { esperado [C:\Desenvolvimento\sigc
-n-med-backend\med-backend.csproj]
-C:\Desenvolvimento\sigcn-med-backend\Controllers\WeatherForecastController.cs(3,14): error CS1514: { esperado [C
-:\Desenvolvimento\sigcn-med-backend\med-backend.csproj]
-C:\Desenvolvimento\sigcn-med-backend\Controllers\WeatherForecastController.cs(4,1): error CS1022: Definição de n
-amespace ou tipo, ou final do arquivo esperado [C:\Desenvolvimento\sigcn-med-backend\med-backend.csproj]
-C:\Desenvolvimento\sigcn-med-backend\WeatherForecast.cs(2,1): error CS1022: Definição de namespace ou tipo, ou f
-inal do arquivo esperado [C:\Desenvolvimento\sigcn-med-backend\med-backend.csproj]
+C:\Desenvolvimento\sigcn-med-backend\Controllers\WeatherForecastController.cs(3,23): error CS0116: Um namespace não pode conter diretamente membros, como campo
+s, métodos ou instruções [C:\Desenvolvimento\sigcn-med-backend\med-backend.csproj]
+C:\Desenvolvimento\sigcn-med-backend\Controllers\WeatherForecastController.cs(3,14): error CS1514: { esperado [C:\Desenvolvimento\sigcn-med-backend\med-backend
+.csproj]
+C:\Desenvolvimento\sigcn-med-backend\WeatherForecast.cs(1,15): error CS0116: Um namespace não pode conter diretamente membros, como campos, métodos ou instruçõ
+es [C:\Desenvolvimento\sigcn-med-backend\med-backend.csproj]
+C:\Desenvolvimento\sigcn-med-backend\Controllers\WeatherForecastController.cs(4,1): error CS1022: Definição de namespace ou tipo, ou final do arquivo esperado 
+[C:\Desenvolvimento\sigcn-med-backend\med-backend.csproj]
+C:\Desenvolvimento\sigcn-med-backend\WeatherForecast.cs(1,14): error CS1514: { esperado [C:\Desenvolvimento\sigcn-med-backend\med-backend.csproj]
+C:\Desenvolvimento\sigcn-med-backend\WeatherForecast.cs(2,1): error CS1022: Definição de namespace ou tipo, ou final do arquivo esperado [C:\Desenvolvimento\si 
+gcn-med-backend\med-backend.csproj]
 
 Ocorreu uma falha no build. Corrija os erros de build e execute novamente.
 PS C:\Desenvolvimento\sigcn-med-backend> 
+
+
+namespace med-backend
+{
+    public class WeatherForecast
+    {
+        public DateOnly Date { get; set; }
+
+        public int TemperatureC { get; set; }
+
+        public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+
+        public string? Summary { get; set; }
+    }
+}
+
+
+
+
+
+using Microsoft.AspNetCore.Mvc;
+
+namespace med-backend.Controllers
+{
+    [ApiController]
+    [Route("/")]
+    public class WeatherForecastController : ControllerBase
+    {
+        private static readonly string[] Summaries = new[]
+        {
+            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
+        };
+
+        private readonly ILogger<WeatherForecastController> _logger;
+
+        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        {
+            _logger = logger;
+        }
+
+        [HttpGet()]
+        public IEnumerable<WeatherForecast> Get()
+        {
+            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
+            {
+                Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
+                TemperatureC = Random.Shared.Next(-20, 55),
+                Summary = Summaries[Random.Shared.Next(Summaries.Length)]
+            })
+            .ToArray();
+        }
+    }
+}
+
