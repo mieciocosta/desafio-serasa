@@ -1,63 +1,48 @@
-andersion
+Anderson, segue abaixo os cenários que montei para a HU 74373. Estão focados no comportamento do worker do MED/SIGCN (consumo do endpoint do SISPI + aplicação de filtros + persistência + envio ao Service Bus/SICLON), não em testar o endpoint isoladamente:
 
-Poderia colocar aqui teus cenários criados? Não estou entendendo muito bem. Talvez com os cenários consiga abstrair melhor o que está pensando
-Miecio Santos Costa
-Quando mencionei na daily que dependia do time, foi em relação a alinhamentos técnicos da integração da task/HU 74373 – Relato de Infração - Integração com o SISPI (Listar Relatos), principalmente sobre o entendimento do endpoint, filtros aplicáveis e fluxo pós-consumo no MED.
- 
- paulo
-Com relação ao meu worker, não está completo porque precisa das informações que o Moreno irá disponibilizar, só temos o endpoint que nos retornar as informações sobre os relatos de infração, não há necessidade de testar o endpoint de listagem de relatos de infração, pois o teste deve ser do worker, quando o mesmo estiver finalizado.
+CT01 – Processar relatos abertos (RECEBIDA/OPEN) com sucesso (Worker HU 74373)
+Dado que o endpoint do SISPI retorne relatos com tipoOrigemRelatoInfracao=RECEBIDA e statusRelatoInfracao=OPEN
+Quando o worker do SIGCN/MED executar a rotina de consulta
+Então os relatos devem ser gravados no CosmosDB
+E devem ser postados na fila do Service Bus para o SICLON
+E o processamento deve ser registrado com sucesso
+
+CT02 – Resposta sem itens elegíveis (Worker HU 74373)
+Dado que o endpoint retorne vazio ou sem itens OPEN/RECEBIDA
+Quando o worker executar a rotina
+Então não deve gravar registros
+E não deve postar mensagens na fila
+
+CT03 – Agendamento (Worker HU 74373)
+Dado que o agendamento esteja ativo
+Quando completar 1 hora
+Então o worker deve executar novamente e processar conforme regras
+
+CT04 – Falha no consumo do SISPI (Worker HU 74373)
+Dado que o endpoint retorne erro (ex: 500/timeout)
+Quando o worker executar
+Então deve registrar o erro (telemetria/log)
+E não deve gravar nem postar
+
+CT05 – Idempotência por ID fim a fim (Worker HU 74373)
+Dado que já exista registro com o mesmo ID fim a fim
+Quando o worker receber o mesmo item novamente
+Então não deve duplicar no Cosmos
+E não deve reenviar ao SICLON
+
+CT06 – Postagem no Service Bus com sucesso (Worker HU 74373)
+Dado que há itens gravados e elegíveis
+Quando o worker postar na fila
+Então registrar sucesso e disponibilizar para consumo do SICLON
+
+CT07 – Falha ao postar na fila (Worker HU 74373)
+Dado que o Service Bus esteja indisponível
+Quando o worker tentar postar
+Então registrar erro
+E manter o item disponível para reprocessamento
 
 
-cenarioa criados antes
 
-CT01 – Listar relatos de infração abertos com sucesso
+Paulo, entendido. Os cenários que levantei são para validar o worker end-to-end da HU 74373 (após ele estar completo), cobrindo filtros RECEBIDA/OPEN, gravação no Cosmos, idempotência por ID fim a fim, envio ao Service Bus e registro de erro. Não é teste do endpoint do SISPI isoladamente. Assim que o worker estiver com as informações do Moreno, executo a validação.
 
-Dado que o SISPI possua relatos de infração com status OPEN
-Quando o SIGCN executar a consulta ao SISPI
-Então os relatos devem ser gravados no banco de dados
-E o campo tipoOrigemRelatoInfracao deve ser RECEBIDA
-E o campo statusRelatoInfracao deve ser OPEN
-E os relatos devem ser enviados para a fila do SICLON
 
-CT02 – SISPI sem relatos de infração abertos
-
-Dado que o SISPI não retorne relatos com status OPEN
-Quando o SIGCN executar a consulta
-Então nenhum registro deve ser gravado no banco
-E nenhuma mensagem deve ser enviada ao SICLON
-
-CT03 – Consulta automática a cada 1 hora
-
-Dado que o agendamento de consulta esteja ativo
-Quando completar o intervalo de 1 hora
-Então o SIGCN deve consultar o SISPI automaticamente
-E processar os relatos retornados
-
-CT04 – Falha na integração com o SISPI
-
-Dado que o SISPI esteja indisponível
-Quando o SIGCN tentar listar os relatos
-Então o erro deve ser registrado com sucesso
-E nenhum relato deve ser gravado
-E nenhuma mensagem deve ser enviada ao SICLON
-
-CT05 – Evitar duplicidade pelo ID fim a fim
-
-Dado que exista um relato já gravado com o mesmo ID fim a fim
-Quando o SISPI retornar o mesmo relato novamente
-Então o SIGCN não deve gravar o registro novamente
-E não deve reenviar o relato ao SICLON
-
-CT06 – Envio com sucesso para o SICLON
-
-Dado que os relatos tenham sido gravados com sucesso
-Quando o SIGCN postar as mensagens na fila
-Então o SICLON deve receber os relatos para tratamento
-E o envio deve ser registrado como sucesso
-
-CT07 – Falha no envio para a fila do SICLON
-
-Dado que ocorra erro ao postar na fila do Service Bus
-Quando o SIGCN tentar enviar os relatos
-Então o erro deve ser registrado
-E o relato deve ficar disponível para reprocessamento
