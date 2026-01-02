@@ -1,25 +1,3 @@
-Márcia, obrigado.
-A massa que preciso não envolve abertura de conta ou transações PIX novas.
-
-O que preciso é o seguinte:
-Relatos de Infração que já existam no SISPI e que retornem no endpoint:
-
-GET /v2/relatos-infracao/listar
-
-com os filtros abaixo:
-
-tipoOrigemRelatoInfracao = RECEBIDA
-
-statusRelatoInfracao = OPEN
-
-Ou seja, apenas algum registro que já esteja disponível no SISPI e que apareça nesse endpoint com esses filtros, para eu validar o consumo e o fluxo no MED.
-
-Caso seja possível, se puder indicar:
-
-ID do relato
-
-Data de criação
-
-Motivo (por exemplo, FRAUD)
-
-Isso já é suficiente para os testes.
+Bom dia!
+Resolvi perguntar por aqui para não envolver o pessoal da Caixa.
+Miecio Santos Costa, vc falou na daily que depende do time para realizar suas atividades, o que exatamente vc precisa?
