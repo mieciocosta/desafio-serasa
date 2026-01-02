@@ -1,5 +1,14 @@
-dotnet run --project MedBackend\MedBackend.csproj
+PS C:\Desenvolvimento\sigcn-med-backend\MedBackend> dotnet run
+Compilando...
+Environment: Local
+info: Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager[63]
+      User profile is available. Using 'C:\Users\f996657\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+info: Microsoft.Hosting.Lifetime[14]
+      Now listening on: http://localhost:5059
+info: Microsoft.Hosting.Lifetime[0]
+      Application started. Press Ctrl+C to shut down.
+info: Microsoft.Hosting.Lifetime[0]
+      Hosting environment: Local
+info: Microsoft.Hosting.Lifetime[0]
+      Content root path: C:\Desenvolvimento\sigcn-med-backend\MedBackend
 
-
-cd MedBackend
-dotnet run
