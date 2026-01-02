@@ -1,4 +1,13 @@
-Sobre o entendimento, não entendi.
-Vc não precisará testar esse endpoint, somente para verificar os campos que o SISPI retorna e depois que o worker estiver finalizado, verificar também o que será enviado ao SICLON e o que foi gravado no banco.
- 
-Outra coisa que percebi nessa HU referente a listagem de relatos de infração, foi que não houve na parte negocial uma preocupação com o período de pesquisa referente ao relatos de infração, estou ciente que haverá uma verificação pelo IdFIMaFIM, porém é desnecessario trazer os mesmos dados inumeras vezes, sendo que um filtro por data também resolveria
+Paulo, agora ficou claro, obrigado pelo esclarecimento.
+
+Quando mencionei entendimento do endpoint, me referia apenas a conhecer o contrato de retorno (campos) para saber exatamente o que será persistido e enviado ao SICLON, não à execução de testes no endpoint em si.
+
+Fico alinhado então que os testes da HU 74373 devem ocorrer após o worker finalizado, validando:
+
+campos retornados pelo SISPI,
+
+dados gravados no banco,
+
+e payload enviado ao SICLON.
+
+Sobre o ponto do período de pesquisa, concordo com a observação. A ausência desse filtro pode gerar consumo repetido de dados; hoje o controle está no IdFimAFim, mas um critério temporal ajudaria a otimizar. Vale registrar esse ponto como ajuste ou melhoria negocial.
