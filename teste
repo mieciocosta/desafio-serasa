@@ -1,5 +1,86 @@
-dotnet run --project MedBackend\MedBackend.csproj
+PS C:\Desenvolvimento\sigcn-med-backend> dotnet run --project MedBackend\MedBackend.csproj
+Compilando...
+C:\Desenvolvimento\sigcn-med-backend\MedBackend.Domain\Entities\ParametrosGrafo.cs(48,16): warning CS8618: O propriedade não anulável 'Id' precisa conter um va
+lor não nulo ao sair do construtor. Considere declarar o propriedade como anulável. [C:\Desenvolvimento\sigcn-med-backend\MedBackend.Domain\MedBackend.Domain.c
+sproj]
+C:\Desenvolvimento\sigcn-med-backend\MedBackend.Domain\Entities\ParametrosGrafo.cs(48,16): warning CS8618: O propriedade não anulável 'TipoFluxo' precisa conte
+r um valor não nulo ao sair do construtor. Considere declarar o propriedade como anulável. [C:\Desenvolvimento\sigcn-med-backend\MedBackend.Domain\MedBackend.D
+omain.csproj]
+C:\Desenvolvimento\sigcn-med-backend\MedBackend.Infrastructure\Repositories\ParametrosGrafoRepository.cs(58,27): warning CS1998: Este método assíncrono não pos
+sui operadores 'await' e será executado de modo síncrono. É recomendável o uso do operador 'await' para aguardar chamadas à API desbloqueadas ou do operador 'a
+wait Task.Run(...)' para realizar um trabalho associado à CPU em um thread em segundo plano. [C:\Desenvolvimento\sigcn-med-backend\MedBackend.Infrastructure\Me
+dBackend.Infrastructure.csproj]
+C:\Desenvolvimento\sigcn-med-backend\MedBackend.Application\ParametrosGrafos\Commands\UpdateParametrosGrafoHandler.cs(18,48): warning CS8613: A nulidade de tip
+os de referência no tipo de retorno de 'Task<ParametrosGrafoDTO?> UpdateParametrosGrafoHandler.Handle(UpdateParametrosGrafoCommand request, CancellationToken c
+ancellationToken)' não corresponde ao membro implicitamente implementado 'Task<ParametrosGrafoDTO> IRequestHandler<UpdateParametrosGrafoCommand, ParametrosGraf
+oDTO>.Handle(UpdateParametrosGrafoCommand request, CancellationToken cancellationToken)'. [C:\Desenvolvimento\sigcn-med-backend\MedBackend.Application\MedBacke
+nd.Application.csproj]
+C:\Desenvolvimento\sigcn-med-backend\MedBackend.Application\ParametrosGrafos\Commands\UpdateParametrosGrafoHandler.cs(24,130): warning CS8604: Possível argumen
+to de referência nula para o parâmetro 'telefone' em 'void ParametrosGrafo.Update(string id, int minTransactionAmount, int maxTransactions, int hopWindow, int  
+maxHops, string telefone, string email, string usuario, bool isVigente, string tipoFluxo)'. [C:\Desenvolvimento\sigcn-med-backend\MedBackend.Application\MedBac 
+kend.Application.csproj]
+C:\Desenvolvimento\sigcn-med-backend\MedBackend.Application\ParametrosGrafos\Commands\UpdateParametrosGrafoHandler.cs(24,148): warning CS8604: Possível argumen 
+to de referência nula para o parâmetro 'email' em 'void ParametrosGrafo.Update(string id, int minTransactionAmount, int maxTransactions, int hopWindow, int max 
+Hops, string telefone, string email, string usuario, bool isVigente, string tipoFluxo)'. [C:\Desenvolvimento\sigcn-med-backend\MedBackend.Application\MedBacken 
+d.Application.csproj]
+C:\Desenvolvimento\sigcn-med-backend\MedBackend.Application\ParametrosGrafos\Commands\UpdateParametrosGrafoHandler.cs(24,163): warning CS8604: Possível argumen 
+to de referência nula para o parâmetro 'usuario' em 'void ParametrosGrafo.Update(string id, int minTransactionAmount, int maxTransactions, int hopWindow, int m 
+axHops, string telefone, string email, string usuario, bool isVigente, string tipoFluxo)'. [C:\Desenvolvimento\sigcn-med-backend\MedBackend.Application\MedBack 
+end.Application.csproj]
+C:\Desenvolvimento\sigcn-med-backend\MedBackend.Application\ParametrosGrafos\Commands\UpdateParametrosGrafoHandler.cs(24,199): warning CS8604: Possível argumen 
+to de referência nula para o parâmetro 'tipoFluxo' em 'void ParametrosGrafo.Update(string id, int minTransactionAmount, int maxTransactions, int hopWindow, int 
+ maxHops, string telefone, string email, string usuario, bool isVigente, string tipoFluxo)'. [C:\Desenvolvimento\sigcn-med-backend\MedBackend.Application\MedBa 
+ckend.Application.csproj]
+C:\Desenvolvimento\sigcn-med-backend\MedBackend.Application\ParametrosGrafos\Commands\ParametrosGrafoCommandBase.cs(9,23): warning CS8618: O propriedade não an 
+ulável 'Id' precisa conter um valor não nulo ao sair do construtor. Considere declarar o propriedade como anulável. [C:\Desenvolvimento\sigcn-med-backend\MedBa 
+ckend.Application\MedBackend.Application.csproj]
+C:\Desenvolvimento\sigcn-med-backend\MedBackend.Application\ParametrosGrafos\Commands\CreateParametrosGrafoHandler.cs(23,45): warning CS8604: Possível argument 
+o de referência nula para o parâmetro 'telefone' em 'ParametrosGrafo.ParametrosGrafo(string id, int minTransactionAmount, int maxTransactions, int hopWindow, i 
+nt maxHops, string telefone, string email, string usuario, bool isVigente, string tipoFluxo)'. [C:\Desenvolvimento\sigcn-med-backend\MedBackend.Application\Med 
+Backend.Application.csproj]
+C:\Desenvolvimento\sigcn-med-backend\MedBackend.Application\ParametrosGrafos\Commands\CreateParametrosGrafoHandler.cs(23,63): warning CS8604: Possível argument 
+o de referência nula para o parâmetro 'email' em 'ParametrosGrafo.ParametrosGrafo(string id, int minTransactionAmount, int maxTransactions, int hopWindow, int  
+maxHops, string telefone, string email, string usuario, bool isVigente, string tipoFluxo)'. [C:\Desenvolvimento\sigcn-med-backend\MedBackend.Application\MedBac 
+kend.Application.csproj]
+C:\Desenvolvimento\sigcn-med-backend\MedBackend.Application\ParametrosGrafos\Commands\CreateParametrosGrafoHandler.cs(23,78): warning CS8604: Possível argument 
+o de referência nula para o parâmetro 'usuario' em 'ParametrosGrafo.ParametrosGrafo(string id, int minTransactionAmount, int maxTransactions, int hopWindow, in 
+t maxHops, string telefone, string email, string usuario, bool isVigente, string tipoFluxo)'. [C:\Desenvolvimento\sigcn-med-backend\MedBackend.Application\MedB 
+ackend.Application.csproj]
+C:\Desenvolvimento\sigcn-med-backend\MedBackend.Application\ParametrosGrafos\Commands\CreateParametrosGrafoHandler.cs(23,114): warning CS8604: Possível argumen 
+to de referência nula para o parâmetro 'tipoFluxo' em 'ParametrosGrafo.ParametrosGrafo(string id, int minTransactionAmount, int maxTransactions, int hopWindow, 
+ int maxHops, string telefone, string email, string usuario, bool isVigente, string tipoFluxo)'. [C:\Desenvolvimento\sigcn-med-backend\MedBackend.Application\M 
+edBackend.Application.csproj]
+C:\Desenvolvimento\sigcn-med-backend\MedBackend\Program.cs(71,23): warning CS8604: Possível argumento de referência nula para o parâmetro 'connectionString' em
+ 'DbContextOptionsBuilder CosmosDbContextOptionsExtensions.UseCosmos(DbContextOptionsBuilder optionsBuilder, string connectionString, string databaseName, Acti 
+on<CosmosDbContextOptionsBuilder>? cosmosOptionsAction = null)'. [C:\Desenvolvimento\sigcn-med-backend\MedBackend\MedBackend.csproj]
+C:\Desenvolvimento\sigcn-med-backend\MedBackend\Program.cs(71,66): warning CS8604: Possível argumento de referência nula para o parâmetro 'databaseName' em 'Db 
+ContextOptionsBuilder CosmosDbContextOptionsExtensions.UseCosmos(DbContextOptionsBuilder optionsBuilder, string connectionString, string databaseName, Action<C 
+osmosDbContextOptionsBuilder>? cosmosOptionsAction = null)'. [C:\Desenvolvimento\sigcn-med-backend\MedBackend\MedBackend.csproj]
+CSC : warning AD0001: O analisador 'Microsoft.AspNetCore.Analyzers.RouteHandlers.RouteHandlerAnalyzer' gerou uma exceção do tipo 'System.InvalidOperationExcept 
+ion' com a mensagem 'Failed to resolve well-known type 'Microsoft.AspNetCore.Builder.EndpointRouteBuilderExtensions'.'. [C:\Desenvolvimento\sigcn-med-backend\M 
+edBackend\MedBackend.csproj]
+Environment: Local
+info: Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager[63]
+      User profile is available. Using 'C:\Users\f996657\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.info: Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager[58]
+      Creating key {57cdd4cc-ece3-4dbd-8d16-02da237c8a31} with creation date 2026-01-02 20:30:23Z, activation date 2026-01-02 20:30:23Z, and expiration date 2026-04-02 20:30:23Z.
+info: Microsoft.AspNetCore.DataProtection.Repositories.FileSystemXmlRepository[39]
+      Writing data to file 'C:\Users\f996657\AppData\Local\ASP.NET\DataProtection-Keys\key-57cdd4cc-ece3-4dbd-8d16-02da237c8a31.xml'.
+info: Microsoft.Hosting.Lifetime[14]
+      Now listening on: http://localhost:5059
+info: Microsoft.Hosting.Lifetime[0]
+      Application started. Press Ctrl+C to shut down.
+info: Microsoft.Hosting.Lifetime[0]
+      Hosting environment: Local
+info: Microsoft.Hosting.Lifetime[0]
+      Content root path: C:\Desenvolvimento\sigcn-med-backend\MedBackend
 
 
-cd MedBackend
-dotnet run
+
+
+
+
+
+
+
+
+
