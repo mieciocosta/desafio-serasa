@@ -13,9 +13,11 @@ Validar a tela **Configurações** do SIGCN MED quanto a **preenchimento, salvam
 * **URL:** [https://sasitemededsnprd.z15.web.core.windows.net](https://sasitemededsnprd.z15.web.core.windows.net)
 * **Usuário:** c892024
 
-📸 Print – Tela inicial / Login
+Print – Tela inicial / Login
 
-> (colar aqui)
+<img width="1911" height="1021" alt="image" src="https://github.com/user-attachments/assets/e7e03802-aa04-450f-9a94-addb9d4e14bf" />
+
+
 
 ---
 
@@ -25,7 +27,8 @@ Menu **Configurações** → **Grafos**
 
 📸 Print – Tela Grafos aberta
 
-> (colar aqui)
+<img width="1918" height="1078" alt="image" src="https://github.com/user-attachments/assets/e1db1e1d-f846-4c0f-b7e1-419ef4e2a98e" />
+
 
 ---
 
