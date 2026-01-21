@@ -1,10 +1,1 @@
-{
-  "teste_miecio": "RECUP_SIGCN_OK",
-  "idFimAFim": "E0036030520260114233461dafb516b6",
-  "valor": 2,
-  "dataHoraTransacao": "2026-01-14T17:51:03.000Z",
-  "tipoRecuperacao": "SCAM",
-  "canal": "Teste SIGCN",
-  "protocoloOrigem": "260116096768384",
-  "cpfPagador": "61562716352"
-}
+{"Protocolo":{"Transacaos":[{"IdFimAFim":"E00360305202601142327f7646f098f1","IdRV":"3626896f-e421-42fe-8101-08d2ce48e166","DataCriacao":"2026-01-15T19:07:02.424294744Z","Status":"CRIADA"},{"IdFimAFim":"E0036030520260114232603e21b387ee","IdRV":"44309b39-5c45-4c9a-8bb5-574d75bcd48d","DataCriacao":"2026-01-15T19:07:03.412294539Z","Status":"CRIADA"}]}}
