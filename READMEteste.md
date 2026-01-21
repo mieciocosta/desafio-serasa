@@ -1,10 +1,4 @@
 
-Perfeito 😄
-Vou montar o **documento de evidência no formato “caminho feliz”**, cobrindo **ENVIO → RECEBIMENTO → CANCELAMENTO**, **bem limpo**, só com **pontos objetivos + lugar exato para colar prints**.
-
-Pronto para README / Jira / Confluence.
-
----
 
 # 📑 Evidência de Teste – MED | Caminho Feliz (Envio, Recebimento e Cancelamento)
 
@@ -51,6 +45,12 @@ Pronto para README / Jira / Confluence.
 
 📸 **Print – Tela de envio da mensagem no Service Bus**
 
+<img width="1918" height="1078" alt="image" src="https://github.com/user-attachments/assets/cc309ecf-28df-4c79-8ebf-8276dd3b45b8" />
+
+<img width="1918" height="672" alt="image" src="https://github.com/user-attachments/assets/77abc698-3577-4b1a-8596-29741b2a4311" />
+
+
+
 ---
 
 # 📥 2. Caminho Feliz – RECEBIMENTO E PROCESSAMENTO
@@ -65,6 +65,7 @@ Pronto para README / Jira / Confluence.
 * Nenhuma mensagem enviada para Dead Letter Queue (DLQ)
 
 📸 **Print – Fila de recebimento sem mensagens pendentes**
+<img width="1918" height="1078" alt="image" src="https://github.com/user-attachments/assets/f2d90add-c2e9-4cd6-b02a-405ad5e39ee5" />
 
 ---
 
@@ -131,15 +132,3 @@ WHERE c.idFimAFim = "E0036030520260114233353d900045d1"
 
 ---
 
-## 📝 Observações
-
-* O payload convertido atendeu integralmente ao layout esperado pelo worker do SIGCN
-* O fluxo validado confirma o comportamento esperado para o **caminho feliz completo**
-* Evidência válida para QA, homologação e auditoria
-
----
-
-Se quiser, no próximo passo eu posso:
-
-* gerar o **mesmo documento para erro funcional e DLQ**
-* ou padronizar com **cabeçalho oficial CAIXA (versão, responsável, data)**
