@@ -1,1 +1,20 @@
-{"Protocolo":{"Transacaos":[{"IdFimAFim":"E00360305202601142327f7646f098f1","IdRV":"3626896f-e421-42fe-8101-08d2ce48e166","DataCriacao":"2026-01-15T19:07:02.424294744Z","Status":"CRIADA"},{"IdFimAFim":"E0036030520260114232603e21b387ee","IdRV":"44309b39-5c45-4c9a-8bb5-574d75bcd48d","DataCriacao":"2026-01-15T19:07:03.412294539Z","Status":"CRIADA"}]}}
+{
+  "teste_miecio": "RECUP_ENTRADA_001",
+  "Protocolo": "PROTO_MIECIO_001",
+  "Transacaos": [
+    {
+      "IdFimAFim": "E00360305202601142327f7646f098f1"
+    }
+  ]
+}
+
+
+
+{
+  "teste_miecio": "RECUP_ENTRADA_002",
+  "Protocolo": "PROTO_MIECIO_002",
+  "Transacaos": [
+    { "IdFimAFim": "E00360305202601142327f7646f098f1" },
+    { "IdFimAFim": "E0036030520260114232603e21b387ee" }
+  ]
+}
