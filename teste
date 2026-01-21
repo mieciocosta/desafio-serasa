@@ -1,227 +1,65 @@
-Perfeito 👍
-Segue um **README LIMPO, direto e profissional**, pronto para **colar sem ajuste**.
-Usei títulos claros, passo a passo objetivo, JSONs separados e critérios de validação.
-
----
-
-# 🧪 Testes MED – Recuperação de Valores (SIGCN)
-
-Este documento descreve **como executar e validar os testes** do fluxo de Recuperação de Valores utilizando **IDs reais**, filas do **Azure Service Bus** e **Cosmos DB**.
-
----
-
-## 📌 Filas Envolvidas
-
-* **Entrada (postagem de testes)**
-  `sigcn-med-solicitacaorecuperacao-recebimento`
-
-* **Retorno (sucesso – canal digital)**
-  `sigcn-med-solicitacaorecuperacao-retorno`
-
-* **Falhas (erro de validação / erro funcional)**
-  `sigcn-med-falhas-solicitacaorecuperacao-envio`
-
-* **Mensagens Mortas (DLQ)**
-  Aba *Mensagens mortas* da fila de recebimento
-
----
-
-## ⚠️ Pré-requisito Importante
-
-O namespace do Service Bus possui **acesso público desabilitado**.
-
-Antes de testar:
-
-1. Estar conectado à **rede/VPN corporativa**, ou
-2. Ter o **IP liberado** no namespace
-3. Clicar em **“Alternar para a Rede”** no topo da fila
-4. Atualizar a página
-
-Sem isso, **não será possível enviar ou espiar mensagens**.
-
----
-
-## 🧩 Massa de IDs de Transação (BACEN)
-
-### ✅ IDs FUNCIONAIS (usar para sucesso)
-
-```
-E00360305202601142342a2c61528410
-E00360305202601142342b1c2ba87263
-E00360305202601142343ef45a64aefd
-E00360305202601142343a70ead682b8
-```
-
-### ⚠️ IDs NÃO INDEXADOS (erro funcional esperado)
-
-```
-E003603052026011420262b6f5ae914f
-E00360305202601142027c313b4f493c
-```
-
-### ❌ IDs COM HISTÓRICO DE DLQ
-
-```
-E00360305202601142349ed5d917f9a6
-```
-
----
-
-## 🧪 TESTE 1 — Sucesso (Happy Path)
-
-### Objetivo
-
-Criar pedido de recuperação com sucesso utilizando **ID real funcional**.
-
-### Onde postar
-
-Fila:
-`sigcn-med-solicitacaorecuperacao-recebimento`
-
-### JSON
-
-```json
 {
-  "teste_miecio": "SUCESSO_REAL_001",
-  "IdFimaFim": "MIECIO_FIMAFIM_OK_001",
-  "idTransacao": "E00360305202601142342a2c61528410",
-  "origem": "SICONT",
-  "valor": 150.75,
-  "dataSolicitacao": "2026-01-21T16:10:00Z",
-  "motivo": "FRAUDE_GOLPE"
+    "Protocolo": "260116096768384",
+    "Nome": "VALENTINA GABRIELA MORAES",
+    "Agencia": "0333",
+    "Conta": "0000005929228970",
+    "Produto": "3701",
+    "Documento": "61562716352",
+    "Telefone": "99999999999",
+    "DataHoraRegistro": "2026-01-16T15:24:32.785389-03:00",
+    "CanalRegistro": "Teste SIGCN",
+    "IdDispositivo": "a3f9c2d8-7b4e-4e1a-9f6d-2c8b1e5f4a7",
+    "Geolocalizacao": {
+        "latitude": "-23.550520",
+        "longitude": "-46.633308",
+        "location_accuracy": "15",
+        "location_timestamp": "2025-12-02T12:55:25.123-03:00"
+    },
+    "TipoJornada": "PIX_NORMAL",
+    "Situacao": "SCAM",
+    "ResultadoQuestionario": 3,
+    "Razao": "REFUND_REQUEST",
+    "DetalhesRelatoInfracao": "AAAAAAAAAAAAAAAAAAAAA",
+    "Transacoes": [
+        {
+            "IdFimaFim": "E0036030520260114233353d900045d1",
+            "CanalOrigem": "SIIBC",
+            "Valor": 2,
+            "UsuarioPagador": {
+                "Nome": "VALENTINA GABRIELA MORAES",
+                "Cpf": "61562716352",
+                "Cnpj": "",
+                "Conta": {
+                    "Agencia": "0333",
+                    "NumeroConta": "0000005929228970",
+                    "Chave": null,
+                    "Ispb": "00360305",
+                    "Produto": "3701"
+                }
+            },
+            "UsuarioRecebedor": {
+                "Nome": "BERNARDO CLAUDIO RENAN PEREIRA",
+                "Cpf": "45651547061",
+                "Cnpj": "",
+                "Conta": {
+                    "Agencia": "0333",
+                    "NumeroConta": "0000005929228953",
+                    "Chave": "2b428a80-9a40-4bba-a367-cb3f362f30b9",
+                    "Ispb": "00360305",
+                    "Produto": "3701"
+                }
+            },
+            "DataHoraTransacao": "2026-01-14T17:51:03.000Z",
+            "Tipo": "D",
+            "IdNotificacaoInfracao": null,
+            "DataHoraCriacaoNi": null,
+            "SituacaoCriacaoNI": null
+        }
+    ],
+    "Questionario": [
+        {
+            "Pergunta": "Qual dessas alternativas descreve melhor o que aconteceu?",
+            "Resposta": "Realizei o pagamento e percebi se tratar de um golpe"
+        }
+    ]
 }
-```
-
-### Validação Esperada
-
-* Fila de recebimento: mensagem consumida (Fila = 0)
-* Fila de retorno:
-
-  * Retorno com `idRecuperacaoValor` e/ou `protocolo` (quando aplicável)
-* Cosmos DB:
-
-  * Documento criado
-  * `status = CRIADO`
-  * `idTransacao` igual ao enviado
-
----
-
-## 🧪 TESTE 2 — Erro Funcional (Transação não indexada)
-
-### Objetivo
-
-Validar tratamento de erro funcional retornado pelo BACEN/SISPI.
-
-### JSON
-
-```json
-{
-  "teste_miecio": "ERRO_BACEN_001",
-  "IdFimaFim": "MIECIO_FIMAFIM_ERRO_BACEN",
-  "idTransacao": "E003603052026011420262b6f5ae914f",
-  "origem": "SICONT",
-  "valor": 200.00,
-  "dataSolicitacao": "2026-01-21T16:20:00Z",
-  "motivo": "FRAUDE_GOLPE"
-}
-```
-
-### Validação Esperada
-
-* Mensagem processada
-* Registro de erro salvo no banco
-* Mensagem pode aparecer na fila:
-
-  * `sigcn-med-falhas-solicitacaorecuperacao-envio`
-* **Não deve ir para DLQ**
-
----
-
-## 🧪 TESTE 3 — Dead Letter Queue (DLQ)
-
-### Objetivo
-
-Validar envio para mensagens mortas após falhas repetidas.
-
-### JSON
-
-```json
-{
-  "teste_miecio": "DLQ_001",
-  "IdFimaFim": "MIECIO_FIMAFIM_DLQ",
-  "idTransacao": "E00360305202601142349ed5d917f9a6",
-  "origem": "SICONT",
-  "valor": 300.00,
-  "dataSolicitacao": "2026-01-21T16:30:00Z",
-  "motivo": "FRAUDE_GOLPE"
-}
-```
-
-### Validação Esperada
-
-* Após tentativas de reprocessamento:
-
-  * Mensagem aparece em **Mensagens Mortas**
-* Corpo da mensagem contém o `idTransacao` enviado
-* Nenhum status de sucesso no Cosmos
-
----
-
-## 🧪 TESTE 4 — Status ANALYZED (Disparo de Devolução)
-
-### Objetivo
-
-Validar o fluxo de devolução quando a análise é concluída.
-
-### JSON (fila de mudança de status)
-
-```json
-{
-  "teste_miecio": "ANALYZED_REAL_001",
-  "IdFimaFim": "MIECIO_FIMAFIM_OK_001",
-  "IDRecuperacao": "E00360305202601142342a2c61528410",
-  "status": "ANALYZED",
-  "timestamp": "2026-01-21T16:40:00Z"
-}
-```
-
-### Validação Esperada
-
-* SIGCN identifica status `ANALYZED`
-* Cria JSON de solicitação de devolução
-* Tenta chamada ao endpoint do SISPI
-* Em erro:
-
-  * Registro salvo no container
-    `med-devolucao-solicitacoes`
-
----
-
-## 🔍 Validação no Cosmos DB (exemplo de query)
-
-```sql
-SELECT * FROM c
-WHERE c.idTransacao = "E00360305202601142342a2c61528410"
-```
-
-Verificar:
-
-* Status do pedido
-* Timestamp de criação
-* IdFimAFim / idTransacao
-
----
-
-## ✅ Regra de Ouro
-
-* Sempre usar **idTransacao real**
-* Sucesso ≠ apenas fila vazia → **validar Cosmos**
-* Erro funcional ≠ DLQ
-* DLQ só ocorre em erro técnico ou reprocessamento excedido
-
----
-
-Se quiser, posso:
-
-* gerar uma **tabela de evidências (print obrigatório por teste)**
-* ou adaptar esse README para **padrão corporativo CAIXA** (header, versão, responsável, data).
