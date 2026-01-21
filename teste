@@ -1,213 +1,100 @@
-Perfeito — pelas tuas telas dá pra ver que você já está exatamente nas **3 filas**:
-
-* **Entrada**: `sigcn-med-solicitacaorecuperacao-recebimento` (onde você posta)
-* **Retorno**: `sigcn-med-solicitacaorecuperacao-retorno` (onde você valida o “ok” do canal digital)
-* **Falhas**: `sigcn-med-falhas-solicitacaorecuperacao-envio` (onde cai erro de validação / fallback)
-
-E também aparece o aviso grande: **“acesso à rede pública desabilitado”** e o botão **“Alternar para a Rede”**.
-
-Abaixo vai um **passo a passo bem operacional**: onde clicar, que JSON postar e como validar.
-
----
-
-## 0) Antes de tudo: resolver o “Alternar para a Rede”
-
-Se você estiver fora da rede permitida, o Azure Portal **não vai deixar** “Espiar / Ver / Enviar” mensagem.
-
-1. Na própria tela da fila, clique no botão **“Alternar para a Rede”** (lado direito).
-2. Se abrir a parte de rede (Networking) e você não tiver permissão, o caminho típico é:
-
-   * entrar pela **VPN/rede corporativa** (quando existe), **ou**
-   * pedir para liberarem teu **IP** na allowlist do namespace (se o time de infra fizer isso).
-3. Volte pra fila e clique **Atualizar**.
-
-> Se depois disso ainda não aparecer o corpo/mensagens, é 99% rede/permissão.
-
----
-
-## 1) Teste de SUCESSO (entrada → cosmos CRIADO → retorno)
-
-### 1.1 Onde clicar para POSTAR na fila de **recebimento**
-
-Na fila **`sigcn-med-solicitacaorecuperacao-recebimento`**:
-
-1. Clique em **“Enviar mensagens”** (barra de ações no topo).
-2. Vai abrir o painel de envio. Normalmente você vai ver campos tipo:
-
-   * **Corpo da mensagem**
-   * (opcional) Content-Type / propriedades
-3. Cole o JSON (abaixo) e clique em **Enviar**.
-
-### 1.2 JSON de teste (bem rastreável)
-
-Use este aqui (bem simples e com `teste_miecio` + `IdFimaFim`):
-
-```json
-{
-  "teste_miecio": "OK_RECUP_001",
-  "IdFimaFim": "MIECIO_FIMAFIM_OK_001",
-  "origem": "SICONT",
-  "idTransacao": "TX_MIECIO_001",
-  "valor": 10.5,
-  "dataSolicitacao": "2026-01-21T15:00:00Z",
-  "motivo": "FRAUDE_GOLPE"
-}
-```
-
-> Mesmo que o layout real tenha mais campos, esse JSON já serve como “smoke” **se o teu consumidor não exigir muitos obrigatórios**.
-> Se ele exigir, você vai ver cair em **falhas** (e aí a gente ajusta o payload conforme o erro retornado).
-
-### 1.3 Como VALIDAR que processou
-
-#### A) Validar na fila de **recebimento**
-
-1. Clique em **Modo de Espiada** (drop-down).
-2. Clique **“Espiar próximas mensagens”**.
-
-   * Se o worker consumiu rápido, vai ficar **Fila (0)**.
-3. Clique na aba **“Mensagens mortas”**:
-
-   * Se aparecer aqui, é erro/retry estourado (DLQ).
-
-#### B) Validar na fila de **retorno**
-
-Na fila **`sigcn-med-solicitacaorecuperacao-retorno`**:
-
-1. Clique **“Espiar próximas mensagens”**.
-2. Marque a mensagem e clique **“Baixe o corpo da mensagem selecionada”** (ou “Mostrar o corpo da mensagem” se aparecer).
-3. O **sucesso do canal digital** costuma vir com algo como:
-
-   * `protocolo`
-   * `idRecuperacaoValor` (ou idRecuperacao)
-
-> Se você postou como SICONT e o fluxo “sucesso = Cosmos CRIADO” sem retorno, pode não cair nada aqui — aí a validação é no Cosmos.
-
-#### C) Validar no Cosmos DB (status CRIADO)
-
-No Azure Portal:
-
-1. Abra o **Cosmos DB Account** do projeto
-2. Vá em **Data Explorer**
-3. Entre no container que guarda os pedidos (o time te passou “Cosmos DB com status CRIADO”; se você souber o nome eu deixo a query certinha)
-4. Rode uma query buscando pelo teu rastreio:
-
-Exemplo de query (SQL do Cosmos) — ajuste nome dos campos conforme estiverem lá:
-
-```sql
-SELECT * FROM c
-WHERE c.IdFimaFim = "MIECIO_FIMAFIM_OK_001"
-   OR c.teste_miecio = "OK_RECUP_001"
-   OR c.idTransacao = "TX_MIECIO_001"
-```
-
-**O que procurar no documento:**
-
-* `status` = **CRIADO**
-* `IdFimaFim` / `idTransacao` batendo
-* timestamps de criação/update
-
----
-
-## 2) Teste de ERRO DE VALIDAÇÃO (entrada → fila de falhas)
-
-### 2.1 Postar um JSON propositalmente inválido
-
-Na **`sigcn-med-solicitacaorecuperacao-recebimento`** → **Enviar mensagens**:
-
-```json
-{
-  "teste_miecio": "ERRO_LAYOUT_001",
-  "IdFimaFim": "MIECIO_FIMAFIM_ERRO_001",
-  "origem": "SICONT"
-}
-```
-
-(Ex.: faltando campos de transação, valor, motivo etc.)
-
-### 2.2 Validar na fila de **falhas**
-
-Na **`sigcn-med-falhas-solicitacaorecuperacao-envio`**:
-
-1. Clique **“Espiar próximas mensagens”**
-2. Abra o corpo: **“Baixe o corpo…”** / “Mostrar o corpo…”
-3. Valide se vem algo como:
-
-* motivo do erro (campo obrigatório ausente, leiaute inválido etc.)
-* o teu `IdFimaFim`/`teste_miecio` para provar correlação
-
-> Se cair em falhas, você já prova o critério “Retornar erro ao sistema de origem / erro controlado”.
-
----
-
-## 3) Teste de DLQ (Mensagens mortas) — quando dá erro “não tratável”
-
-Esse é mais chatinho porque precisa de um erro que **sempre falhe** e gere retry até estourar.
-
-### Como validar DLQ (sem precisar esperar muito)
-
-1. Na fila **recebimento**, clique na aba **“Mensagens mortas”**
-2. Se tiver mensagens, selecione e:
-
-   * **Baixe o corpo da mensagem selecionada**
-   * Veja **DeliveryCount**/motivo (às vezes aparece nos headers/propriedades)
-
-> Para forçar DLQ de verdade, normalmente é:
-
-* mandar mensagem que quebra o consumidor (ex.: JSON malformado, tipo errado crítico)
-* ou simular dependência fora (endpoint indisponível) se o worker não tratar com backoff
-
-Se você me mandar **um exemplo de mensagem que você viu indo pra DLQ**, eu te digo exatamente qual tipo de payload reproduz isso.
-
----
-
-## 4) Teste de “Mudança de Status” (TASK 76172) — se você também posta manual
-
-Se existir uma fila específica de **mudança de status** (não vi o nome nas tuas telas, mas a massa é essa):
-
-### JSON (layout da task)
-
-```json
-{
-  "teste_miecio": "STATUS_ANALYZED_001",
-  "IdFimaFim": "MIECIO_FIMAFIM_OK_001",
-  "StatusAnterior": "PROCESSING",
-  "StatusAtual": "ANALYZED",
-  "DataDoRegistro": "2026-01-21T15:05:00Z"
-}
-```
-
-**Validação esperada:**
-
-* algum update no Cosmos (status/etapa)
-* e/ou disparo do fluxo de devolução (dependendo do worker encadeado)
-
----
-
-## 5) O “mapa” rápido do que cada fila significa (pra não se perder)
-
-### `...-recebimento`
-
-✅ Você posta aqui para iniciar teste
-📌 Valida: consumiu? ficou 0? foi DLQ?
-
-### `...-retorno`
-
-✅ Aqui você valida a resposta do canal digital
-📌 Valida: `protocolo` + `idRecuperacaoValor`
-
-### `...-falhas-...-envio`
-
-✅ Aqui você valida erro de validação/contrato
-📌 Valida: motivo do erro + correlação com teu `IdFimaFim`
-
----
-
-## Me diz 2 coisas que eu deixo “cirúrgico” (sem você ter que adivinhar)
-
-1. **Qual container Cosmos** guarda o pedido de recuperação (nome exato).
-2. Qual é o **nome exato do campo** que o time usa como chave (é `IdFimaFim` mesmo? ou `idFimAFim` / `endToEndId` / `idTransacao`?).
-
-Com isso eu te devolvo:
-
-* as **queries prontas** do Cosmos (sem tentativa/erro),
-* e a massa JSON **no layout real** (com todos obrigatórios) pra cair em **sucesso garantido** e gerar retorno/protocolo.
+Voce vai precisar de id de transação real para fazer os testes: A Malu mandou essa massa de dados aq
+ 
+ 
+E003603052026011420262b6f5ae914f (A transação informada não está indexada no BACEN)
+E00360305202601142027c313b4f493c (A transação informada não está indexada no BACEN.)
+E003603052026011420288cadad39667
+E00360305202601142029ac5eeab0e5e
+E003603052026011420300907abb4254
+E00360305202601142031fe5f944bb86
+E00360305202601142032cc8de851e52
+ 
+E003603052026011420402ca8fd9fcbc 
+E00360305202601142042029dc12e2f1
+E00360305202601142043f12e2cee2e5
+E00360305202601142043f2a4f12227f
+E00360305202601142044d48040670e7
+E00360305202601142045f39b5827a69
+E00360305202601142046fc6dfd28725
+E003603052026011420473ebf05ed17b
+ 
+E0036030520260114231755bf0bb8ecf
+E003603052026011423189fcb307fbf8
+E00360305202601142319e2a24a96955
+E003603052026011423201037ddd4ba8
+E003603052026011423212ef592c2db7
+E003603052026011423226a59e8930de
+E00360305202601142323c1d5a6bbd9c
+Caixa outra IF Conta 1
+E003603052026011423253b1af48bbd4
+E0036030520260114232603e21b387ee
+E00360305202601142327f7646f098f1
+E00360305202601142327b0ea8fc0e4c
+E003603052026011423281afd5283be3
+E003603052026011423296517c8e98a2
+E0036030520260114232993f5147523c
+E00360305202601142330802e5c3a441
+Caixa - Caixa Conta 2
+E0036030520260114233353d900045d1
+E0036030520260114233461dafb516b6
+E00360305202601142335f8291d4a6ba
+E003603052026011423369fa19cb2a0a
+E00360305202601142337345c493e191
+E00360305202601142338a52170d86e8
+E003603052026011423392da4349078a
+E00360305202601142340cb3f832385b
+E00360305202601142341c3e51624cb6
+
+Caixa outra IF Conta 2
+E00360305202601142342a2c61528410 (Funcionou - USADO)
+E00360305202601142342b1c2ba87263 (Funcionou - USADO)
+E00360305202601142343ef45a64aefd (Funcionou - USADO)
+E00360305202601142343a70ead682b8 (Funcionou - USADO)
+E003603052026011423489456fdea8e8 (NÃO SEI)
+E00360305202601142349ed5d917f9a6 (DEAD LETTER)
+E003603052026011423504672dd828f4 (Tá zoado, não entendi)
+E003603052026011423516413cd0e8a8
+E00360305202601142352180aef77250
+ 
+ 
+
+RR003603052026011587351415809 (Tentativa de uso - Não há caracter especial)
+E0036030520260115110142911635633 (Tentativa de uso - N indexado da caixa)
+RR003603052026011552731966558
+E0036030520260115110142944044420
+RR003603052026011571087047007
+E0036030520260115110142149916407
+RR003603052026011586814431332
+E0036030520260115110142281258496
+RR003603052026011586177481824
+E0036030520260115110142888597588
+RR003603052026011536494725899
+E0036030520260115110142918361804
+RR003603052026011568678188736
+E0036030520260115110142159285015
+RR003603052026011502519283536
+E0036030520260115110142460468230
+RR003603052026011569765057329
+E0036030520260115110142482249069
+RR003603052026011514442983565
+E0036030520260115110142359517644
+RR003603052026011583721679582
+E0036030520260115110142894707240
+RR003603052026011520576850554
+E0036030520260115110142771071678
+RR003603052026011528110914067
+E0036030520260115110142524827744
+RR003603052026011582983568481
+E0036030520260115110142410036514
+RR003603052026011574046973738
+E0036030520260115110142450989543
+RR003603052026011519907463180
+E0036030520260115110142279039468
+RR003603052026011562208306449
+E0036030520260115110142497571570
+RR003603052026011546802238822
+E0036030520260115110142138765978
+RR003603052026011521782192441
+E0036030520260115110142447329495
+RR003603052026011513329059875
+E0036030520260115110142925239424
