@@ -3,7 +3,7 @@
 
 ## Objetivo
 
-Validar a tela **Configurações** do SIGCN MED quanto a **preenchimento, salvamento e persistência** dos dados.
+Validar a tela **Grafos** do SIGCN MED quanto a **preenchimento, salvamento e persistência** dos dados.
 
 ---
 
