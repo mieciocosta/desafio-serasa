@@ -1,14 +1,272 @@
-PS C:\Desenvolvimento\sigcn-med-backend\MedBackend> dotnet run
-Compilando...
-Environment: Local
-info: Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager[63]
-      User profile is available. Using 'C:\Users\f996657\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
-info: Microsoft.Hosting.Lifetime[14]
-      Now listening on: http://localhost:5059
-info: Microsoft.Hosting.Lifetime[0]
-      Application started. Press Ctrl+C to shut down.
-info: Microsoft.Hosting.Lifetime[0]
-      Hosting environment: Local
-info: Microsoft.Hosting.Lifetime[0]
-      Content root path: C:\Desenvolvimento\sigcn-med-backend\MedBackend
+fluxo MED
+
+Canal de Aberturs do MED SIGCN SISPI
+o de Solicitação de Recuperação de Valores
+Recebe a reclamação 
+do Cliente acerca de 
+MED não 
+reconhecido por 
+fraude ou golpe
+Recebe a solicitação 
+de abertura de 
+recuperação de 
+valores e popula os 
+parâmetros do grafo
+Recebe do 
+Plataforma a 
+solicitação e envia o 
+pedido de 
+recuperação de 
+valores ao DICT
+Captura os pedidos de 
+recuperação que 
+tiveram seu status 
+alterado e envia ao SIG
+Recebe do SISPI as 
+solicitações de 
+recuperação que tiveram 
+seu status alterado para 
+“ANALYZED”
+Recebe do SIGCN a 
+solicitação de 
+devolução e envia ao 
+DICT
+Necessário página 
+web para alterar 
+parâmetros do 
+grafo
+Facultativo a partir 
+de 23/11/2025 e 
+obrigatório em 
+02/02/2025
+Após analisada, o 
+PSP pagador tem 
+até 72h para 
+solicitar a 
+devolução
+1,1
+DICT PSP(S) RECEBEDOR (S)
+Fluxo
+Recebe da CAIXA a solicitação 
+de recuperação de valores, 
+elabora o grafo e abre a (s) NI 
+(s)
+Analisam a(s) 
+notificação(s) 
+de Infração(S)
+Recebe do PSP(s) 
+recebedor(s) o(s) 
+resultado(s) 
+Recebe do PSP 
+pagador o pedido 
+de devolução e 
+envia ao(s ) PSP(s) 
+recebedor(s)
+Recebe o (s) e 
+providencia a(s) 
+devolução(s) em 
+até 6h
+O status da análise só 
+é alterado quando 
+todos os PSPs  
+concluírem sua 
+análise, no caso de tri
+A devolução é 
+liquidada em 
+conta
+1,2
+
+
+
+Canal de Aberturs do MED SIGCN SISPI
+o de Solicitação de Recuperação de Valores
+Recebe a reclamação 
+do Cliente acerca de 
+MED não 
+reconhecido por 
+fraude ou golpe
+Recebe a solicitação 
+de abertura de 
+recuperação de 
+valores e popula os 
+parâmetros do grafo
+Recebe do 
+Plataforma a 
+solicitação e envia o 
+pedido de 
+recuperação de 
+valores ao DICT
+Captura os pedidos de 
+recuperação que 
+tiveram seu status 
+alterado e envia ao SIG
+Recebe do SISPI as 
+solicitações de 
+recuperação que tiveram 
+seu status alterado para 
+“ANALYZED”
+Recebe do SIGCN a 
+solicitação de 
+devolução e envia ao 
+DICT
+Necessário página 
+web para alterar 
+parâmetros do 
+grafo
+Facultativo a partir 
+de 23/11/2025 e 
+obrigatório em 
+02/02/2025
+Após analisada, o 
+PSP pagador tem 
+até 72h para 
+solicitar a 
+devolução
+1,1
+DICT PSP(S) RECEBEDOR (S)
+Fluxo
+Recebe da CAIXA a solicitação 
+de recuperação de valores, 
+elabora o grafo e abre a (s) NI 
+(s)
+Analisam a(s) 
+notificação(s) 
+de Infração(S)
+Recebe do PSP(s) 
+recebedor(s) o(s) 
+resultado(s) 
+Recebe do PSP 
+pagador o pedido 
+de devolução e 
+envia ao(s ) PSP(s) 
+recebedor(s)
+Recebe o (s) e 
+providencia a(s) 
+devolução(s) em 
+até 6h
+O status da análise só 
+é alterado quando 
+todos os PSPs  
+concluírem sua 
+análise, no caso de tri
+A devolução é 
+liquidada em 
+conta
+1,2
+
+
+
+Link: Link Front-end Ambiente DES
+Usuário: c892024
+Senha: Caixa123
+
+
+sicont envia e caso erro retorna pra ooutra fila
+
+canal digital quando posta na fila eles recebm o retorno de sucesso, ocorrendo sucesso, retorna em outra fila o protocolo e também o id de recureção de valor da transação
+aí já tem 2 fulox pra canais diferentes
+
+validar esses vceanrios de envio para rantoa siclon(enviam como sicont) veriiacr se foi sucesso, sicont sucesso é se tiver persistindo container no cosmo DB com status criado com id de transação
+
+com id fim a fim se tiver criado é porque foi criado se ano foi pra dade letter, fica de stand by ( mensagens mortas se tiver 10 tentativas de processamento)
+
+outro worker status sispei statu analiserd, atuaiza pra outra fila tudo dentro dos requsistos 
+
+worker do cancelamento criou um pedido de recuperação de valor do primeiro fluxo. processando se ser ok, vai aparecer no cosmo esta cancelada ao invés de criada (cenalemnto da primeira abertura que fez anterior)
+
+
+
+
+
+sigcn-med-solicitacaorecuperacao-recebimento (servicebus-eds-nprd/sigcn-med-solicitacaorecuperacao-…
+Microsoft Azure
+ 
+sigcn-med-solicitacaorecuperacao-retorno (servicebus-eds-nprd/sigcn-med-solicitacaorecuperacao-reto…
+Microsoft Azure
+ 
+Anderson Silva da Conceicao
+sigcn-med-solicitacaorecuperacao-recebimento (servicebus-eds-nprd/sigcn-med-solicitacaorecuperacao-…
+faz a postagem ( de entrada para os testes
+ 
+Anderson Silva da Conceicao
+sigcn-med-solicitacaorecuperacao-retorno (servicebus-eds-nprd/sigcn-med-solicitacaorecuperacao-reto…
+posta na fila e tem o retorno do canal digital.
+ 
+sigcn-med-falhas-solicitacaorecuperacao-envio (servicebus-eds-nprd/sigcn-med-falhas-solicitacaorecu…
+Microsoft Azure
+ 
+Anderson Silva da Conceicao
+sigcn-med-falhas-solicitacaorecuperacao-envio (servicebus-eds-nprd/sigcn-med-falhas-solicitacaorecu…
+fila quando ha erro de validação, e envia para o sicont
+
+
+
+
+Gerado por IA. Certifique-se de verificar a precisão. 
+
+Anotações da reunião: 
+
+Configuração e Boas Práticas de ConfigMap: Fabio explicou detalhadamente para Anderson, Ivan, Gabriela, Paulo e o restante da equipa como criar, configurar e validar arquivos ConfigMap, destacando cuidados com sintaxe, indentação e validação em pipelines, além de recomendar revisões duplas antes de deploys em produção.  
+
+Sintaxe e Indentação: Fabio alertou sobre a importância de utilizar a sintaxe correta nos arquivos ConfigMap, evitando letras maiúsculas nos nomes, utilizando aspas duplas para valores booleanos e mantendo a indentação precisa, pois qualquer erro pode causar falhas na pipeline e problemas em produção. 
+
+Validação e Referência em Pipelines: Foi explicado que, após criar o ConfigMap, é necessário referenciá-lo corretamente no arquivo de valores (values.yaml), garantindo que o nome do arquivo e o nome referenciado coincidam, e que a pipeline valide corretamente a configuração antes do deploy. 
+
+Revisão por Múltiplas Pessoas: Fabio recomendou que, especialmente para arquivos de produção, pelo menos duas pessoas revisem os ConfigMaps para evitar erros que possam passar despercebidos e comprometer o deploy. 
+
+Separação de Variáveis: Foi sugerido que variáveis não secretas podem ser separadas em arquivos distintos para melhor organização, desde que estejam corretamente referenciadas e documentadas no repositório. 
+
+Gestão e Importação de Secrets: Fabio orientou Paulo, Anderson e o grupo sobre a criação, importação e referência de arquivos de secrets, esclarecendo o processo de solicitação à equipa de segurança (Marcio) e destacando a necessidade de garantir a correspondência exata entre nomes e valores para evitar erros de conexão.  
+
+Criação e Nomeação de Arquivos: Fabio explicou que cada secret deve ser importada em um arquivo separado, com o nome do arquivo e o nome da secret exatamente iguais, para garantir o correto funcionamento da importação e evitar problemas de conexão. 
+
+Processo de Solicitação de Secrets: Foi esclarecido que a equipa de desenvolvimento não pode alterar diretamente os secrets em produção; é necessário abrir uma requisição para a equipa de segurança (Marcio), que realiza a alteração no Key Vault. 
+
+Referência em Values e Debug: Após criar e importar a secret, é preciso referenciá-la corretamente no arquivo de valores, utilizando a sintaxe adequada, e verificar possíveis erros de importação durante o deploy, como valores incorretos ou espaços extras. 
+
+Ajustes e Correções em Produção: Anderson relatou um caso prático de erro de configuração de secret, que foi corrigido em conjunto com Sabina e Fabiana, reforçando a importância de validação e ajuste rápido em produção. 
+
+Configuração de Deploy Backend e Infraestrutura: Fabio detalhou para Anderson, Paulo, Maria e equipa os passos para configurar o deploy do backend, incluindo definições de recursos, certificados, DNS, node pools e tolerations, além de explicar como identificar e corrigir problemas comuns durante o deploy.  
+
+Definições de Recursos e Endereços: Foram explicadas as configurações de recursos (CPU, memória, autoscaling) e a definição dos endereços HTTP/HTTPS, incluindo o padrão de nomenclatura e a necessidade de geração e referência de certificados para HTTPS. 
+
+Configuração de Node Pools e Tolerations: Fabio mostrou como configurar node pools válidos para execução de builds e deploys, destacando que o valor do node pool pode precisar ser ajustado manualmente no values de produção. 
+
+Debug e Solução de Problemas: Foram apresentadas estratégias de debug em caso de falha no deploy, como análise dos logs da pipeline, verificação de warnings no namespace e consulta aos logs do pod, além de dicas para identificar erros de importação de ConfigMap ou secrets. 
+
+Etapa PFM e Aprovação: Maria e Fabio discutiram a etapa PFM, que representa uma aceitação tácita de qualidade por parte de um agente de operações (ex: Márcio), sendo necessária aprovação para deploy em produção, desde que os requisitos de cobertura e qualidade estejam cumpridos. 
+
+Deploy e Configuração do Frontend: Fabio explicou para Ivan, Maria e equipa que o deploy do frontend é feito via Azure Blob Storage, com variáveis de ambiente e secrets configurados diretamente no repositório, e esclareceu dúvidas sobre permissões, erros de configuração e processos de build.  
+
+Processo de Deploy Estático: O frontend é servido como site estático via Azure Blob Storage, sem necessidade de servidor Node, e o deploy consiste em subir os arquivos gerados para o storage, com as variáveis de ambiente definidas nos arquivos do próprio repositório. 
+
+Configuração de Variáveis e Secrets: Fabio destacou que as connection strings e account names devem ser configuradas como secrets no repositório, e que não se deve incluir secrets diretamente nos arquivos de configuração do frontend. 
+
+Permissões e Suporte: Ivan questionou sobre permissões para configurar secrets, e Fabio esclareceu que, caso não tenham acesso, podem solicitar a ele, ao Marcio ou ao Victor Rodrigo para realizar as configurações necessárias. 
+
+Resolução de Erros Específicos: Ivan relatou um erro relacionado ao tamanho de arquivo no frontend, e Fabio sugeriu consultar Victor Rodrigues de Brito para avaliar a possibilidade de alterar o limite, propondo criar um chat para tratar do tema. 
+
+Pipelines, Qualidade de Código e Rollback: Fabio orientou o grupo sobre o funcionamento das pipelines de CI/CD, requisitos de qualidade (80% de cobertura), análise de erros no SonarQube, e explicou como realizar rollback de deploys em caso de falha, além de ressaltar a importância de sempre gerar nova pipeline após alterações.  
+
+Requisitos de Qualidade e SonarQube: Foi reforçado que é obrigatório atingir pelo menos 80% de cobertura de código e não possuir issues críticas para aprovação de deploy, sendo o SonarQube a ferramenta de referência para análise e aprovação. 
+
+Funcionamento das Pipelines: Fabio explicou o fluxo das pipelines de build, análise estática e deploy, destacando a necessidade de monitorar logs e outputs para identificar falsos positivos e problemas não detectados automaticamente. 
+
+Rollback de Deploy: Em caso de falha em produção, o rollback é feito executando a última pipeline bem-sucedida, garantindo o retorno à versão anterior estável, tanto em produção quanto em ambientes de desenvolvimento. 
+
+Atualização de Variáveis e Novas Pipelines: Foi alertado que, após alterar variáveis de ambiente, é necessário executar uma nova pipeline para que as alterações sejam aplicadas, pois re-executar jobs antigos não atualiza as variáveis. 
+
+Distribuição de Tarefas e Colaboração da Equipa: Leonardo, Anderson, Maria e equipa discutiram a distribuição de tarefas, colaboração entre membros e estratégias para garantir que todos estejam alinhados e produtivos, com Anderson detalhando como o grupo se organiza para evitar sobrecarga ou ociosidade.  
+
+Organização Interna da Equipa: Anderson explicou que, após reuniões técnicas, a equipa se reúne para distribuir tarefas de acordo com as especialidades e disponibilidade de cada um, garantindo que todos estejam envolvidos e que o progresso seja contínuo. 
+
+Tarefas de acompanhamento: 
+
+Agendamento de Reunião de Acompanhamento: Agendar uma reunião rápida para as 16:30 e outra para as 17:30 de hoje para verificar o andamento dos trabalhos. (Julliana) 
+
+Configuração de Variáveis e Secrets no Frontend: Criar um chat com Victor Rodrigues de Brito e Ivan para discutir a alteração do tamanho máximo permitido no ficheiro de configuração do frontend. (Fabio) 
+
+
+
+
 
