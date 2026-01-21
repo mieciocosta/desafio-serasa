@@ -1,100 +1,227 @@
-Voce vai precisar de id de transação real para fazer os testes: A Malu mandou essa massa de dados aq
- 
- 
-E003603052026011420262b6f5ae914f (A transação informada não está indexada no BACEN)
-E00360305202601142027c313b4f493c (A transação informada não está indexada no BACEN.)
-E003603052026011420288cadad39667
-E00360305202601142029ac5eeab0e5e
-E003603052026011420300907abb4254
-E00360305202601142031fe5f944bb86
-E00360305202601142032cc8de851e52
- 
-E003603052026011420402ca8fd9fcbc 
-E00360305202601142042029dc12e2f1
-E00360305202601142043f12e2cee2e5
-E00360305202601142043f2a4f12227f
-E00360305202601142044d48040670e7
-E00360305202601142045f39b5827a69
-E00360305202601142046fc6dfd28725
-E003603052026011420473ebf05ed17b
- 
-E0036030520260114231755bf0bb8ecf
-E003603052026011423189fcb307fbf8
-E00360305202601142319e2a24a96955
-E003603052026011423201037ddd4ba8
-E003603052026011423212ef592c2db7
-E003603052026011423226a59e8930de
-E00360305202601142323c1d5a6bbd9c
-Caixa outra IF Conta 1
-E003603052026011423253b1af48bbd4
-E0036030520260114232603e21b387ee
-E00360305202601142327f7646f098f1
-E00360305202601142327b0ea8fc0e4c
-E003603052026011423281afd5283be3
-E003603052026011423296517c8e98a2
-E0036030520260114232993f5147523c
-E00360305202601142330802e5c3a441
-Caixa - Caixa Conta 2
-E0036030520260114233353d900045d1
-E0036030520260114233461dafb516b6
-E00360305202601142335f8291d4a6ba
-E003603052026011423369fa19cb2a0a
-E00360305202601142337345c493e191
-E00360305202601142338a52170d86e8
-E003603052026011423392da4349078a
-E00360305202601142340cb3f832385b
-E00360305202601142341c3e51624cb6
+Perfeito 👍
+Segue um **README LIMPO, direto e profissional**, pronto para **colar sem ajuste**.
+Usei títulos claros, passo a passo objetivo, JSONs separados e critérios de validação.
 
-Caixa outra IF Conta 2
-E00360305202601142342a2c61528410 (Funcionou - USADO)
-E00360305202601142342b1c2ba87263 (Funcionou - USADO)
-E00360305202601142343ef45a64aefd (Funcionou - USADO)
-E00360305202601142343a70ead682b8 (Funcionou - USADO)
-E003603052026011423489456fdea8e8 (NÃO SEI)
-E00360305202601142349ed5d917f9a6 (DEAD LETTER)
-E003603052026011423504672dd828f4 (Tá zoado, não entendi)
-E003603052026011423516413cd0e8a8
-E00360305202601142352180aef77250
- 
- 
+---
 
-RR003603052026011587351415809 (Tentativa de uso - Não há caracter especial)
-E0036030520260115110142911635633 (Tentativa de uso - N indexado da caixa)
-RR003603052026011552731966558
-E0036030520260115110142944044420
-RR003603052026011571087047007
-E0036030520260115110142149916407
-RR003603052026011586814431332
-E0036030520260115110142281258496
-RR003603052026011586177481824
-E0036030520260115110142888597588
-RR003603052026011536494725899
-E0036030520260115110142918361804
-RR003603052026011568678188736
-E0036030520260115110142159285015
-RR003603052026011502519283536
-E0036030520260115110142460468230
-RR003603052026011569765057329
-E0036030520260115110142482249069
-RR003603052026011514442983565
-E0036030520260115110142359517644
-RR003603052026011583721679582
-E0036030520260115110142894707240
-RR003603052026011520576850554
-E0036030520260115110142771071678
-RR003603052026011528110914067
-E0036030520260115110142524827744
-RR003603052026011582983568481
-E0036030520260115110142410036514
-RR003603052026011574046973738
-E0036030520260115110142450989543
-RR003603052026011519907463180
-E0036030520260115110142279039468
-RR003603052026011562208306449
-E0036030520260115110142497571570
-RR003603052026011546802238822
-E0036030520260115110142138765978
-RR003603052026011521782192441
-E0036030520260115110142447329495
-RR003603052026011513329059875
-E0036030520260115110142925239424
+# 🧪 Testes MED – Recuperação de Valores (SIGCN)
+
+Este documento descreve **como executar e validar os testes** do fluxo de Recuperação de Valores utilizando **IDs reais**, filas do **Azure Service Bus** e **Cosmos DB**.
+
+---
+
+## 📌 Filas Envolvidas
+
+* **Entrada (postagem de testes)**
+  `sigcn-med-solicitacaorecuperacao-recebimento`
+
+* **Retorno (sucesso – canal digital)**
+  `sigcn-med-solicitacaorecuperacao-retorno`
+
+* **Falhas (erro de validação / erro funcional)**
+  `sigcn-med-falhas-solicitacaorecuperacao-envio`
+
+* **Mensagens Mortas (DLQ)**
+  Aba *Mensagens mortas* da fila de recebimento
+
+---
+
+## ⚠️ Pré-requisito Importante
+
+O namespace do Service Bus possui **acesso público desabilitado**.
+
+Antes de testar:
+
+1. Estar conectado à **rede/VPN corporativa**, ou
+2. Ter o **IP liberado** no namespace
+3. Clicar em **“Alternar para a Rede”** no topo da fila
+4. Atualizar a página
+
+Sem isso, **não será possível enviar ou espiar mensagens**.
+
+---
+
+## 🧩 Massa de IDs de Transação (BACEN)
+
+### ✅ IDs FUNCIONAIS (usar para sucesso)
+
+```
+E00360305202601142342a2c61528410
+E00360305202601142342b1c2ba87263
+E00360305202601142343ef45a64aefd
+E00360305202601142343a70ead682b8
+```
+
+### ⚠️ IDs NÃO INDEXADOS (erro funcional esperado)
+
+```
+E003603052026011420262b6f5ae914f
+E00360305202601142027c313b4f493c
+```
+
+### ❌ IDs COM HISTÓRICO DE DLQ
+
+```
+E00360305202601142349ed5d917f9a6
+```
+
+---
+
+## 🧪 TESTE 1 — Sucesso (Happy Path)
+
+### Objetivo
+
+Criar pedido de recuperação com sucesso utilizando **ID real funcional**.
+
+### Onde postar
+
+Fila:
+`sigcn-med-solicitacaorecuperacao-recebimento`
+
+### JSON
+
+```json
+{
+  "teste_miecio": "SUCESSO_REAL_001",
+  "IdFimaFim": "MIECIO_FIMAFIM_OK_001",
+  "idTransacao": "E00360305202601142342a2c61528410",
+  "origem": "SICONT",
+  "valor": 150.75,
+  "dataSolicitacao": "2026-01-21T16:10:00Z",
+  "motivo": "FRAUDE_GOLPE"
+}
+```
+
+### Validação Esperada
+
+* Fila de recebimento: mensagem consumida (Fila = 0)
+* Fila de retorno:
+
+  * Retorno com `idRecuperacaoValor` e/ou `protocolo` (quando aplicável)
+* Cosmos DB:
+
+  * Documento criado
+  * `status = CRIADO`
+  * `idTransacao` igual ao enviado
+
+---
+
+## 🧪 TESTE 2 — Erro Funcional (Transação não indexada)
+
+### Objetivo
+
+Validar tratamento de erro funcional retornado pelo BACEN/SISPI.
+
+### JSON
+
+```json
+{
+  "teste_miecio": "ERRO_BACEN_001",
+  "IdFimaFim": "MIECIO_FIMAFIM_ERRO_BACEN",
+  "idTransacao": "E003603052026011420262b6f5ae914f",
+  "origem": "SICONT",
+  "valor": 200.00,
+  "dataSolicitacao": "2026-01-21T16:20:00Z",
+  "motivo": "FRAUDE_GOLPE"
+}
+```
+
+### Validação Esperada
+
+* Mensagem processada
+* Registro de erro salvo no banco
+* Mensagem pode aparecer na fila:
+
+  * `sigcn-med-falhas-solicitacaorecuperacao-envio`
+* **Não deve ir para DLQ**
+
+---
+
+## 🧪 TESTE 3 — Dead Letter Queue (DLQ)
+
+### Objetivo
+
+Validar envio para mensagens mortas após falhas repetidas.
+
+### JSON
+
+```json
+{
+  "teste_miecio": "DLQ_001",
+  "IdFimaFim": "MIECIO_FIMAFIM_DLQ",
+  "idTransacao": "E00360305202601142349ed5d917f9a6",
+  "origem": "SICONT",
+  "valor": 300.00,
+  "dataSolicitacao": "2026-01-21T16:30:00Z",
+  "motivo": "FRAUDE_GOLPE"
+}
+```
+
+### Validação Esperada
+
+* Após tentativas de reprocessamento:
+
+  * Mensagem aparece em **Mensagens Mortas**
+* Corpo da mensagem contém o `idTransacao` enviado
+* Nenhum status de sucesso no Cosmos
+
+---
+
+## 🧪 TESTE 4 — Status ANALYZED (Disparo de Devolução)
+
+### Objetivo
+
+Validar o fluxo de devolução quando a análise é concluída.
+
+### JSON (fila de mudança de status)
+
+```json
+{
+  "teste_miecio": "ANALYZED_REAL_001",
+  "IdFimaFim": "MIECIO_FIMAFIM_OK_001",
+  "IDRecuperacao": "E00360305202601142342a2c61528410",
+  "status": "ANALYZED",
+  "timestamp": "2026-01-21T16:40:00Z"
+}
+```
+
+### Validação Esperada
+
+* SIGCN identifica status `ANALYZED`
+* Cria JSON de solicitação de devolução
+* Tenta chamada ao endpoint do SISPI
+* Em erro:
+
+  * Registro salvo no container
+    `med-devolucao-solicitacoes`
+
+---
+
+## 🔍 Validação no Cosmos DB (exemplo de query)
+
+```sql
+SELECT * FROM c
+WHERE c.idTransacao = "E00360305202601142342a2c61528410"
+```
+
+Verificar:
+
+* Status do pedido
+* Timestamp de criação
+* IdFimAFim / idTransacao
+
+---
+
+## ✅ Regra de Ouro
+
+* Sempre usar **idTransacao real**
+* Sucesso ≠ apenas fila vazia → **validar Cosmos**
+* Erro funcional ≠ DLQ
+* DLQ só ocorre em erro técnico ou reprocessamento excedido
+
+---
+
+Se quiser, posso:
+
+* gerar uma **tabela de evidências (print obrigatório por teste)**
+* ou adaptar esse README para **padrão corporativo CAIXA** (header, versão, responsável, data).
