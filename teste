@@ -1,10 +1,188 @@
+Na fila de mensagens mortas tem bastante json que foram enviados pela Contestação Digital
+ 
+por exemplo 
+ 
+ 
 {
-  "teste_miecio": "RECUP_CONVERTIDO_001",
-  "idFimAFim": "E0036030520260114233353d900045d1",
-  "valor": 2,
-  "dataHoraTransacao": "2026-01-14T17:51:03.000Z",
-  "tipoRecuperacao": "SCAM",
-  "canal": "Teste SIGCN",
-  "protocoloOrigem": "260116096768384",
-  "cpfPagador": "61562716352"
+    "Protocolo": "260116096768384",
+    "Nome": "VALENTINA GABRIELA MORAES",
+    "Agencia": "0333",
+    "Conta": "0000005929228970",
+    "Produto": "3701",
+    "Documento": "61562716352",
+    "Telefone": "99999999999",
+    "DataHoraRegistro": "2026-01-16T15:24:32.785389-03:00",
+    "CanalRegistro": "Teste SIGCN",
+    "IdDispositivo": "a3f9c2d8-7b4e-4e1a-9f6d-2c8b1e5f4a7",
+    "Geolocalizacao": {
+        "latitude": "-23.550520",
+        "longitude": "-46.633308",
+        "location_accuracy": "15",
+        "location_timestamp": "2025-12-02T12:55:25.123-03:00"
+    },
+    "TipoJornada": "PIX_NORMAL",
+    "Situacao": "SCAM",
+    "ResultadoQuestionario": 3,
+    "Razao": "REFUND_REQUEST",
+    "DetalhesRelatoInfracao": "AAAAAAAAAAAAAAAAAAAAA",
+    "Transacoes": [
+        {
+            "IdFimaFim": "E0036030520260114233353d900045d1",
+            "CanalOrigem": "SIIBC",
+            "Valor": 2,
+            "UsuarioPagador": {
+                "Nome": "VALENTINA GABRIELA MORAES",
+                "Cpf": "61562716352",
+                "Cnpj": "",
+                "Conta": {
+                    "Agencia": "0333",
+                    "NumeroConta": "0000005929228970",
+                    "Chave": null,
+                    "Ispb": "00360305",
+                    "Produto": "3701"
+                }
+            },
+            "UsuarioRecebedor": {
+                "Nome": "BERNARDO CLAUDIO RENAN PEREIRA",
+                "Cpf": "45651547061",
+                "Cnpj": "",
+                "Conta": {
+                    "Agencia": "0333",
+                    "NumeroConta": "0000005929228953",
+                    "Chave": "2b428a80-9a40-4bba-a367-cb3f362f30b9",
+                    "Ispb": "00360305",
+                    "Produto": "3701"
+                }
+            },
+            "DataHoraTransacao": "2026-01-14T17:51:03.000Z",
+            "Tipo": "D",
+            "IdNotificacaoInfracao": null,
+            "DataHoraCriacaoNi": null,
+            "SituacaoCriacaoNI": null
+        }
+    ],
+    "Questionario": [
+        {
+            "Pergunta": "Qual dessas alternativas descreve melhor o que aconteceu?",
+            "Resposta": "Realizei o pagamento e percebi se tratar de um golpe"
+        }
+    ]
 }
+ 
+Você pode mudar o IdTransacao colocando Ids que a Malu passou
+ 
+Mudar o campo  IdFimaFim
+ 
+Ela passou vários IDs como massa de teste 
+ 
+que é para nós testarmos.
+ 
+Caixa-Caixa Conta 1
+
+
+E0036030520260114231755bf0bb8ecf
+
+
+E003603052026011423189fcb307fbf8
+
+
+E00360305202601142319e2a24a96955
+
+
+E003603052026011423201037ddd4ba8
+
+
+E003603052026011423212ef592c2db7
+
+
+E003603052026011423226a59e8930de
+
+
+E00360305202601142323c1d5a6bbd9c
+ 
+Caixa outra IF Conta 1
+
+
+E003603052026011423253b1af48bbd4
+
+
+E0036030520260114232603e21b387ee
+
+
+E00360305202601142327f7646f098f1
+
+
+E00360305202601142327b0ea8fc0e4c
+
+
+E003603052026011423281afd5283be3
+
+
+E003603052026011423296517c8e98a2
+
+
+E0036030520260114232993f5147523c
+
+
+E00360305202601142330802e5c3a441
+ 
+Caixa - Caixa Conta 2
+ 
+E0036030520260114233353d900045d1
+
+
+E0036030520260114233461dafb516b6
+
+
+E00360305202601142335f8291d4a6ba
+
+
+E003603052026011423369fa19cb2a0a
+
+
+E00360305202601142337345c493e191
+
+
+E00360305202601142338a52170d86e8
+
+
+E003603052026011423392da4349078a
+
+
+E00360305202601142340cb3f832385b
+
+
+E00360305202601142341c3e51624cb6
+ 
+ 
+Caixa outra IF Conta 2
+ 
+E00360305202601142342a2c61528410
+
+
+E00360305202601142342b1c2ba87263
+
+
+E00360305202601142343ef45a64aefd
+
+
+E00360305202601142343a70ead682b8
+
+
+E003603052026011423489456fdea8e8
+
+
+E00360305202601142349ed5d917f9a6
+
+
+E003603052026011423504672dd828f4
+
+
+E003603052026011423516413cd0e8a8
+
+
+E00360305202601142352180aef77250
+
+ 
+Esses IDs você substitui o campo idFimaFim do payload de exemplo
+ 
