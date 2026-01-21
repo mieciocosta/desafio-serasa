@@ -1,272 +1,213 @@
-fluxo MED
+Perfeito — pelas tuas telas dá pra ver que você já está exatamente nas **3 filas**:
 
-Canal de Aberturs do MED SIGCN SISPI
-o de Solicitação de Recuperação de Valores
-Recebe a reclamação 
-do Cliente acerca de 
-MED não 
-reconhecido por 
-fraude ou golpe
-Recebe a solicitação 
-de abertura de 
-recuperação de 
-valores e popula os 
-parâmetros do grafo
-Recebe do 
-Plataforma a 
-solicitação e envia o 
-pedido de 
-recuperação de 
-valores ao DICT
-Captura os pedidos de 
-recuperação que 
-tiveram seu status 
-alterado e envia ao SIG
-Recebe do SISPI as 
-solicitações de 
-recuperação que tiveram 
-seu status alterado para 
-“ANALYZED”
-Recebe do SIGCN a 
-solicitação de 
-devolução e envia ao 
-DICT
-Necessário página 
-web para alterar 
-parâmetros do 
-grafo
-Facultativo a partir 
-de 23/11/2025 e 
-obrigatório em 
-02/02/2025
-Após analisada, o 
-PSP pagador tem 
-até 72h para 
-solicitar a 
-devolução
-1,1
-DICT PSP(S) RECEBEDOR (S)
-Fluxo
-Recebe da CAIXA a solicitação 
-de recuperação de valores, 
-elabora o grafo e abre a (s) NI 
-(s)
-Analisam a(s) 
-notificação(s) 
-de Infração(S)
-Recebe do PSP(s) 
-recebedor(s) o(s) 
-resultado(s) 
-Recebe do PSP 
-pagador o pedido 
-de devolução e 
-envia ao(s ) PSP(s) 
-recebedor(s)
-Recebe o (s) e 
-providencia a(s) 
-devolução(s) em 
-até 6h
-O status da análise só 
-é alterado quando 
-todos os PSPs  
-concluírem sua 
-análise, no caso de tri
-A devolução é 
-liquidada em 
-conta
-1,2
+* **Entrada**: `sigcn-med-solicitacaorecuperacao-recebimento` (onde você posta)
+* **Retorno**: `sigcn-med-solicitacaorecuperacao-retorno` (onde você valida o “ok” do canal digital)
+* **Falhas**: `sigcn-med-falhas-solicitacaorecuperacao-envio` (onde cai erro de validação / fallback)
 
+E também aparece o aviso grande: **“acesso à rede pública desabilitado”** e o botão **“Alternar para a Rede”**.
 
+Abaixo vai um **passo a passo bem operacional**: onde clicar, que JSON postar e como validar.
 
-Canal de Aberturs do MED SIGCN SISPI
-o de Solicitação de Recuperação de Valores
-Recebe a reclamação 
-do Cliente acerca de 
-MED não 
-reconhecido por 
-fraude ou golpe
-Recebe a solicitação 
-de abertura de 
-recuperação de 
-valores e popula os 
-parâmetros do grafo
-Recebe do 
-Plataforma a 
-solicitação e envia o 
-pedido de 
-recuperação de 
-valores ao DICT
-Captura os pedidos de 
-recuperação que 
-tiveram seu status 
-alterado e envia ao SIG
-Recebe do SISPI as 
-solicitações de 
-recuperação que tiveram 
-seu status alterado para 
-“ANALYZED”
-Recebe do SIGCN a 
-solicitação de 
-devolução e envia ao 
-DICT
-Necessário página 
-web para alterar 
-parâmetros do 
-grafo
-Facultativo a partir 
-de 23/11/2025 e 
-obrigatório em 
-02/02/2025
-Após analisada, o 
-PSP pagador tem 
-até 72h para 
-solicitar a 
-devolução
-1,1
-DICT PSP(S) RECEBEDOR (S)
-Fluxo
-Recebe da CAIXA a solicitação 
-de recuperação de valores, 
-elabora o grafo e abre a (s) NI 
-(s)
-Analisam a(s) 
-notificação(s) 
-de Infração(S)
-Recebe do PSP(s) 
-recebedor(s) o(s) 
-resultado(s) 
-Recebe do PSP 
-pagador o pedido 
-de devolução e 
-envia ao(s ) PSP(s) 
-recebedor(s)
-Recebe o (s) e 
-providencia a(s) 
-devolução(s) em 
-até 6h
-O status da análise só 
-é alterado quando 
-todos os PSPs  
-concluírem sua 
-análise, no caso de tri
-A devolução é 
-liquidada em 
-conta
-1,2
+---
 
+## 0) Antes de tudo: resolver o “Alternar para a Rede”
 
+Se você estiver fora da rede permitida, o Azure Portal **não vai deixar** “Espiar / Ver / Enviar” mensagem.
 
-Link: Link Front-end Ambiente DES
-Usuário: c892024
-Senha: Caixa123
+1. Na própria tela da fila, clique no botão **“Alternar para a Rede”** (lado direito).
+2. Se abrir a parte de rede (Networking) e você não tiver permissão, o caminho típico é:
 
+   * entrar pela **VPN/rede corporativa** (quando existe), **ou**
+   * pedir para liberarem teu **IP** na allowlist do namespace (se o time de infra fizer isso).
+3. Volte pra fila e clique **Atualizar**.
 
-sicont envia e caso erro retorna pra ooutra fila
+> Se depois disso ainda não aparecer o corpo/mensagens, é 99% rede/permissão.
 
-canal digital quando posta na fila eles recebm o retorno de sucesso, ocorrendo sucesso, retorna em outra fila o protocolo e também o id de recureção de valor da transação
-aí já tem 2 fulox pra canais diferentes
+---
 
-validar esses vceanrios de envio para rantoa siclon(enviam como sicont) veriiacr se foi sucesso, sicont sucesso é se tiver persistindo container no cosmo DB com status criado com id de transação
+## 1) Teste de SUCESSO (entrada → cosmos CRIADO → retorno)
 
-com id fim a fim se tiver criado é porque foi criado se ano foi pra dade letter, fica de stand by ( mensagens mortas se tiver 10 tentativas de processamento)
+### 1.1 Onde clicar para POSTAR na fila de **recebimento**
 
-outro worker status sispei statu analiserd, atuaiza pra outra fila tudo dentro dos requsistos 
+Na fila **`sigcn-med-solicitacaorecuperacao-recebimento`**:
 
-worker do cancelamento criou um pedido de recuperação de valor do primeiro fluxo. processando se ser ok, vai aparecer no cosmo esta cancelada ao invés de criada (cenalemnto da primeira abertura que fez anterior)
+1. Clique em **“Enviar mensagens”** (barra de ações no topo).
+2. Vai abrir o painel de envio. Normalmente você vai ver campos tipo:
 
+   * **Corpo da mensagem**
+   * (opcional) Content-Type / propriedades
+3. Cole o JSON (abaixo) e clique em **Enviar**.
 
+### 1.2 JSON de teste (bem rastreável)
 
+Use este aqui (bem simples e com `teste_miecio` + `IdFimaFim`):
 
+```json
+{
+  "teste_miecio": "OK_RECUP_001",
+  "IdFimaFim": "MIECIO_FIMAFIM_OK_001",
+  "origem": "SICONT",
+  "idTransacao": "TX_MIECIO_001",
+  "valor": 10.5,
+  "dataSolicitacao": "2026-01-21T15:00:00Z",
+  "motivo": "FRAUDE_GOLPE"
+}
+```
 
-sigcn-med-solicitacaorecuperacao-recebimento (servicebus-eds-nprd/sigcn-med-solicitacaorecuperacao-…
-Microsoft Azure
- 
-sigcn-med-solicitacaorecuperacao-retorno (servicebus-eds-nprd/sigcn-med-solicitacaorecuperacao-reto…
-Microsoft Azure
- 
-Anderson Silva da Conceicao
-sigcn-med-solicitacaorecuperacao-recebimento (servicebus-eds-nprd/sigcn-med-solicitacaorecuperacao-…
-faz a postagem ( de entrada para os testes
- 
-Anderson Silva da Conceicao
-sigcn-med-solicitacaorecuperacao-retorno (servicebus-eds-nprd/sigcn-med-solicitacaorecuperacao-reto…
-posta na fila e tem o retorno do canal digital.
- 
-sigcn-med-falhas-solicitacaorecuperacao-envio (servicebus-eds-nprd/sigcn-med-falhas-solicitacaorecu…
-Microsoft Azure
- 
-Anderson Silva da Conceicao
-sigcn-med-falhas-solicitacaorecuperacao-envio (servicebus-eds-nprd/sigcn-med-falhas-solicitacaorecu…
-fila quando ha erro de validação, e envia para o sicont
+> Mesmo que o layout real tenha mais campos, esse JSON já serve como “smoke” **se o teu consumidor não exigir muitos obrigatórios**.
+> Se ele exigir, você vai ver cair em **falhas** (e aí a gente ajusta o payload conforme o erro retornado).
 
+### 1.3 Como VALIDAR que processou
 
+#### A) Validar na fila de **recebimento**
 
+1. Clique em **Modo de Espiada** (drop-down).
+2. Clique **“Espiar próximas mensagens”**.
 
-Gerado por IA. Certifique-se de verificar a precisão. 
+   * Se o worker consumiu rápido, vai ficar **Fila (0)**.
+3. Clique na aba **“Mensagens mortas”**:
 
-Anotações da reunião: 
+   * Se aparecer aqui, é erro/retry estourado (DLQ).
 
-Configuração e Boas Práticas de ConfigMap: Fabio explicou detalhadamente para Anderson, Ivan, Gabriela, Paulo e o restante da equipa como criar, configurar e validar arquivos ConfigMap, destacando cuidados com sintaxe, indentação e validação em pipelines, além de recomendar revisões duplas antes de deploys em produção.  
+#### B) Validar na fila de **retorno**
 
-Sintaxe e Indentação: Fabio alertou sobre a importância de utilizar a sintaxe correta nos arquivos ConfigMap, evitando letras maiúsculas nos nomes, utilizando aspas duplas para valores booleanos e mantendo a indentação precisa, pois qualquer erro pode causar falhas na pipeline e problemas em produção. 
+Na fila **`sigcn-med-solicitacaorecuperacao-retorno`**:
 
-Validação e Referência em Pipelines: Foi explicado que, após criar o ConfigMap, é necessário referenciá-lo corretamente no arquivo de valores (values.yaml), garantindo que o nome do arquivo e o nome referenciado coincidam, e que a pipeline valide corretamente a configuração antes do deploy. 
+1. Clique **“Espiar próximas mensagens”**.
+2. Marque a mensagem e clique **“Baixe o corpo da mensagem selecionada”** (ou “Mostrar o corpo da mensagem” se aparecer).
+3. O **sucesso do canal digital** costuma vir com algo como:
 
-Revisão por Múltiplas Pessoas: Fabio recomendou que, especialmente para arquivos de produção, pelo menos duas pessoas revisem os ConfigMaps para evitar erros que possam passar despercebidos e comprometer o deploy. 
+   * `protocolo`
+   * `idRecuperacaoValor` (ou idRecuperacao)
 
-Separação de Variáveis: Foi sugerido que variáveis não secretas podem ser separadas em arquivos distintos para melhor organização, desde que estejam corretamente referenciadas e documentadas no repositório. 
+> Se você postou como SICONT e o fluxo “sucesso = Cosmos CRIADO” sem retorno, pode não cair nada aqui — aí a validação é no Cosmos.
 
-Gestão e Importação de Secrets: Fabio orientou Paulo, Anderson e o grupo sobre a criação, importação e referência de arquivos de secrets, esclarecendo o processo de solicitação à equipa de segurança (Marcio) e destacando a necessidade de garantir a correspondência exata entre nomes e valores para evitar erros de conexão.  
+#### C) Validar no Cosmos DB (status CRIADO)
 
-Criação e Nomeação de Arquivos: Fabio explicou que cada secret deve ser importada em um arquivo separado, com o nome do arquivo e o nome da secret exatamente iguais, para garantir o correto funcionamento da importação e evitar problemas de conexão. 
+No Azure Portal:
 
-Processo de Solicitação de Secrets: Foi esclarecido que a equipa de desenvolvimento não pode alterar diretamente os secrets em produção; é necessário abrir uma requisição para a equipa de segurança (Marcio), que realiza a alteração no Key Vault. 
+1. Abra o **Cosmos DB Account** do projeto
+2. Vá em **Data Explorer**
+3. Entre no container que guarda os pedidos (o time te passou “Cosmos DB com status CRIADO”; se você souber o nome eu deixo a query certinha)
+4. Rode uma query buscando pelo teu rastreio:
 
-Referência em Values e Debug: Após criar e importar a secret, é preciso referenciá-la corretamente no arquivo de valores, utilizando a sintaxe adequada, e verificar possíveis erros de importação durante o deploy, como valores incorretos ou espaços extras. 
+Exemplo de query (SQL do Cosmos) — ajuste nome dos campos conforme estiverem lá:
 
-Ajustes e Correções em Produção: Anderson relatou um caso prático de erro de configuração de secret, que foi corrigido em conjunto com Sabina e Fabiana, reforçando a importância de validação e ajuste rápido em produção. 
+```sql
+SELECT * FROM c
+WHERE c.IdFimaFim = "MIECIO_FIMAFIM_OK_001"
+   OR c.teste_miecio = "OK_RECUP_001"
+   OR c.idTransacao = "TX_MIECIO_001"
+```
 
-Configuração de Deploy Backend e Infraestrutura: Fabio detalhou para Anderson, Paulo, Maria e equipa os passos para configurar o deploy do backend, incluindo definições de recursos, certificados, DNS, node pools e tolerations, além de explicar como identificar e corrigir problemas comuns durante o deploy.  
+**O que procurar no documento:**
 
-Definições de Recursos e Endereços: Foram explicadas as configurações de recursos (CPU, memória, autoscaling) e a definição dos endereços HTTP/HTTPS, incluindo o padrão de nomenclatura e a necessidade de geração e referência de certificados para HTTPS. 
+* `status` = **CRIADO**
+* `IdFimaFim` / `idTransacao` batendo
+* timestamps de criação/update
 
-Configuração de Node Pools e Tolerations: Fabio mostrou como configurar node pools válidos para execução de builds e deploys, destacando que o valor do node pool pode precisar ser ajustado manualmente no values de produção. 
+---
 
-Debug e Solução de Problemas: Foram apresentadas estratégias de debug em caso de falha no deploy, como análise dos logs da pipeline, verificação de warnings no namespace e consulta aos logs do pod, além de dicas para identificar erros de importação de ConfigMap ou secrets. 
+## 2) Teste de ERRO DE VALIDAÇÃO (entrada → fila de falhas)
 
-Etapa PFM e Aprovação: Maria e Fabio discutiram a etapa PFM, que representa uma aceitação tácita de qualidade por parte de um agente de operações (ex: Márcio), sendo necessária aprovação para deploy em produção, desde que os requisitos de cobertura e qualidade estejam cumpridos. 
+### 2.1 Postar um JSON propositalmente inválido
 
-Deploy e Configuração do Frontend: Fabio explicou para Ivan, Maria e equipa que o deploy do frontend é feito via Azure Blob Storage, com variáveis de ambiente e secrets configurados diretamente no repositório, e esclareceu dúvidas sobre permissões, erros de configuração e processos de build.  
+Na **`sigcn-med-solicitacaorecuperacao-recebimento`** → **Enviar mensagens**:
 
-Processo de Deploy Estático: O frontend é servido como site estático via Azure Blob Storage, sem necessidade de servidor Node, e o deploy consiste em subir os arquivos gerados para o storage, com as variáveis de ambiente definidas nos arquivos do próprio repositório. 
+```json
+{
+  "teste_miecio": "ERRO_LAYOUT_001",
+  "IdFimaFim": "MIECIO_FIMAFIM_ERRO_001",
+  "origem": "SICONT"
+}
+```
 
-Configuração de Variáveis e Secrets: Fabio destacou que as connection strings e account names devem ser configuradas como secrets no repositório, e que não se deve incluir secrets diretamente nos arquivos de configuração do frontend. 
+(Ex.: faltando campos de transação, valor, motivo etc.)
 
-Permissões e Suporte: Ivan questionou sobre permissões para configurar secrets, e Fabio esclareceu que, caso não tenham acesso, podem solicitar a ele, ao Marcio ou ao Victor Rodrigo para realizar as configurações necessárias. 
+### 2.2 Validar na fila de **falhas**
 
-Resolução de Erros Específicos: Ivan relatou um erro relacionado ao tamanho de arquivo no frontend, e Fabio sugeriu consultar Victor Rodrigues de Brito para avaliar a possibilidade de alterar o limite, propondo criar um chat para tratar do tema. 
+Na **`sigcn-med-falhas-solicitacaorecuperacao-envio`**:
 
-Pipelines, Qualidade de Código e Rollback: Fabio orientou o grupo sobre o funcionamento das pipelines de CI/CD, requisitos de qualidade (80% de cobertura), análise de erros no SonarQube, e explicou como realizar rollback de deploys em caso de falha, além de ressaltar a importância de sempre gerar nova pipeline após alterações.  
+1. Clique **“Espiar próximas mensagens”**
+2. Abra o corpo: **“Baixe o corpo…”** / “Mostrar o corpo…”
+3. Valide se vem algo como:
 
-Requisitos de Qualidade e SonarQube: Foi reforçado que é obrigatório atingir pelo menos 80% de cobertura de código e não possuir issues críticas para aprovação de deploy, sendo o SonarQube a ferramenta de referência para análise e aprovação. 
+* motivo do erro (campo obrigatório ausente, leiaute inválido etc.)
+* o teu `IdFimaFim`/`teste_miecio` para provar correlação
 
-Funcionamento das Pipelines: Fabio explicou o fluxo das pipelines de build, análise estática e deploy, destacando a necessidade de monitorar logs e outputs para identificar falsos positivos e problemas não detectados automaticamente. 
+> Se cair em falhas, você já prova o critério “Retornar erro ao sistema de origem / erro controlado”.
 
-Rollback de Deploy: Em caso de falha em produção, o rollback é feito executando a última pipeline bem-sucedida, garantindo o retorno à versão anterior estável, tanto em produção quanto em ambientes de desenvolvimento. 
+---
 
-Atualização de Variáveis e Novas Pipelines: Foi alertado que, após alterar variáveis de ambiente, é necessário executar uma nova pipeline para que as alterações sejam aplicadas, pois re-executar jobs antigos não atualiza as variáveis. 
+## 3) Teste de DLQ (Mensagens mortas) — quando dá erro “não tratável”
 
-Distribuição de Tarefas e Colaboração da Equipa: Leonardo, Anderson, Maria e equipa discutiram a distribuição de tarefas, colaboração entre membros e estratégias para garantir que todos estejam alinhados e produtivos, com Anderson detalhando como o grupo se organiza para evitar sobrecarga ou ociosidade.  
+Esse é mais chatinho porque precisa de um erro que **sempre falhe** e gere retry até estourar.
 
-Organização Interna da Equipa: Anderson explicou que, após reuniões técnicas, a equipa se reúne para distribuir tarefas de acordo com as especialidades e disponibilidade de cada um, garantindo que todos estejam envolvidos e que o progresso seja contínuo. 
+### Como validar DLQ (sem precisar esperar muito)
 
-Tarefas de acompanhamento: 
+1. Na fila **recebimento**, clique na aba **“Mensagens mortas”**
+2. Se tiver mensagens, selecione e:
 
-Agendamento de Reunião de Acompanhamento: Agendar uma reunião rápida para as 16:30 e outra para as 17:30 de hoje para verificar o andamento dos trabalhos. (Julliana) 
+   * **Baixe o corpo da mensagem selecionada**
+   * Veja **DeliveryCount**/motivo (às vezes aparece nos headers/propriedades)
 
-Configuração de Variáveis e Secrets no Frontend: Criar um chat com Victor Rodrigues de Brito e Ivan para discutir a alteração do tamanho máximo permitido no ficheiro de configuração do frontend. (Fabio) 
+> Para forçar DLQ de verdade, normalmente é:
 
+* mandar mensagem que quebra o consumidor (ex.: JSON malformado, tipo errado crítico)
+* ou simular dependência fora (endpoint indisponível) se o worker não tratar com backoff
 
+Se você me mandar **um exemplo de mensagem que você viu indo pra DLQ**, eu te digo exatamente qual tipo de payload reproduz isso.
 
+---
 
+## 4) Teste de “Mudança de Status” (TASK 76172) — se você também posta manual
 
+Se existir uma fila específica de **mudança de status** (não vi o nome nas tuas telas, mas a massa é essa):
+
+### JSON (layout da task)
+
+```json
+{
+  "teste_miecio": "STATUS_ANALYZED_001",
+  "IdFimaFim": "MIECIO_FIMAFIM_OK_001",
+  "StatusAnterior": "PROCESSING",
+  "StatusAtual": "ANALYZED",
+  "DataDoRegistro": "2026-01-21T15:05:00Z"
+}
+```
+
+**Validação esperada:**
+
+* algum update no Cosmos (status/etapa)
+* e/ou disparo do fluxo de devolução (dependendo do worker encadeado)
+
+---
+
+## 5) O “mapa” rápido do que cada fila significa (pra não se perder)
+
+### `...-recebimento`
+
+✅ Você posta aqui para iniciar teste
+📌 Valida: consumiu? ficou 0? foi DLQ?
+
+### `...-retorno`
+
+✅ Aqui você valida a resposta do canal digital
+📌 Valida: `protocolo` + `idRecuperacaoValor`
+
+### `...-falhas-...-envio`
+
+✅ Aqui você valida erro de validação/contrato
+📌 Valida: motivo do erro + correlação com teu `IdFimaFim`
+
+---
+
+## Me diz 2 coisas que eu deixo “cirúrgico” (sem você ter que adivinhar)
+
+1. **Qual container Cosmos** guarda o pedido de recuperação (nome exato).
+2. Qual é o **nome exato do campo** que o time usa como chave (é `IdFimaFim` mesmo? ou `idFimAFim` / `endToEndId` / `idTransacao`?).
+
+Com isso eu te devolvo:
+
+* as **queries prontas** do Cosmos (sem tentativa/erro),
+* e a massa JSON **no layout real** (com todos obrigatórios) pra cair em **sucesso garantido** e gerar retorno/protocolo.
