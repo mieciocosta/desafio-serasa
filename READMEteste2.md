@@ -1,1 +1,7 @@
-<img width="1918" height="1078" alt="image" src="https://github.com/user-attachments/assets/cf6ebbfd-306d-4536-9d11-4f70c849f021" />
+SELECT
+  c.idRecuperacaoValores,
+  c.Status.Anterior,
+  c.Status.Atual,
+  c.Status.DataAlteracaoStatus
+FROM c
+WHERE c.idRecuperacaoValores = "b83292c2-73ee-439a-86eb-af602ce3032"
