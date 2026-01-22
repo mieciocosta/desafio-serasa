@@ -1,17 +1,126 @@
+boa tarde. tem o link fácil do serviço de cancelamento?
+ 
+O cancelamento é por fila também 
+ 
+posso mandar por esse então?
+ 
+sigcn-med-solicitacaorecuperacao-recebimento (servicebus-eds-nprd/sigcn-med-solicitacaorecuperacao-…
+Microsoft Azure
+ 
+tinha esse aqui
+ 
+sigcn-med-solicitacaorecuperacao-cancelamento" -> Fila de cancelament
+ 
+fiquei na duvida
+ 
+Esse link é da fila de recebimento 
+ 
+Mas é aí nesse mesma sessão, um passo antes, mostra asl lista com a filas, você escolhe a do cancelamento 
+ 
+E posta o Json conforme exemplos que o Anderson mandou
+ 
+eu ja tenho o json, so nao estou encontrando a onde disparar o cancelamento
+ 
+É igual você colocou na do recebimento 
+ 
+Você chegou a pedir id de recuperação já com status analisado para o pessoal do SISPI?
+ 
+{
+
+  "IdRecuperacaoValores" : "6376a3fe-0a40-4304-b324-81d8173dfa9f"
+
+}
+ 
+tenho esse
+ 
+Mas esse você pegou aonde?
+ 
+É que vai ser o fluxo de erro, o fluxo feliz só dará certo com ID que esteja com status analisado
+ 
+ 
+peguei daqui
+ 
+Aí tem que pegar com os caras lá , pode pedir pro Guilherme também talvez ele ajude a pegar 
+ 
+Ele tava na sala com o SISPI 
+ 
+Miecio Santos Costa
+📷
+Pelo que sei do processo, esses id acabaram de entrar pela fila de recebimento, não sei se estão com status analisado.
+ 
+Com mas pra cancelar qualquer ID serve
+ 
+*bom para cancelar, qualquer ID serve 
+ 
+pois é so preciso de um ID que deu certo como cancelado no cosmos
+ 
+so falta esse na evidencia
+ Esse é o JSON de envio na fila de cancelamento. 
+ 
+para cancelar precisa informar o Id da recuperação de valor que consta no banco de dados.
+ 
+assim no caso
+ 
+{
+
+  "IdRecuperacaoValores" : "6376a3fe-0a40-4304-b324-81d8173dfa9f"
+
+}
+ 
+pra validar, somente pelo cosmos?
+ 
+Sim
+ 
+nessa fila correto? so pra confirmar
+ 
+Miecio Santos Costa
+📷   nessa fila correto? so pra confirmar
+Errado. vOce quer testr falhas ou cancelamento?
+ 
 4. Caminho Feliz – CANCELAMENTO DO PEDIDO
 Ação Executada
-•	Worker de cancelamento processou a solicitação de cancelamento
-•	Cancelamento referente ao pedido previamente criado
+Worker de cancelamento processou a solicitação de cancelamento
+Cancelamento referente ao pedido previamente criado
 Resultado Esperado
-•	Pedido atualizado para status CANCELADA
-•	Nenhum novo pedido criado
-•	Nenhuma mensagem enviada para DLQ
- Print – Documento no Cosmos DB com status CANCELADA
+Pedido atualizado para status CANCELADA
+Nenhum novo pedido criado
+Nenhuma mensagem enviada para DLQ
+ 
+ 
+falha no caso que você fala é aquele mensagens mortas? se sim, ja validei esse
+ 
+Então ce está na fila errada. O nome da fila de cancelamento leva o nome de **-cancelamento
+ 
+acho que ontem você nao mandou da fila de cancelamento
+ 
+Miecio Santos Costa
+falha no caso que você fala é aquele mensagens mortas? se sim, ja validei esse
+Não. Essa fila de falhas é referente ao fluxo do SICLON recebendo de volta as falhas. 
+ 
+Voce tem feito os testes bseado nas HUS?
+ 
+Miecio Santos Costa
+acho que ontem você nao mandou da fila de cancelamento
+VPN nao está conectando aqui. mas tu consegue achar a fila nesse mesmo local ai do azure. 
+ 
+ontem mandei 2, mas era um fluxo feliz sendo postado do canal digital. as outras 3 filas não passei. mas tu tem acesso a elas tmb 
+ 
+     "sigcn-med-solicitacaorecuperacao-recebimento" -> Fila de recebimento do pedido de recuperação
 
- 5. Verificação de Mensagens Mortas (DLQ)
-Ação Executada
-•	Verificação da aba Mensagens Mortas na fila de recebimento
-Resultado Esperado
-•	Nenhuma mensagem presente na DLQ
- Print – Aba “Mensagens Mortas” vazia
+     "sigcn-med-falhas-solicitacaorecuperacao-envio" -> Erro do payload do SICONT
 
+      "sigcn-med-atualizacaorecuperacao-recebimento" -> Atualização do status do pedido de recuperação
+
+      "sigcn-med-solicitacaorecuperacao-retorno" -> Fila de retorno do status criado para o Canal Digital
+
+     "sigcn-med-solicitacaorecuperacao-cancelamento" -> Fila de cancelamento
+ 
+achei isso no meu código. Sem VPN n consigo entrar e enviar o link. mas pesquisa ai q tu acha kk 
+ 
+ 
+de cancelamento nao
+ 
+Mas é assim, onde tu está pesquisando é onde tu encontra as filas? 
+ 
+Tu está pesquisando algo global
+ 
