@@ -1,7 +1,1 @@
-SELECT
-  c.idRecuperacaoValores,
-  c.Status.Anterior,
-  c.Status.Atual,
-  c.Status.DataAlteracaoStatus
-FROM c
-WHERE c.idRecuperacaoValores = "b83292c2-73ee-439a-86eb-af602ce3032"
+<img width="1917" height="1077" alt="image" src="https://github.com/user-attachments/assets/189efbca-047f-4556-8a7b-9930f3e78869" />
