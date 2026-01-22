@@ -1,3 +1,1 @@
-SELECT c.cpf
-FROM c
-WHERE c.id = "D901C0C1-D095-418A-B40C-1555CB8921B8"
+evidências do teste de devolução das informações aos canais de origem tb
