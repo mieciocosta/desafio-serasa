@@ -1,187 +1,255 @@
-Voce vai precisar de id de transação real para fazer os testes: A Malu mandou essa massa de dados aq
+Filas:
+sigcn-med-falhas-solicitacaorecuperacao-envio
+sigcn-med-solicitacaorecuperacao-recebimento
+sigcn-med-atualizacaorecuperacao-recebimento
  
+Containers do banco de dados
+med-devolucao
+indice-med-devolucao
  
-E003603052026011420262b6f5ae914f (A transação informada não está indexada no BACEN)
-E00360305202601142027c313b4f493c (A transação informada não está indexada no BACEN.)
-E003603052026011420288cadad39667
-E00360305202601142029ac5eeab0e5e
-E003603052026011420300907abb4254
-E00360305202601142031fe5f944bb86
-E00360305202601142032cc8de851e52
+Chave de particao: atributo "particao" para ambos
  
-E003603052026011420402ca8fd9fcbc 
-E00360305202601142042029dc12e2f1
-E00360305202601142043f12e2cee2e5
-E00360305202601142043f2a4f12227f
-E00360305202601142044d48040670e7
-E00360305202601142045f39b5827a69
-E00360305202601142046fc6dfd28725
-E003603052026011420473ebf05ed17b
- 
-E0036030520260114231755bf0bb8ecf
-E003603052026011423189fcb307fbf8
-E00360305202601142319e2a24a96955
-E003603052026011423201037ddd4ba8
-E003603052026011423212ef592c2db7
-E003603052026011423226a59e8930de
-E00360305202601142323c1d5a6bbd9c
-Caixa outra IF Conta 1
-E003603052026011423253b1af48bbd4
-E0036030520260114232603e21b387ee
-E00360305202601142327f7646f098f1
-E00360305202601142327b0ea8fc0e4c
-E003603052026011423281afd5283be3
-E003603052026011423296517c8e98a2
-E0036030520260114232993f5147523c
-E00360305202601142330802e5c3a441
-Caixa - Caixa Conta 2
-E0036030520260114233353d900045d1
-E0036030520260114233461dafb516b6
-E00360305202601142335f8291d4a6ba
-E003603052026011423369fa19cb2a0a
-E00360305202601142337345c493e191
-E00360305202601142338a52170d86e8
-E003603052026011423392da4349078a
-E00360305202601142340cb3f832385b
-E00360305202601142341c3e51624cb6
-
-Caixa outra IF Conta 2
-E00360305202601142342a2c61528410 (Funcionou - USADO)
-E00360305202601142342b1c2ba87263 (Funcionou - USADO)
-E00360305202601142343ef45a64aefd (Funcionou - USADO)
-E00360305202601142343a70ead682b8 (Funcionou - USADO)
-E003603052026011423489456fdea8e8 (NÃO SEI)
-E00360305202601142349ed5d917f9a6 (DEAD LETTER)
-E003603052026011423504672dd828f4 (Tá zoado, não entendi)
-E003603052026011423516413cd0e8a8
-E00360305202601142352180aef77250
- 
- 
-
-RR003603052026011587351415809 (Tentativa de uso - Não há caracter especial)
-E0036030520260115110142911635633 (Tentativa de uso - N indexado da caixa)
-RR003603052026011552731966558
-E0036030520260115110142944044420
-RR003603052026011571087047007
-E0036030520260115110142149916407
-RR003603052026011586814431332
-E0036030520260115110142281258496
-RR003603052026011586177481824
-E0036030520260115110142888597588
-RR003603052026011536494725899
-E0036030520260115110142918361804
-RR003603052026011568678188736
-E0036030520260115110142159285015
-RR003603052026011502519283536
-E0036030520260115110142460468230
-RR003603052026011569765057329
-E0036030520260115110142482249069
-RR003603052026011514442983565
-E0036030520260115110142359517644
-RR003603052026011583721679582
-E0036030520260115110142894707240
-RR003603052026011520576850554
-E0036030520260115110142771071678
-RR003603052026011528110914067
-E0036030520260115110142524827744
-RR003603052026011582983568481
-E0036030520260115110142410036514
-RR003603052026011574046973738
-E0036030520260115110142450989543
-RR003603052026011519907463180
-E0036030520260115110142279039468
-RR003603052026011562208306449
-E0036030520260115110142497571570
-RR003603052026011546802238822
-E0036030520260115110142138765978
-RR003603052026011521782192441
-E0036030520260115110142447329495
-RR003603052026011513329059875
-E0036030520260115110142925239424
-
-
-<img width="1918" height="1078" alt="image" src="https://github.com/user-attachments/assets/c3275d8b-06df-4f6f-8301-da52a794d077" />
-
-
-{
-    "id": "E003603052026011423253b1af48bbd4-0122202609:35:17",
-    "particao": "E003603052026011423253b1af48bbd4-0122202609:35:17",
-    "cpf": "61562716352",
-    "idRecuperacaoValores": "6376a3fe-0a40-4304-b324-81d8173dfa9f",
-    "pedidoRecuperacao": {
-        "Nome": "VALENTINA GABRIELA MORAES",
-        "Conta": "0000005929228970",
-        "Razao": "REFUND_REQUEST",
-        "Agencia": "0333",
-        "Produto": "3701",
-        "Situacao": "CANCELADA",
-        "Telefone": "99999999999",
-        "Documento": "61562716352",
-        "Protocolo": "260116096768384",
-        "Transacoes": [
-            {
-                "Tipo": "D",
-                "Valor": 2,
-                "IdFimaFim": "E003603052026011423253b1af48bbd4",
-                "CanalOrigem": "SIIBC",
-                "UsuarioPagador": {
-                    "Cpf": "61562716352",
-                    "Cnpj": "",
-                    "Nome": "VALENTINA GABRIELA MORAES",
-                    "Conta": {
-                        "Ispb": "00360305",
-                        "Chave": null,
-                        "Agencia": "0333",
-                        "Produto": "3701",
-                        "NumeroConta": "0000005929228970"
-                    }
-                },
-                "UsuarioRecebedor": {
-                    "Cpf": "45651547061",
-                    "Cnpj": "",
-                    "Nome": "BERNARDO CLAUDIO RENAN PEREIRA",
-                    "Conta": {
-                        "Ispb": "00360305",
-                        "Chave": "2b428a80-9a40-4bba-a367-cb3f362f30b9",
-                        "Agencia": "0333",
-                        "Produto": "3701",
-                        "NumeroConta": "0000005929228953"
-                    }
-                },
-                "DataHoraCriacaoNi": null,
-                "DataHoraTransacao": "2026-01-14T17:51:03Z",
-                "SituacaoCriacaoNI": null,
-                "IdNotificacaoInfracao": null
-            }
-        ],
-        "TipoJornada": "PIX_NORMAL",
-        "Questionario": [
-            {
-                "Pergunta": "Qual dessas alternativas descreve melhor o que aconteceu?",
-                "Resposta": "Realizei o pagamento e percebi se tratar de um golpe"
-            }
-        ],
-        "CanalRegistro": "Teste SIGCN",
-        "DataHoraRegistro": "2026-01-16T15:24:32.785389-03:00",
-        "ResultadoQuestionario": 3,
-        "DetalhesRelatoInfracao": "AAAAAAAAAAAAAAAAAAAAA"
-    },
-    "Status": {
-        "Anterior": "CRIADA",
-        "Atual": "CANCELADA",
-        "DataAlteracaoStatus": "2026-01-22T16:35:16.733Z"
-    },
-    "DtAberturaSolicRecup": "2026-01-22T12:35:16.733Z",
-    "DtRetornoStatusAnalizado": "",
-    "TempoProcessamento": 0,
-    "Ativo": false,
-    "_etag": "\"25009062-0000-0b00-0000-69727b960000\"",
-    "_rid": "iAQdAKsTYCk6AAAAAAAAAA==",
-    "_self": "dbs/iAQdAA==/colls/iAQdAKsTYCk=/docs/iAQdAKsTYCk6AAAAAAAAAA==/",
-    "_attachments": "attachments/",
-    "_ts": 1769110422
+Exemplo de objetos (exemplo de uso do indice)
+med-devolucao:
+{ 
+"id": "D901C0C1-D095-418A-B40C-1555CB8921B8",
+"particao": "12345678909",
+"cpf": "12345678909",
+<etc.>
+"transacao" : {
+     "idfimafim": "E00360305202509051715FoCzto3kJj7",
+     <etc.>
+     }
 }
+ 
+indice-med-devolucao:
+{
+"id":  "D901C0C1-D095-418A-B40C-1555CB8921B8",
+"particao": "D901C0C1-D095-418A-B40C-1555CB8921B8",
+"cpf" : "12345678909"
+}
+ 
+Passo para buscar um documento no med-devolucao tendo somente o "id":
+primeiro buscar no container indice-med-devolucao
+pegar o valor do campo cpf
+por fim, buscar no container med-devolucao, com id e particao definidos
+isso é mais performático do que realizar uma busca em med-devolucao sem especificar a partição.
+ 
+ 
+segunda-feira, 1 de dezembro de 2025 14:00 - 16:00
+
+Parte 1
+
+Parte 2
+
+Compartilhar
+Esta parte da reunião foi apenas transcrita.
+
+Conteúdo
 
 
+Sigcn Med.png
+
+Alinhamento Técnico Squad MED Segurança.docx
+
+Anotações
+
+Transcrição
+Transcrição. Use as setas para navegar entre as entradas da transcrição.
+
+
+Pesquisar
+
+O conteúdo gerado por IA pode estar incorreto
+
+Julliana Honorato Albuquerque começou a transcrição
+
+Aline Borges
+0 minutos 4 segundos0:04
+Aline Borges 0 minutos 4 segundos
+Nada se encontro contigo, né? Porque a gente tem algumas definições.
+Aline Borges 0 minutos 9 segundos
+E aí o queria assim fazer um pedido, aproveitar que eu conseguia achar o Gabriel é Gabriel. Veio também.
+Aline Borges 0 minutos 16 segundos
+A os meninos precisam de de de itens muito, muito assim estruturais para a gente começar a trabalhar.
+Aline Borges 0 minutos 27 segundos
+E do outro ponto a gente precisa estar cá os trabalhos de alguma maneira, porque eu tempo está correndo. A gente não tem Ho Ródano.
+
+Caio Yuri da Silva Costa
+0 minutos 28 segundos0:28
+Caio Yuri da Silva Costa 0 minutos 28 segundos
+Um.
+
+Aline Borges
+0 minutos 36 segundos0:36
+Aline Borges 0 minutos 36 segundos
+Né, então assim, existe 11 sociedade grande.
+Aline Borges 0 minutos 41 segundos
+De tirar dúvidas com vocês do que para eles Hoje são assim, não, não posso começar que seria impedimento, seria impedimento.
+Aline Borges 0 minutos 48 segundos
+E Ai eu queria sim, eu vou falar aqui de ouvinte. Obviamente começo fazer um pedido se todo mundo pode escrever no chat, não é impedimento um escreve aí, pedimos 2 escreve aí e a gente endereça, né? O que é que seria para nós? Agilidade, o que é que seria ali de soluções? O que seria de com Gabriel, que não seria que Nenhum de Nós que nós temos que atrás?
+
+Caio Yuri da Silva Costa
+1 minuto 9 segundos1:09
+Caio Yuri da Silva Costa 1 minuto 9 segundos
+Aham.
+
+Aline Borges
+1 minuto 9 segundos1:09
+Aline Borges 1 minuto 9 segundos
+Porque depois a gente vai voltar para ele.
+Caio Yuri da Silva Costa 1 hora 20 minutos 13 segundos
+É o recebimento de uma solicitação de recuperação.
+Caio Yuri da Silva Costa 1 hora 20 minutos 21 segundos
+Seria isso então para fila que vai receber do ciclone no caso.
+Caio Yuri da Silva Costa 1 hora 20 minutos 29 segundos
+Aqui está de acordo com que o negócio aí da aplicação.
+Caio Yuri da Silva Costa 1 hora 20 minutos 34 segundos
+Vai receber.
+Caio Yuri da Silva Costa 1 hora 20 minutos 42 segundos
+Aqui não.
+Caio Yuri da Silva Costa 1 hora 20 minutos 44 segundos
+Não têm, não, não houve oposição, então vou vou criar dessa forma.
+Caio Yuri da Silva Costa 1 hora 20 minutos 52 segundos
+Então a gente vai ter essa aqui os valores eu deixei tudo padrão está aí depois, dependendo da necessidade do negócio, a gente pode.
+Caio Yuri da Silva Costa 1 hora 21 minutos 2 segundos
+É modificar.
+Caio Yuri da Silva Costa 1 hora 21 minutos 5 segundos
+EEA outra fila, ela conseguiu padrão x SN mede também é um recebimento, mas qual vai ser? O que é que ela vai recebendo? É no caso vai receber do CPI, não é?
+Caio Yuri da Silva Costa 1 hora 21 minutos 20 segundos
+O que é que ela vai receber do XP?
+
+Guilherme Klein
+1 hora 21 minutos 24 segundos1:21:24
+Guilherme Klein 1 hora 21 minutos 24 segundos
+É isso, alteração de status de análise.
+Caio Yuri da Silva Costa 1 hora 38 minutos 19 segundos
+Mas, eu acho que não era só realmente esse, só que tem relação do do Redirect lá.
+IA
+Ivan Lopes Alonso
+1 hora 38 minutos 25 segundos1:38:25
+Ivan Lopes Alonso 1 hora 38 minutos 25 segundos
+Aham.
+
+Caio Yuri da Silva Costa
+1 hora 38 minutos 26 segundos1:38:26
+Caio Yuri da Silva Costa 1 hora 38 minutos 26 segundos
+E.
+Caio Yuri da Silva Costa 1 hora 38 minutos 28 segundos
+Criação do DNS, o certificado SSL, e.
+Caio Yuri da Silva Costa 1 hora 38 minutos 33 segundos
+Eu acho que não tinha mais nenhuma dor de cabeça, não.
+IA
+Ivan Lopes Alonso
+1 hora 38 minutos 33 segundos1:38:33
+Ivan Lopes Alonso 1 hora 38 minutos 33 segundos
+Isso agora é tudo ou nada na parte do ambiente, não é também.
+F
+Fabio Domingues Pereira Sabino
+1 hora 38 minutos 36 segundos1:38:36
+Fabio Domingues Pereira Sabino 1 hora 38 minutos 36 segundos
+Eu acho que a session gente não teve muito problema não mesmo, até porque em Bikini 20 não. A validação do Talking, pelo menos a gente faz offline, né? No backend.
+
+Caio Yuri da Silva Costa
+1 hora 38 minutos 38 segundos1:38:38
+Caio Yuri da Silva Costa 1 hora 38 minutos 38 segundos
+Não é?
+F
+Fabio Domingues Pereira Sabino
+1 hora 38 minutos 46 segundos1:38:46
+Fabio Domingues Pereira Sabino 1 hora 38 minutos 46 segundos
+Mas, se vocês precisarem gerar um pouquinho, si não deve ter muito problema, não?
+IA
+Ivan Lopes Alonso
+1 hora 38 minutos 51 segundos1:38:51
+Ivan Lopes Alonso 1 hora 38 minutos 51 segundos
+Adeus ó k comentou sobre a.
+Ivan Lopes Alonso 1 hora 38 minutos 56 segundos
+É problema, apesar de VPN da da fábrica para acessar.
+Ivan Lopes Alonso 1 hora 39 minutos 1 segundo
+A lógica que era que era a subida da UE? Sim, é esse problema seria também com.
+Ivan Lopes Alonso 1 hora 39 minutos 8 segundos
+Nosso offline aqui pronto cube que o.
+Ivan Lopes Alonso 1 hora 39 minutos 11 segundos
+Se envolveria normal ter num local de escolha, exemplo.
+Ivan Lopes Alonso 1 hora 39 minutos 16 segundos
+Tem sentido a pergunta?
+
+Caio Yuri da Silva Costa
+1 hora 39 minutos 20 segundos1:39:20
+Caio Yuri da Silva Costa 1 hora 39 minutos 20 segundos
+E normalmente.
+Caio Yuri da Silva Costa 1 hora 39 minutos 22 segundos
+Se você se você vai trabalhar com os elementos diferentes.
+Caio Yuri da Silva Costa 1 hora 39 minutos 27 segundos
+Você quer acessar o back end que está lá de apoiado, né? Aí você vai precisar.
+IA
+Ivan Lopes Alonso
+1 hora 39 minutos 33 segundos1:39:33
+Ivan Lopes Alonso 1 hora 39 minutos 33 segundos
+A.
+
+Caio Yuri da Silva Costa
+1 hora 39 minutos 36 segundos1:39:36
+Caio Yuri da Silva Costa 1 hora 39 minutos 36 segundos
+E vai precisar ter também a regra de Faro para acessar AO back end.
+IA
+Ivan Lopes Alonso
+1 hora 39 minutos 43 segundos1:39:43
+Ivan Lopes Alonso 1 hora 39 minutos 43 segundos
+A vida a vida Era Para Ser seu Deus. 2 locais segue O Jogo.
+
+Caio Yuri da Silva Costa
+1 hora 39 minutos 47 segundos1:39:47
+Caio Yuri da Silva Costa 1 hora 39 minutos 47 segundos
+Isso, isso é o que a gente.
+IA
+Ivan Lopes Alonso
+1 hora 39 minutos 48 segundos1:39:48
+Ivan Lopes Alonso 1 hora 39 minutos 48 segundos
+A configuração tá na frente, eu preciso fazer alguma configuração quando tiver os 2 ambientes online, por exemplo.
+
+Caio Yuri da Silva Costa
+1 hora 39 minutos 56 segundos1:39:56
+Caio Yuri da Silva Costa 1 hora 39 minutos 56 segundos
+Não quando tiver.
+V
+
+Victor Rodrigo Nunes Lopes e Silva
+1 hora 39 minutos 56 segundos1:39:56
+Victor Rodrigo Nunes Lopes e Silva 1 hora 39 minutos 56 segundos
+Desde os amigos, vejam lá. Isso tem que ter AA regra entre eles só.
+Victor Rodrigo Nunes Lopes e Silva 1 hora 40 minutos 1 segundo
+E ai isso é.
+
+Caio Yuri da Silva Costa
+1 hora 40 minutos 1 segundo1:40:01
+Caio Yuri da Silva Costa 1 hora 40 minutos 1 segundo
+É.
+IA
+Ivan Lopes Alonso
+1 hora 40 minutos 1 segundo1:40:01
+Ivan Lopes Alonso 1 hora 40 minutos 1 segundo
+Ai ficar no você vai criar, né? Ou locais o ambiente isso.
+
+Caio Yuri da Silva Costa
+1 hora 40 minutos 8 segundos1:40:08
+Caio Yuri da Silva Costa 1 hora 40 minutos 8 segundos
+Em termos de ambiente eu, eu eu dito que quando a gente criar, não é?
+Caio Yuri da Silva Costa 1 hora 40 minutos 14 segundos
+Já.
+Caio Yuri da Silva Costa 1 hora 40 minutos 16 segundos
+Isso já vai, já vai auto mais coisa. A gente tem que demandar também isso fado. Foi assim para o fronte.
+F
+Fabio Domingues Pereira Sabino
+1 hora 40 minutos 24 segundos1:40:24
+Fabio Domingues Pereira Sabino 1 hora 40 minutos 24 segundos
+Pode repetir por favor?
+
+Caio Yuri da Silva Costa
+1 hora 40 minutos 26 segundos1:40:26
+Caio Yuri da Silva Costa 1 hora 40 minutos 26 segundos
+A tá não, já já misturei as bolas aqui.
+Esta transcrição é útil?
 
 
