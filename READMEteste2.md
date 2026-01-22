@@ -1,21 +1,187 @@
+Voce vai precisar de id de transação real para fazer os testes: A Malu mandou essa massa de dados aq
+ 
+ 
+E003603052026011420262b6f5ae914f (A transação informada não está indexada no BACEN)
+E00360305202601142027c313b4f493c (A transação informada não está indexada no BACEN.)
+E003603052026011420288cadad39667
+E00360305202601142029ac5eeab0e5e
+E003603052026011420300907abb4254
+E00360305202601142031fe5f944bb86
+E00360305202601142032cc8de851e52
+ 
+E003603052026011420402ca8fd9fcbc 
+E00360305202601142042029dc12e2f1
+E00360305202601142043f12e2cee2e5
+E00360305202601142043f2a4f12227f
+E00360305202601142044d48040670e7
+E00360305202601142045f39b5827a69
+E00360305202601142046fc6dfd28725
+E003603052026011420473ebf05ed17b
+ 
+E0036030520260114231755bf0bb8ecf
+E003603052026011423189fcb307fbf8
+E00360305202601142319e2a24a96955
+E003603052026011423201037ddd4ba8
+E003603052026011423212ef592c2db7
+E003603052026011423226a59e8930de
+E00360305202601142323c1d5a6bbd9c
+Caixa outra IF Conta 1
+E003603052026011423253b1af48bbd4
+E0036030520260114232603e21b387ee
+E00360305202601142327f7646f098f1
+E00360305202601142327b0ea8fc0e4c
+E003603052026011423281afd5283be3
+E003603052026011423296517c8e98a2
+E0036030520260114232993f5147523c
+E00360305202601142330802e5c3a441
+Caixa - Caixa Conta 2
+E0036030520260114233353d900045d1
+E0036030520260114233461dafb516b6
+E00360305202601142335f8291d4a6ba
+E003603052026011423369fa19cb2a0a
+E00360305202601142337345c493e191
+E00360305202601142338a52170d86e8
+E003603052026011423392da4349078a
+E00360305202601142340cb3f832385b
+E00360305202601142341c3e51624cb6
+
+Caixa outra IF Conta 2
+E00360305202601142342a2c61528410 (Funcionou - USADO)
+E00360305202601142342b1c2ba87263 (Funcionou - USADO)
+E00360305202601142343ef45a64aefd (Funcionou - USADO)
+E00360305202601142343a70ead682b8 (Funcionou - USADO)
+E003603052026011423489456fdea8e8 (NÃO SEI)
+E00360305202601142349ed5d917f9a6 (DEAD LETTER)
+E003603052026011423504672dd828f4 (Tá zoado, não entendi)
+E003603052026011423516413cd0e8a8
+E00360305202601142352180aef77250
+ 
+ 
+
+RR003603052026011587351415809 (Tentativa de uso - Não há caracter especial)
+E0036030520260115110142911635633 (Tentativa de uso - N indexado da caixa)
+RR003603052026011552731966558
+E0036030520260115110142944044420
+RR003603052026011571087047007
+E0036030520260115110142149916407
+RR003603052026011586814431332
+E0036030520260115110142281258496
+RR003603052026011586177481824
+E0036030520260115110142888597588
+RR003603052026011536494725899
+E0036030520260115110142918361804
+RR003603052026011568678188736
+E0036030520260115110142159285015
+RR003603052026011502519283536
+E0036030520260115110142460468230
+RR003603052026011569765057329
+E0036030520260115110142482249069
+RR003603052026011514442983565
+E0036030520260115110142359517644
+RR003603052026011583721679582
+E0036030520260115110142894707240
+RR003603052026011520576850554
+E0036030520260115110142771071678
+RR003603052026011528110914067
+E0036030520260115110142524827744
+RR003603052026011582983568481
+E0036030520260115110142410036514
+RR003603052026011574046973738
+E0036030520260115110142450989543
+RR003603052026011519907463180
+E0036030520260115110142279039468
+RR003603052026011562208306449
+E0036030520260115110142497571570
+RR003603052026011546802238822
+E0036030520260115110142138765978
+RR003603052026011521782192441
+E0036030520260115110142447329495
+RR003603052026011513329059875
+E0036030520260115110142925239424
+
+
+<img width="1918" height="1078" alt="image" src="https://github.com/user-attachments/assets/c3275d8b-06df-4f6f-8301-da52a794d077" />
+
+
 {
-    "id": "cce24b6f-0ae4-410b-b20e-58eb50aacd15",
-    "particao": "cce24b6f-0ae4-410b-b20e-58eb50aacd15",
-    "mudancaStatus": {
-        "IdRecuperacaoValores": "b832922c-73ee-439a-86eb-af60b2ce3032",
-        "StatusAnterior": "OPEN",
-        "StatusAtual": "ANALYZED",
-        "DataAlteracaoStatus": "23/12/2025 16:43:00 +00:00"
+    "id": "E003603052026011423253b1af48bbd4-0122202609:35:17",
+    "particao": "E003603052026011423253b1af48bbd4-0122202609:35:17",
+    "cpf": "61562716352",
+    "idRecuperacaoValores": "6376a3fe-0a40-4304-b324-81d8173dfa9f",
+    "pedidoRecuperacao": {
+        "Nome": "VALENTINA GABRIELA MORAES",
+        "Conta": "0000005929228970",
+        "Razao": "REFUND_REQUEST",
+        "Agencia": "0333",
+        "Produto": "3701",
+        "Situacao": "CANCELADA",
+        "Telefone": "99999999999",
+        "Documento": "61562716352",
+        "Protocolo": "260116096768384",
+        "Transacoes": [
+            {
+                "Tipo": "D",
+                "Valor": 2,
+                "IdFimaFim": "E003603052026011423253b1af48bbd4",
+                "CanalOrigem": "SIIBC",
+                "UsuarioPagador": {
+                    "Cpf": "61562716352",
+                    "Cnpj": "",
+                    "Nome": "VALENTINA GABRIELA MORAES",
+                    "Conta": {
+                        "Ispb": "00360305",
+                        "Chave": null,
+                        "Agencia": "0333",
+                        "Produto": "3701",
+                        "NumeroConta": "0000005929228970"
+                    }
+                },
+                "UsuarioRecebedor": {
+                    "Cpf": "45651547061",
+                    "Cnpj": "",
+                    "Nome": "BERNARDO CLAUDIO RENAN PEREIRA",
+                    "Conta": {
+                        "Ispb": "00360305",
+                        "Chave": "2b428a80-9a40-4bba-a367-cb3f362f30b9",
+                        "Agencia": "0333",
+                        "Produto": "3701",
+                        "NumeroConta": "0000005929228953"
+                    }
+                },
+                "DataHoraCriacaoNi": null,
+                "DataHoraTransacao": "2026-01-14T17:51:03Z",
+                "SituacaoCriacaoNI": null,
+                "IdNotificacaoInfracao": null
+            }
+        ],
+        "TipoJornada": "PIX_NORMAL",
+        "Questionario": [
+            {
+                "Pergunta": "Qual dessas alternativas descreve melhor o que aconteceu?",
+                "Resposta": "Realizei o pagamento e percebi se tratar de um golpe"
+            }
+        ],
+        "CanalRegistro": "Teste SIGCN",
+        "DataHoraRegistro": "2026-01-16T15:24:32.785389-03:00",
+        "ResultadoQuestionario": 3,
+        "DetalhesRelatoInfracao": "AAAAAAAAAAAAAAAAAAAAA"
     },
-    "solicitarDevolucao": {
-        "AdditionalData": {},
-        "Assinatura": "assinatura",
-        "IdRecuperacaoValores": "b832922c-73ee-439a-86eb-af60b2ce3032",
-        "Participante": "123456789"
+    "Status": {
+        "Anterior": "CRIADA",
+        "Atual": "CANCELADA",
+        "DataAlteracaoStatus": "2026-01-22T16:35:16.733Z"
     },
-    "_rid": "iAQdALV+1f4BAAAAAAAAAA==",
-    "_self": "dbs/iAQdAA==/colls/iAQdALV+1f4=/docs/iAQdALV+1f4BAAAAAAAAAA==/",
-    "_etag": "\"b6003a79-0000-0b00-0000-694afbe40000\"",
+    "DtAberturaSolicRecup": "2026-01-22T12:35:16.733Z",
+    "DtRetornoStatusAnalizado": "",
+    "TempoProcessamento": 0,
+    "Ativo": false,
+    "_etag": "\"25009062-0000-0b00-0000-69727b960000\"",
+    "_rid": "iAQdAKsTYCk6AAAAAAAAAA==",
+    "_self": "dbs/iAQdAA==/colls/iAQdAKsTYCk=/docs/iAQdAKsTYCk6AAAAAAAAAA==/",
     "_attachments": "attachments/",
-    "_ts": 1766521828
+    "_ts": 1769110422
 }
+
+
+
+
