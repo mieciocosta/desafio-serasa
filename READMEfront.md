@@ -1,73 +1,12 @@
+Recebeu informação do SISPI no formato do JSON.
+<img width="797" height="412" alt="image" src="https://github.com/user-attachments/assets/7215fc3a-ecc2-47ed-98dc-7d70248d3dd0" />
 
-# Teste Front | SIGCN MED – Grafos
+No JSON consta o Status Analyzed e o Timestamp da DataHoraAlteracao.
+Criar Json da solicitação e Enviar ao SISPI ocorre no backend, nao da para debugar a ação ocorrendo. 
+O Sucesso é salvo no banco de dados, o caso de analyzed
+<img width="849" height="561" alt="image" src="https://github.com/user-attachments/assets/db99aa8c-a6cc-4715-9d33-47235462bd34" />
 
-## Objetivo
-
-Validar a tela **Grafos** do SIGCN MED quanto a **preenchimento, salvamento e persistência** dos dados.
-
----
-
-## Acesso
-
-* **Ambiente:** DES
-* **URL:** [https://sasitemededsnprd.z15.web.core.windows.net](https://sasitemededsnprd.z15.web.core.windows.net)
-* **Usuário:** c892024
-
-Print – Tela inicial / Login
-
-<img width="1911" height="1021" alt="image" src="https://github.com/user-attachments/assets/e7e03802-aa04-450f-9a94-addb9d4e14bf" />
+O caso de erro, foi conversado sobre não salvar em banco e utilizar monitoramento, certo? ficamos de implementar no futuro junto com as demais métricas a serem colhidas. 
 
 
-
----
-
-## Caminho
-
-Menu **Configurações** → **Grafos**
-
-📸 Print – Tela Grafos aberta
-
-<img width="1918" height="1078" alt="image" src="https://github.com/user-attachments/assets/e1db1e1d-f846-4c0f-b7e1-419ef4e2a98e" />
-
-
----
-
-## Teste – Caminho Feliz (Salvar)
-
-### Passos
-
-1. Preencher/alterar os campos:
-
-   * Tipo de Fluxo
-   * Telefone
-   * E-mail
-   * Valor Mínimo / Valor Máximo
-   * Profundidade Máxima, Dias e Horas
-2. Clicar em **Salvar**
-
-📸 Print – Tela preenchida antes de salvar
-
-<img width="1907" height="1025" alt="image" src="https://github.com/user-attachments/assets/fed82f3b-1c12-4f68-a490-d418cf335661" />
-
----
-
-### Resultado Esperado
-
-* Exibir mensagem **“Configurações cadastradas!”**
-* Ao clicar em **OK**, permanecer na tela
-* Ao atualizar a página (F5), os valores permanecem salvos
-
-📸 Print – Popup de sucesso
-
-<img width="1918" height="1060" alt="image" src="https://github.com/user-attachments/assets/92b09d9e-2fa9-4f31-9c52-0306544ccd17" />
-
-
-
-
-Pedido de devolução
-Devolução das informações aos canais de origem
-
-
-<img width="800" height="204" alt="image" src="https://github.com/user-attachments/assets/33c5ca89-12c3-4752-b39d-875a19856069" />
-
-
+Guilherme Klein, com relação ao item "em caso de erro, salvar o retorno em banco", foi uma ideia que dei, porém conversamos e ficou combinado que iriamos ver isso no futuro, para que seja utilizada o padrão que as aplicações da caixa utilizam
