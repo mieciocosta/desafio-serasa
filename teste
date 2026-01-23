@@ -1,10 +1,8 @@
-| Nº | Cenário                                       |
-| -- | --------------------------------------------- |
-| 1  | Recebimento da solicitação de recuperação     |
-| 2  | Persistência do pedido no banco               |
-| 3  | Recebimento da alteração de status (ANALYZED) |
-| 4  | Processamento do status ANALYZED              |
-| 5  | Criação da solicitação de devolução           |
-| 6  | Devolução das informações ao canal de origem  |
-| 7  | Cancelamento do pedido                        |
-| 8  | Verificação de mensagens mortas (DLQ)         |
+| Requisito Funcional                                                 | Evidência |
+| ------------------------------------------------------------------- | --------- |
+| Receber do SISPI as informações de alteração de status da análise   | Item 3    |
+| Identificar as mensagens com status “ANALYZED”                      | Item 4    |
+| Receber IDRecuperacao, status = “ANALYZED” e timestamp da alteração | Item 3    |
+| Criar o JSON da solicitação da devolução de valores                 | Item 5    |
+| Enviar ao SISPI a solicitação de devolução                          | Item 6    |
+| Em caso de erro, salvar o retorno em banco                          | Item 8    |
