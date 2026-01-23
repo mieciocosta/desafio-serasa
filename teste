@@ -1,3 +1,10 @@
-https://portal.azure.com/#@caixa.onmicrosoft.com/resource/subscriptions/dd669b46-a967-4a48-badf-b3a1dc6cbd3a/resourceGroups/rg-eds-nprd/providers/Microsoft.ServiceBus/namespaces/servicebus-eds-nprd/queues/sigcn-med-solicitacaorecuperacao-recebimento/explorer
-
-
+| Nº | Cenário                                       |
+| -- | --------------------------------------------- |
+| 1  | Recebimento da solicitação de recuperação     |
+| 2  | Persistência do pedido no banco               |
+| 3  | Recebimento da alteração de status (ANALYZED) |
+| 4  | Processamento do status ANALYZED              |
+| 5  | Criação da solicitação de devolução           |
+| 6  | Devolução das informações ao canal de origem  |
+| 7  | Cancelamento do pedido                        |
+| 8  | Verificação de mensagens mortas (DLQ)         |
