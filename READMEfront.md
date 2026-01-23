@@ -67,3 +67,7 @@ Menu **Configurações** → **Grafos**
 Pedido de devolução
 Devolução das informações aos canais de origem
 
+
+<img width="800" height="204" alt="image" src="https://github.com/user-attachments/assets/33c5ca89-12c3-4752-b39d-875a19856069" />
+
+
